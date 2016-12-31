@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<None Include="..\..\CCE.uproject" />
+		<Filter Include="Source">
+			<UniqueIdentifier>{92BDB173-CE2D-45E8-98D0-3CB6CAD69274}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\CCE.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<None Include="..\..\Source\CCEEditor.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<Filter Include="Config">
+			<UniqueIdentifier>{DE0B996A-54FC-4B56-BAD7-DF808C106CD8}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Config\DefaultEditor.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultEngine.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultGame.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultInput.ini">
+			<Filter>Config</Filter>
+		</None >
+		<Filter Include="Source\CCE">
+			<UniqueIdentifier>{5CDE8BE1-9F71-4581-9429-DC52CA78CCA2}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\CCE\CCE.Build.cs">
+			<Filter>Source\CCE</Filter>
+		</None >
+		<ClCompile Include="..\..\Source\CCE\CCE.cpp">
+			<Filter>Source\CCE</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\CCE\CCE.h">
+			<Filter>Source\CCE</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\CCE\CCECharacter.cpp">
+			<Filter>Source\CCE</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\CCE\CCECharacter.h">
+			<Filter>Source\CCE</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp">
+			<Filter>Source\CCE</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
+			<Filter>Source\CCE</Filter>
+		</ClInclude >
+	</ItemGroup>
+</Project>
