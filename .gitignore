@@ -58,6 +58,9 @@ Binaries/*
 # Builds
 Build/*
 
+# StarterContent
+Content/StarterContent/*
+
 # Don't ignore icon files in Build
 !Build/**/*.ico
 
