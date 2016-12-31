@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\CCE.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{92BDB173-CE2D-45E8-98D0-3CB6CAD69274}</UniqueIdentifier>
+			<UniqueIdentifier>{DEC50AFC-93AD-4C65-9350-89AC45B8E54E}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\CCE.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{DE0B996A-54FC-4B56-BAD7-DF808C106CD8}</UniqueIdentifier>
+			<UniqueIdentifier>{BF6E39D3-EAE2-4B29-A0BF-A3091C6CA0F7}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -31,7 +31,7 @@
 			<Filter>Config</Filter>
 		</None >
 		<Filter Include="Source\CCE">
-			<UniqueIdentifier>{5CDE8BE1-9F71-4581-9429-DC52CA78CCA2}</UniqueIdentifier>
+			<UniqueIdentifier>{BC235C88-7686-4F17-AEA3-C7AF0B63F1D1}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\CCE\CCE.Build.cs">
 			<Filter>Source\CCE</Filter>
@@ -52,6 +52,12 @@
 			<Filter>Source\CCE</Filter>
 		</ClCompile >
 		<ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
+			<Filter>Source\CCE</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp">
+			<Filter>Source\CCE</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
 			<Filter>Source\CCE</Filter>
 		</ClInclude >
 	</ItemGroup>
