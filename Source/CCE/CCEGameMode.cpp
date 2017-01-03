@@ -2,7 +2,6 @@
 
 #include "CCE.h"
 #include "CCEGameMode.h"
-#include "CCECharacter.h"
 #include "SpectatorCamera.h"
 
 ACCEGameMode::ACCEGameMode()

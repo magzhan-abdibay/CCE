@@ -1,64 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<None Include="..\..\CCE.uproject" />
-		<Filter Include="Source">
-			<UniqueIdentifier>{DEC50AFC-93AD-4C65-9350-89AC45B8E54E}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\CCE.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<None Include="..\..\Source\CCEEditor.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<Filter Include="Config">
-			<UniqueIdentifier>{BF6E39D3-EAE2-4B29-A0BF-A3091C6CA0F7}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Config\DefaultEditor.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultEngine.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultGame.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultInput.ini">
-			<Filter>Config</Filter>
-		</None >
-		<Filter Include="Source\CCE">
-			<UniqueIdentifier>{BC235C88-7686-4F17-AEA3-C7AF0B63F1D1}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\CCE\CCE.Build.cs">
-			<Filter>Source\CCE</Filter>
-		</None >
-		<ClCompile Include="..\..\Source\CCE\CCE.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\CCE.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\CCECharacter.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\CCECharacter.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\CCE.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{DEC50AFC-93AD-4C65-9350-89AC45B8E54E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\CCEEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{BF6E39D3-EAE2-4B29-A0BF-A3091C6CA0F7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\CCE">
+      <UniqueIdentifier>{BC235C88-7686-4F17-AEA3-C7AF0B63F1D1}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\CCE.Build.cs">
+      <Filter>Source\CCE</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\CCE\CCE.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\CCE.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\CCE\Agent.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\CCE\Agent.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
