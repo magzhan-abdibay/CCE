@@ -43,7 +43,7 @@ void ASpectatorCamera::HandleMovement(float DeltaTime)
 	if (!MovementInput.IsZero())
 	{
 		//Scale our movement input axis values by cameraSpeed units per second
-		MovementInput = MovementInput.SafeNormal() * cameraSpeed;
+		MovementInput = MovementInput.GetSafeNormal() * cameraSpeed;
 		FVector NewLocation = GetActorLocation();
 		NewLocation += GetActorForwardVector() * MovementInput.X * DeltaTime;
 		NewLocation += GetActorRightVector() * MovementInput.Y * DeltaTime;
@@ -68,15 +68,15 @@ void ASpectatorCamera::HandlePitch()
 }
 
 // Called to bind functionality to input
-void ASpectatorCamera::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void ASpectatorCamera::SetupPlayerInputComponent(class UInputComponent* Value)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(Value);
 
 	//Hook up every-frame handling for our four axes
-	InputComponent->BindAxis("MoveForward", this, &ASpectatorCamera::MoveForward);
-	InputComponent->BindAxis("MoveRight", this, &ASpectatorCamera::MoveRight);
-	InputComponent->BindAxis("CameraPitch", this, &ASpectatorCamera::PitchCamera);
-	InputComponent->BindAxis("CameraYaw", this, &ASpectatorCamera::YawCamera);
+	Value->BindAxis("MoveForward", this, &ASpectatorCamera::MoveForward);
+	Value->BindAxis("MoveRight", this, &ASpectatorCamera::MoveRight);
+	Value->BindAxis("CameraPitch", this, &ASpectatorCamera::PitchCamera);
+	Value->BindAxis("CameraYaw", this, &ASpectatorCamera::YawCamera);
 
 }
 

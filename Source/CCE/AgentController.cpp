@@ -16,11 +16,11 @@ AAgentController::AAgentController()
 	LocationToGoKey = "LocationToGo";
 	CurrentLocationTarget = 0;
 }
-void AAgentController::Possess(APawn * Pawn)
+void AAgentController::Possess(APawn * Value)
 {
-	Super::Possess(Pawn);
+	Super::Possess(Value);
 
-	AAgent* Agent = Cast<AAgent>(Pawn);
+	AAgent* Agent = Cast<AAgent>(Value);
 
 	if(Agent){
 		if (Agent->GetBehaviorTree()->BlackboardAsset)

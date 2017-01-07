@@ -1,7 +1,5 @@
 #include "CCE.h"
 #include "Agent.h"
-#include "Kismet/HeadMountedDisplayFunctionLibrary.h"
-
 
 AAgent::AAgent()
 {
@@ -51,7 +49,7 @@ void AAgent::SetupPlayerInputComponent(class UInputComponent* PlayerInputCompone
 
 void AAgent::MoveForward(float Value)
 {
-	if ((Controller != NULL) && (Value != 0.0f))
+	if ((Controller != nullptr) && (Value != 0.0f))
 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -65,7 +63,7 @@ void AAgent::MoveForward(float Value)
 
 void AAgent::MoveRight(float Value)
 {
-	if ((Controller != NULL) && (Value != 0.0f))
+	if ((Controller != nullptr) && (Value != 0.0f))
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();

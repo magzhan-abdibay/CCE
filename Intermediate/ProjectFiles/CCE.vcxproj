@@ -591,6 +591,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\CCE\BehaviorTreeSelectPoint.cpp" />
+    <ClCompile Include="..\..\Source\CCE\SelectPoint.cpp" />
     <ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp" />
     <None Include="..\..\CCE.uproject" />
     <None Include="..\..\Source\CCE.Target.cs" />
@@ -610,6 +611,7 @@
     <ClInclude Include="..\..\Source\CCE\CCE.h" />
     <ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp" />
     <ClInclude Include="..\..\Source\CCE\CCEGameMode.h" />
+    <ClInclude Include="..\..\Source\CCE\SelectPoint.h" />
     <ClInclude Include="..\..\Source\CCE\SpectatorCamera.h" />
   </ItemGroup>
   <PropertyGroup>
