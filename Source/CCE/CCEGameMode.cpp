@@ -2,10 +2,9 @@
 
 #include "CCE.h"
 #include "CCEGameMode.h"
-#include "CCECharacter.h"
+#include "SpectatorCamera.h"
 
 ACCEGameMode::ACCEGameMode()
 {
-	// set default pawn class
-	DefaultPawnClass = ACCECharacter::StaticClass();
+	DefaultPawnClass = ASpectatorCamera::StaticClass();
 }

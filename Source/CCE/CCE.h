@@ -3,6 +3,6 @@
 #ifndef __CCE_H__
 #define __CCE_H__
 
-#include "EngineMinimal.h"
+#include "Engine.h"
 
 #endif
