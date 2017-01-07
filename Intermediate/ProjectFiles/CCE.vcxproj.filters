@@ -47,9 +47,6 @@
     <ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp">
-      <Filter>Source\CCE</Filter>
-    </ClCompile>
     <ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
@@ -58,9 +55,24 @@
     <ClInclude Include="..\..\Source\CCE\Agent.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\CCE\AgentController.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CCE\BehaviorTreeSelectPoint.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\CCE\Agent.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CCE\AgentController.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CCE\BehaviorTreeSelectPoint.cpp">
       <Filter>Source\CCE</Filter>
     </ClCompile>
   </ItemGroup>
