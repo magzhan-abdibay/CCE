@@ -15,7 +15,7 @@ EBTNodeResult::Type UBehaviorTreeSelectPoint::ExecuteTask(UBehaviorTreeComponent
 		TArray<AActor*> AvailablePoints = Controller->GetLocationTargets();
 		ATargetPoint* LocationToGo;
 		int32 CurrentLocationTarget= Controller->GetCurrentLocationTarget();
-
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,FString::FromInt(AvailablePoints.Num()));
 		if(CurrentLocationTarget !=AvailablePoints.Num()-1)
 		{
 			LocationToGo = Cast<ATargetPoint>(AvailablePoints[++CurrentLocationTarget]);
