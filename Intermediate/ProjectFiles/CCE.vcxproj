@@ -590,7 +590,6 @@
     <NMakeOutput>..\..\Binaries\HTML5\CCE-HTML5-Shipping.exe</NMakeOutput>
   </PropertyGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\CCE\BehaviorTreeSelectPoint.cpp" />
     <ClCompile Include="..\..\Source\CCE\SelectPoint.cpp" />
     <ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp" />
     <None Include="..\..\CCE.uproject" />
@@ -607,7 +606,6 @@
     <ClCompile Include="..\..\Source\CCE\CCE.cpp" />
     <ClInclude Include="..\..\Source\CCE\Agent.h" />
     <ClInclude Include="..\..\Source\CCE\AgentController.h" />
-    <ClInclude Include="..\..\Source\CCE\BehaviorTreeSelectPoint.h" />
     <ClInclude Include="..\..\Source\CCE\CCE.h" />
     <ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp" />
     <ClInclude Include="..\..\Source\CCE\CCEGameMode.h" />
