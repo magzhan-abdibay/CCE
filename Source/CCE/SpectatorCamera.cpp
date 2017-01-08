@@ -13,7 +13,7 @@ ASpectatorCamera::ASpectatorCamera()
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	CameraSpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraSpringArmComponent"));
 	CameraSpringArmComponent->SetupAttachment(RootComponent);
-	CameraSpringArmComponent->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 50.0f), FRotator(-60.0f, 0.0f, 0.0f));
+	CameraSpringArmComponent->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 50.0f), FRotator(0.0f, 0.0f, 0.0f));
 	CameraSpringArmComponent->TargetArmLength = 400.f;
 	CameraSpringArmComponent->bEnableCameraLag = true;
 	CameraSpringArmComponent->CameraLagSpeed = 3.0f;
