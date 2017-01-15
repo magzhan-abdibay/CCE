@@ -5,31 +5,55 @@
 #include "AgentController.h"
 #include "Engine/TargetPoint.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include <string>
+#include <ctime>
 
+USelectPoint::USelectPoint() {
+	int64 DateInSeconds = FDateTime::Now().ToUnixTimestamp();
+	FRandomStream SRand = FRandomStream();
+	SRand.Initialize(DateInSeconds);
+}
 
 EBTNodeResult::Type USelectPoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AAgentController* Controller = Cast<AAgentController>(OwnerComp.GetAIOwner());
 	if (Controller)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Controller->GetCharacter()->GetActorLocation().ToString());
+		FVector agentPosition=Controller->GetCharacter()->GetActorLocation();
+		FVector targetPosition = GenerateTargetVector(agentPosition);
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, targetPosition.ToString());
 		UBlackboardComponent* BlackBoard = Controller->GetAgentBlackBoardComponent();
-		TArray<AActor*> AvailablePoints = Controller->GetLocationTargets();
-		ATargetPoint* LocationToGo;
-		int32 CurrentLocationTarget = Controller->GetCurrentLocationTarget();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FromInt(AvailablePoints.Num()));
-		if (CurrentLocationTarget != AvailablePoints.Num() - 1)
-		{
-			LocationToGo = Cast<ATargetPoint>(AvailablePoints[++CurrentLocationTarget]);
-		}
-		else
-		{
-			CurrentLocationTarget = 0;
-			LocationToGo = Cast<ATargetPoint>(AvailablePoints[CurrentLocationTarget]);
-		}
-		Controller->SetCurrentLocationTarget(CurrentLocationTarget);
-		BlackBoard->SetValueAsObject("LocationToGo", LocationToGo);
-
+		BlackBoard->SetValueAsVector("TargetPosition", targetPosition);
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, BlackBoard->GetValueAsVector("TargetPosition").ToString());
 		return EBTNodeResult::Succeeded;
 	}
 	return EBTNodeResult::Failed;
+}
+
+FVector USelectPoint::GenerateTargetVector(FVector& value) const
+{
+	int32 orientation = FMath::RandRange(1, 4);
+	int32 moveStep = 500;
+	FVector result;
+	switch (orientation)
+	{
+	case 1:
+	
+		result = FVector::ForwardVector*moveStep;
+		break;
+	case 2:
+		result = -FVector::ForwardVector*moveStep;
+		break;
+	case 3:
+		result = FVector::RightVector*moveStep;
+		break;
+	case 4:
+		result = -FVector::RightVector*moveStep;
+		break;
+	default:
+		result = FVector::ZeroVector;
+	}
+	result += value;
+	return result;
 }

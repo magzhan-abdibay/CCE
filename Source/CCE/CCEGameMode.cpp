@@ -3,6 +3,7 @@
 #include "CCE.h"
 #include "CCEGameMode.h"
 #include "SpectatorCamera.h"
+#include <ctime>
 
 ACCEGameMode::ACCEGameMode()
 {
