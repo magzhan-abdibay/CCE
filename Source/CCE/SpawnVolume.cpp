@@ -43,17 +43,17 @@ FVector ASpawnVolume::GetRandomPointInVolume()
 
 void ASpawnVolume::SetSpawningActive(bool bShouldSpawn)
 {
-	//if (bShouldSpawn)
-	//{
-		// Set the timer on Spawn Pickup
+	if (bShouldSpawn)
+	{
+		// Set the timer
 		SpawnDelay = FMath::FRandRange(SpawnDelayRangeLow, SpawnDelayRangeHigh);
 		GetWorldTimerManager().SetTimer(SpawnTimer, this, &ASpawnVolume::SpawnAgent, SpawnDelay, false);
-	/*}
+	}
 	else
 	{
-		// clear the timer on Spawn Pickup
+		// Ñlear the timer
 		GetWorldTimerManager().ClearTimer(SpawnTimer);
-	}*/
+	}
 }
 
 void ASpawnVolume::SpawnAgent()
@@ -74,17 +74,14 @@ void ASpawnVolume::SpawnAgent()
 			FVector SpawnLocation = GetRandomPointInVolume();
 
 			// Get a random rotation for the spawned item
-			FRotator SpawnRotation;
-			SpawnRotation.Yaw = FMath::FRand() * 360.0f;
-			SpawnRotation.Pitch = 0.0f;
-			SpawnRotation.Roll = 0.0f;
+			FRotator SpawnRotation(0,FMath::FRand() * 360.0f,0);
 
 			// spawn
 			AAgent* const SpawnedActor = World->SpawnActor<AAgent>(WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 
 			SpawnDelay = FMath::FRandRange(SpawnDelayRangeLow, SpawnDelayRangeHigh);
+			
 			GetWorldTimerManager().SetTimer(SpawnTimer, this, &ASpawnVolume::SpawnAgent, SpawnDelay, false);
-
 		}
 	}
 }
