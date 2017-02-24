@@ -14,18 +14,13 @@ ASpawnVolume::ASpawnVolume()
 	// Create the Box Component to represent the spawn volume
 	WhereToSpawn = CreateDefaultSubobject<UBoxComponent>(TEXT("WhereToSpawn"));
 	RootComponent = WhereToSpawn;
-
-	//Set the spawn delay range
-	SpawnDelayRangeLow = 1.0f;
-	SpawnDelayRangeHigh = 4.5f;
-
 }
 
 // Called when the game starts or when spawned
 void ASpawnVolume::BeginPlay()
 {
 	Super::BeginPlay();
-	SetSpawningActive(true);
+	SpawnAgent();
 }
 
 // Called every frame
@@ -39,21 +34,6 @@ FVector ASpawnVolume::GetRandomPointInVolume()
 	FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
 	FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;
 	return UKismetMathLibrary::RandomPointInBoundingBox(SpawnOrigin, SpawnExtent);
-}
-
-void ASpawnVolume::SetSpawningActive(bool bShouldSpawn)
-{
-	if (bShouldSpawn)
-	{
-		// Set the timer
-		SpawnDelay = FMath::FRandRange(SpawnDelayRangeLow, SpawnDelayRangeHigh);
-		GetWorldTimerManager().SetTimer(SpawnTimer, this, &ASpawnVolume::SpawnAgent, SpawnDelay, false);
-	}
-	else
-	{
-		// Ñlear the timer
-		GetWorldTimerManager().ClearTimer(SpawnTimer);
-	}
 }
 
 void ASpawnVolume::SpawnAgent()
@@ -78,10 +58,6 @@ void ASpawnVolume::SpawnAgent()
 
 			// spawn
 			AAgent* const SpawnedActor = World->SpawnActor<AAgent>(WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
-
-			SpawnDelay = FMath::FRandRange(SpawnDelayRangeLow, SpawnDelayRangeHigh);
-			
-			GetWorldTimerManager().SetTimer(SpawnTimer, this, &ASpawnVolume::SpawnAgent, SpawnDelay, false);
 		}
 	}
 }

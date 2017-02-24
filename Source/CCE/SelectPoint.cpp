@@ -19,13 +19,13 @@ EBTNodeResult::Type USelectPoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	AAgentController* Controller = Cast<AAgentController>(OwnerComp.GetAIOwner());
 	if (Controller)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Controller->GetCharacter()->GetActorLocation().ToString());
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, Controller->GetCharacter()->GetActorLocation().ToString());
 		FVector agentPosition=Controller->GetCharacter()->GetActorLocation();
 		FVector targetPosition = GenerateTargetVector(agentPosition);
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, targetPosition.ToString());
+		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, targetPosition.ToString());
 		UBlackboardComponent* BlackBoard = Controller->GetAgentBlackBoardComponent();
 		BlackBoard->SetValueAsVector("TargetPosition", targetPosition);
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, BlackBoard->GetValueAsVector("TargetPosition").ToString());
+		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, BlackBoard->GetValueAsVector("TargetPosition").ToString());
 		return EBTNodeResult::Succeeded;
 	}
 	return EBTNodeResult::Failed;
