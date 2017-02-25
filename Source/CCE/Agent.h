@@ -23,6 +23,12 @@ class AAgent : public ACharacter
 public:
 	AAgent();
 
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	FORCEINLINE class UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
+
 protected:
 
 	void MoveForward(float Value);
@@ -30,10 +36,5 @@ protected:
 	void MoveRight(float Value);
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
-public:
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	FORCEINLINE class UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 };
 

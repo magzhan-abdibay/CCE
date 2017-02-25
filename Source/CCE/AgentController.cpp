@@ -12,9 +12,6 @@ AAgentController::AAgentController()
 {
 	AgentBlackBoardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("AgentBlackBoardComponent"));
 	AgentBehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("AgentBehaviorTreeComponent"));
-	
-	LocationToGoKey = "LocationToGo";
-	CurrentLocationTarget = 0;
 }
 void AAgentController::Possess(APawn * Value)
 {
@@ -27,8 +24,6 @@ void AAgentController::Possess(APawn * Value)
 		{
 			AgentBlackBoardComponent->InitializeBlackboard(*(Agent->GetBehaviorTree()->BlackboardAsset));
 		}
-
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(),ATargetPoint::StaticClass(),LocationTargets);
 		AgentBehaviorTreeComponent->StartTree(*Agent->GetBehaviorTree());
 	}
 	
