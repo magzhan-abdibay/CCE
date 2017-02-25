@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UE4", "Intermediate\Project
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCE", "Intermediate\ProjectFiles\CCE.vcxproj", "{1238C453-B028-446A-BA9B-5F6BEAB59F1C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NEAT", "NEAT\NEAT.vcxproj", "{A63FC2F4-49D0-439E-927C-CE1B9E588D96}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NEAT", "Source\CCE\NEAT\NEAT.vcxproj", "{A63FC2F4-49D0-439E-927C-CE1B9E588D96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -235,8 +235,7 @@ Global
 		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|HTML5.ActiveCfg = Release|Win32
 		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|Win32.ActiveCfg = Release|Win32
 		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|Win32.Build.0 = Release|Win32
-		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|Win64.ActiveCfg = Debug|Win32
-		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|Win64.Build.0 = Debug|Win32
+		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|Win64.ActiveCfg = Release|Win32
 		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|x64.ActiveCfg = Release|x64
 		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Release|x64.Build.0 = Release|x64
 		{A63FC2F4-49D0-439E-927C-CE1B9E588D96}.Shipping|Android.ActiveCfg = Release|x64
