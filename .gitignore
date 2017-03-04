@@ -24,6 +24,9 @@ Binaries/*
 # Builds
 Build/*
 
+#VC realease
+Release/*
+
 # StarterContent
 Content/StarterContent/*
 
@@ -36,7 +39,7 @@ Saved/*
 # Compiled source files for the engine to use
 Intermediate/*
 #Unignore Visual Studio projects
-!Intermediate/ProjectFiles/ 
+!Intermediate/ProjectFiles/
 
 # Cache files for the editor to use
 DerivedDataCache/*
