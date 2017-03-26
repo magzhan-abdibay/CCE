@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 	p = pole2TestRealTime();
 	if (p)
 		delete p;
-
+	getchar();
 	return 0;
 }
 

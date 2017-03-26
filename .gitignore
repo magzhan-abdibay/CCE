@@ -23,6 +23,7 @@ Binaries/*
 
 # Builds
 Build/*
+x64/*
 
 #VC realease
 Release/*
