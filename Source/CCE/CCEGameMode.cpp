@@ -4,8 +4,9 @@
 #include "CCEGameMode.h"
 #include "SpectatorCamera.h"
 #include <ctime>
+#include "Agent.h"
 
 ACCEGameMode::ACCEGameMode()
 {
-	DefaultPawnClass = ASpectatorCamera::StaticClass();
+	DefaultPawnClass = AAgent::StaticClass();
 }
