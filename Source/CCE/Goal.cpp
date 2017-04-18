@@ -1,5 +1,6 @@
 #include "CCE.h"
 #include "Goal.h"
+#include "Ball.h"
 
 AGoal::AGoal()
 {
@@ -31,12 +32,16 @@ void AGoal::Tick( float DeltaTime )
 
 void AGoal::TriggerEnter(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	light->SetLightColor(FColor::Green);
+	if (OtherActor->IsA(ABall::StaticClass())) {
+		light->SetLightColor(FColor::Green);
+	}
 }
 
 void AGoal::TriggerExit(class UPrimitiveComponent* HitComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	light->SetLightColor(FColor::Yellow);
+	if (OtherActor->IsA(ABall::StaticClass())) {
+		light->SetLightColor(FColor::Yellow);
+	}
 }
 
 

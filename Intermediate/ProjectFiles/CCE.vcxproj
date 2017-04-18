@@ -603,7 +603,9 @@
     <ClCompile Include="..\..\Source\CCE\AgentController.cpp" />
     <ClInclude Include="..\..\Source\CCE\AgentController.h" />
     <None Include="..\..\Source\CCE\CCE.Build.cs" />
+    <ClCompile Include="..\..\Source\CCE\Ball.cpp" />
     <ClCompile Include="..\..\Source\CCE\CCE.cpp" />
+    <ClInclude Include="..\..\Source\CCE\Ball.h" />
     <ClInclude Include="..\..\Source\CCE\CCE.h" />
     <ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp" />
     <ClInclude Include="..\..\Source\CCE\CCEGameMode.h" />
