@@ -10,6 +10,8 @@ class ACCEGameMode : public AGameMode
 
 public:
 	ACCEGameMode();
+	//virtual void Tick(float DeltaTime) override;
+
 };
 
 

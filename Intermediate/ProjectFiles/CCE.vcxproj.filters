@@ -1,11 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <None Include="..\..\CCE.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{63D4C915-DCFD-482D-80F1-BEE9B9E1097F}</UniqueIdentifier>
+      <UniqueIdentifier>{10516EBD-0B97-47FC-B4D9-1439CE5B9D7A}</UniqueIdentifier>
     </Filter>
+    <None Include="..\..\Source\CCE.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\CCEEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{07C71428-4BBB-4F23-A548-11780084A164}</UniqueIdentifier>
+      <UniqueIdentifier>{17B1FB79-05E5-4ADA-9D7E-B83BDE3775F8}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -23,7 +30,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\CCE">
-      <UniqueIdentifier>{8A116305-D711-49A6-A086-69257644D1D5}</UniqueIdentifier>
+      <UniqueIdentifier>{5B54B7A1-EF61-4FEA-8AE5-151BE8D8DCB7}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\CCE\Agent.cpp">
       <Filter>Source\CCE</Filter>
@@ -37,6 +44,9 @@
     <ClInclude Include="..\..\Source\CCE\AgentController.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
+    <None Include="..\..\Source\CCE\CCE.Build.cs">
+      <Filter>Source\CCE</Filter>
+    </None>
     <ClCompile Include="..\..\Source\CCE\CCE.cpp">
       <Filter>Source\CCE</Filter>
     </ClCompile>
@@ -67,24 +77,963 @@
     <ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
-    <None Include="..\..\Source\CCE.Target.cs">
-      <Filter>Source\BuildStuff</Filter>
-    </None>
-    <None Include="..\..\Source\CCEEditor.Target.cs">
-      <Filter>Source\BuildStuff</Filter>
-    </None>
-    <None Include="..\..\Source\CCE\CCE.Build.cs">
-      <Filter>Source\BuildStuff</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Source\BuildStuff">
-      <UniqueIdentifier>{521b6af0-0fe0-4e44-942f-28d4dd12f2c9}</UniqueIdentifier>
+    <Filter Include="Source\CCE\NEAT">
+      <UniqueIdentifier>{D3B19B23-C638-4B63-938B-1FC97B5CD11B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CCE\NEAT\.git">
+      <UniqueIdentifier>{3E605ED1-F49F-406A-94B0-92BCD4C7EF04}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\COMMIT_EDITMSG">
+      <Filter>Source\CCE\NEAT\.git</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\config">
+      <Filter>Source\CCE\NEAT\.git</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\description">
+      <Filter>Source\CCE\NEAT\.git</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\HEAD">
+      <Filter>Source\CCE\NEAT\.git</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\index">
+      <Filter>Source\CCE\NEAT\.git</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\ORIG_HEAD">
+      <Filter>Source\CCE\NEAT\.git</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\packed-refs">
+      <Filter>Source\CCE\NEAT\.git</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\hooks">
+      <UniqueIdentifier>{499616BF-98CA-4975-A0A8-4EAF18A2A07F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\applypatch-msg.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\commit-msg.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\post-update.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\pre-applypatch.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\pre-commit.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\pre-push.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\pre-rebase.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\pre-receive.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\prepare-commit-msg.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\hooks\update.sample">
+      <Filter>Source\CCE\NEAT\.git\hooks</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\info">
+      <UniqueIdentifier>{C6B6F2A5-3B91-4572-9BBA-1CC95D579FD3}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\info\exclude">
+      <Filter>Source\CCE\NEAT\.git\info</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\logs">
+      <UniqueIdentifier>{5A9C9E49-7186-46F2-9A55-6D58FF3D80CF}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\logs\HEAD">
+      <Filter>Source\CCE\NEAT\.git\logs</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\logs\refs">
+      <UniqueIdentifier>{FC9E183F-64E5-4815-BDFC-0013A481731C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CCE\NEAT\.git\logs\refs\heads">
+      <UniqueIdentifier>{45D840DB-AB71-4D2F-83D8-77A1C44FCCAA}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\logs\refs\heads\master">
+      <Filter>Source\CCE\NEAT\.git\logs\refs\heads</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\logs\refs\remotes">
+      <UniqueIdentifier>{98A4601B-2305-4623-9C12-15561143C4A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CCE\NEAT\.git\logs\refs\remotes\origin">
+      <UniqueIdentifier>{11BE0CB5-99D2-480D-AB89-942DEED94704}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\logs\refs\remotes\origin\HEAD">
+      <Filter>Source\CCE\NEAT\.git\logs\refs\remotes\origin</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\logs\refs\remotes\origin\master">
+      <Filter>Source\CCE\NEAT\.git\logs\refs\remotes\origin</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects">
+      <UniqueIdentifier>{A94B914D-E649-49F2-9C80-EB927981050D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CCE\NEAT\.git\objects\00">
+      <UniqueIdentifier>{6DA2F20E-AD2C-40CD-B22A-68D24735AD27}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\00\bef3f83b067d92c6460d251ddf3fb589364b43">
+      <Filter>Source\CCE\NEAT\.git\objects\00</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\05">
+      <UniqueIdentifier>{78BEA5D8-53E3-48A1-A3AB-8A5992A08CA6}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\05\58743b42097349cae303742d44ba4edc584fe9">
+      <Filter>Source\CCE\NEAT\.git\objects\05</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\06">
+      <UniqueIdentifier>{CB362B44-FC87-4C63-A9DE-F06D58E207E8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\06\3d471bca823ea39f9b7529515df5fd36409e83">
+      <Filter>Source\CCE\NEAT\.git\objects\06</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\08">
+      <UniqueIdentifier>{9FDDD929-B6AB-4BD3-B19A-01E9BFE21217}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\08\3ee7cdbf8c1ea488a4400789c265aced00a72c">
+      <Filter>Source\CCE\NEAT\.git\objects\08</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\09">
+      <UniqueIdentifier>{6CF07F47-2188-4F11-8022-44AC7842248B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\09\f5d26e77c99634297ce5250ef0d75809595d94">
+      <Filter>Source\CCE\NEAT\.git\objects\09</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\0a">
+      <UniqueIdentifier>{44C6C812-69E5-41C9-AA6E-881D4993DF1F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\0a\6fd037746a12fab9cc520d2742cea3730a1233">
+      <Filter>Source\CCE\NEAT\.git\objects\0a</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\0a\838d66423ffc336c8fde8a75d9a6311897be83">
+      <Filter>Source\CCE\NEAT\.git\objects\0a</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\0f">
+      <UniqueIdentifier>{FDFEB0EA-AACC-45BD-A39A-23518A9706FE}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\0f\9912db988484abc3f8bcbde41374a7375b8399">
+      <Filter>Source\CCE\NEAT\.git\objects\0f</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\12">
+      <UniqueIdentifier>{E61D670D-F9D1-427D-9A9D-CC3F5C5B3E80}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\12\f795e926cee966e1735872e2fdb564f506bd26">
+      <Filter>Source\CCE\NEAT\.git\objects\12</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\13">
+      <UniqueIdentifier>{3E433FC0-FCA0-4080-81D6-4D81F717FB96}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\13\989c1c7d1be8e178860cf75c0b97b48fca6780">
+      <Filter>Source\CCE\NEAT\.git\objects\13</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\15">
+      <UniqueIdentifier>{73DE9751-DD41-4A7C-80A7-F08977E85335}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\15\39f701261d311a0a764278c8139ce963d1a74b">
+      <Filter>Source\CCE\NEAT\.git\objects\15</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\17">
+      <UniqueIdentifier>{5ACBB408-3AFF-4776-8CF8-CD3F7E8C19BC}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\17\17dd43bd9013d2836dc022a764225305385626">
+      <Filter>Source\CCE\NEAT\.git\objects\17</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\18">
+      <UniqueIdentifier>{9363DD81-F20F-41F2-B101-C5028FE9ACA7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\18\a4c74085b44033407e7a42cf91a6c100a44c00">
+      <Filter>Source\CCE\NEAT\.git\objects\18</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\18\b629a0464c2ee560760ad171a9e453d16cd1d9">
+      <Filter>Source\CCE\NEAT\.git\objects\18</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\23">
+      <UniqueIdentifier>{FEEFFAB2-EED7-4688-B859-7F76C98112ED}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\23\432d6a12ea14eafff24ac8bc5ce91ea67dd8bd">
+      <Filter>Source\CCE\NEAT\.git\objects\23</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\23\f29b792e87479aa1bdffd2567e9482759032da">
+      <Filter>Source\CCE\NEAT\.git\objects\23</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\25">
+      <UniqueIdentifier>{7BC7E9CA-10F0-4225-8607-7ADF9C33A45C}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\25\7abfbdeeaf741163535efd26bd6523bcfa1d81">
+      <Filter>Source\CCE\NEAT\.git\objects\25</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\25\f8711014c93202de38f096e2b06fc410c3447b">
+      <Filter>Source\CCE\NEAT\.git\objects\25</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\28">
+      <UniqueIdentifier>{D5D82F5D-03B7-4C0E-8488-F24F2635753B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\28\2912ea770078b993c6f51a7356b9936b2ad2e9">
+      <Filter>Source\CCE\NEAT\.git\objects\28</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\28\a3901f080dc33c39e0bed1146f61ca93fc671c">
+      <Filter>Source\CCE\NEAT\.git\objects\28</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\29">
+      <UniqueIdentifier>{DB1E5028-DE52-4E76-B4A7-7A3688D83EB8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\29\b7ecc5b1032b6496cca0b6d0e781af094bdcab">
+      <Filter>Source\CCE\NEAT\.git\objects\29</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\29\d0a080ae655ae02515e6e4314ef37706a96be1">
+      <Filter>Source\CCE\NEAT\.git\objects\29</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\2b">
+      <UniqueIdentifier>{8D1EC57A-B42C-40CD-8124-6175336DFA01}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\2b\922929f31d594d9384d562b5b0f6c179a1c7b8">
+      <Filter>Source\CCE\NEAT\.git\objects\2b</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\2d">
+      <UniqueIdentifier>{FBC6BF34-ADE2-4737-8B40-5D71CF7DA189}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\2d\7237647ae55a11666920242bed52c552543d78">
+      <Filter>Source\CCE\NEAT\.git\objects\2d</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\2d\8030cca805b13503a08eab0a85e162f889d360">
+      <Filter>Source\CCE\NEAT\.git\objects\2d</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\2e">
+      <UniqueIdentifier>{A6374EF0-B2CD-4AAF-B295-D5C524849385}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\2e\226b28e461c9e87c1d2789507f40a9ce8004a2">
+      <Filter>Source\CCE\NEAT\.git\objects\2e</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\2e\91be0fb95305c83be54dbf0401352d58793c04">
+      <Filter>Source\CCE\NEAT\.git\objects\2e</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\2f">
+      <UniqueIdentifier>{C7B92FD3-4639-4F11-A471-D0593DB5D08C}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\2f\30501c2f99831fb3a970c1cd0a7e9b74c51b79">
+      <Filter>Source\CCE\NEAT\.git\objects\2f</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\2f\c1ef0b9e5fc1a7d5ef6dd6026158aa8c8ba036">
+      <Filter>Source\CCE\NEAT\.git\objects\2f</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\34">
+      <UniqueIdentifier>{F1826BAB-C877-49A2-AD41-747B4E9EC33D}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\34\117b1e6e7972d75ff12bf5d0a02adcbfa91058">
+      <Filter>Source\CCE\NEAT\.git\objects\34</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\34\85c675389ca0587a1f01b2f0f3ff981e015213">
+      <Filter>Source\CCE\NEAT\.git\objects\34</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\38">
+      <UniqueIdentifier>{24C60B30-6B8A-4E0B-B757-B1332E52366B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\38\8196c05609ca83a0a0ea5c50046a143f31c168">
+      <Filter>Source\CCE\NEAT\.git\objects\38</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\3c">
+      <UniqueIdentifier>{6A8341CF-7511-458D-BACB-381DFAD7EACA}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\3c\596bd1dbf7d57c273d8a8c0c9e90d0b9b96596">
+      <Filter>Source\CCE\NEAT\.git\objects\3c</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\3c\9846cc016bfcba49dd9f10273c518921c3d6b0">
+      <Filter>Source\CCE\NEAT\.git\objects\3c</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\3d">
+      <UniqueIdentifier>{EE2BE490-6837-4970-8557-8537C8C3D215}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\3d\8e34a21cf3247b35be060a6184dd2e6fd6370a">
+      <Filter>Source\CCE\NEAT\.git\objects\3d</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\43">
+      <UniqueIdentifier>{A5E6A285-C3F0-4BEC-A45D-490E519A2607}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\43\6c43309f6f1d37fc4bc065195d9cb9326ad35d">
+      <Filter>Source\CCE\NEAT\.git\objects\43</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\44">
+      <UniqueIdentifier>{B24F7727-D27E-4EE9-B15F-EF9F039346A9}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\44\afe57e6a458e606cba0b58db33d8ebb1d981ed">
+      <Filter>Source\CCE\NEAT\.git\objects\44</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\45">
+      <UniqueIdentifier>{D1E78631-B890-458D-AF71-2BD502AE2C60}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\45\37a7c9ace7b7870186f4cc5530797dae5beee6">
+      <Filter>Source\CCE\NEAT\.git\objects\45</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\46">
+      <UniqueIdentifier>{8636D4F9-BE4F-45CE-A1F8-E2C107F7DEB7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\46\67b4cec84199910d42e25a4646b91f05e37480">
+      <Filter>Source\CCE\NEAT\.git\objects\46</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\48">
+      <UniqueIdentifier>{33ADD1E2-932F-4EC7-BCE2-17DEB2E1F772}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\48\6a158802660a6e18c4aef8334f0818171cc931">
+      <Filter>Source\CCE\NEAT\.git\objects\48</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\49">
+      <UniqueIdentifier>{5DB69D4A-2995-4A9D-9B46-FED347B30DE5}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\49\e80f87cd14a8afa748cbcf07ea3caf780f4d5b">
+      <Filter>Source\CCE\NEAT\.git\objects\49</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\4a">
+      <UniqueIdentifier>{FA9F802B-C700-4BEA-943B-204E145276C9}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4a\a9d9a58cd35cd1c11e693649513f8c12d11c4f">
+      <Filter>Source\CCE\NEAT\.git\objects\4a</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4a\eae1ea91f4c567ac569b1221671a2f6293cf91">
+      <Filter>Source\CCE\NEAT\.git\objects\4a</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\4c">
+      <UniqueIdentifier>{7AAF10B6-7AD1-48A1-9531-BEE42821B338}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4c\ad5016a0ceffd3072babe6d9dbc2649b99407c">
+      <Filter>Source\CCE\NEAT\.git\objects\4c</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4c\df0727a28bad0722f243eda454bbf7401b67ce">
+      <Filter>Source\CCE\NEAT\.git\objects\4c</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\4e">
+      <UniqueIdentifier>{207DEC8D-DA6A-4833-B053-4A4A8C646106}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4e\23c6956f4069a946eb892662d2c1910beb3d06">
+      <Filter>Source\CCE\NEAT\.git\objects\4e</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\4f">
+      <UniqueIdentifier>{5BFEDA4F-04C1-474C-B6B7-B2D1EF5D5484}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4f\1421ff36ceacae3e05a535d4963a45cc64e2c1">
+      <Filter>Source\CCE\NEAT\.git\objects\4f</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4f\278e0c1f68f13f0bea1573fa7a817a9c351b6d">
+      <Filter>Source\CCE\NEAT\.git\objects\4f</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4f\2aa248f7cf4d64d46c873ca3486c650d2e1f91">
+      <Filter>Source\CCE\NEAT\.git\objects\4f</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4f\95529a470c15dc974eab363c6542461290a8ba">
+      <Filter>Source\CCE\NEAT\.git\objects\4f</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\4f\a7c9378cb94ea484dfb40e7cd12a61e91888d2">
+      <Filter>Source\CCE\NEAT\.git\objects\4f</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\50">
+      <UniqueIdentifier>{6BAD0A74-6F6D-47EF-A6AF-CA2A1B475A42}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\50\4ce6de66fa0b4a767b5c2055c4bd9243804049">
+      <Filter>Source\CCE\NEAT\.git\objects\50</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\51">
+      <UniqueIdentifier>{9EA5E1D8-F540-40DF-8F12-18E36E73871F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\51\452802087c227d9e7fb7320b605dc510362353">
+      <Filter>Source\CCE\NEAT\.git\objects\51</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\51\97b6cfd9509210af8c61b4d646cc884df097ac">
+      <Filter>Source\CCE\NEAT\.git\objects\51</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\51\bcb6d6c587bad7f7acba8223a68856cd7d4ee3">
+      <Filter>Source\CCE\NEAT\.git\objects\51</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\52">
+      <UniqueIdentifier>{DC7E4536-FECD-4D47-8A52-B8ACF810A855}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\52\4fb2958899f99da8ed284391408b9f0c493b84">
+      <Filter>Source\CCE\NEAT\.git\objects\52</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\53">
+      <UniqueIdentifier>{61C16044-9F2A-406B-87AA-59735702F467}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\53\91da3a11ff099c0c1a3b43afa280c2f9c18633">
+      <Filter>Source\CCE\NEAT\.git\objects\53</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\55">
+      <UniqueIdentifier>{23D77C28-1B6D-4F32-B545-7D5B05940433}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\55\2bb528e8a509dacd661569b9092668b0b52cff">
+      <Filter>Source\CCE\NEAT\.git\objects\55</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\58">
+      <UniqueIdentifier>{AFFC0417-7CA6-46A1-BBE2-01FE2A0D8728}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\58\ad3d2e89763dc3b181731cab569c0874e3f247">
+      <Filter>Source\CCE\NEAT\.git\objects\58</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\58\e2d98c2b8014b93f32777565235633421ffd00">
+      <Filter>Source\CCE\NEAT\.git\objects\58</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\5b">
+      <UniqueIdentifier>{A3418222-9B9E-45F3-9C8B-858D798483E3}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\5b\0645d7f0d75cb865e989f6163d0685cc4807e5">
+      <Filter>Source\CCE\NEAT\.git\objects\5b</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\5b\f7f6d977410161d0822e28a2e4c5608b4ea034">
+      <Filter>Source\CCE\NEAT\.git\objects\5b</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\5e">
+      <UniqueIdentifier>{6B558EE6-2716-4626-BC8F-5794A3965298}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\5e\45ab295ab030b7348a76dc64a678b9703c67f4">
+      <Filter>Source\CCE\NEAT\.git\objects\5e</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\60">
+      <UniqueIdentifier>{41A02097-A847-4942-A29F-F4F0C873C787}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\60\e4064d0986631516d76b47eb80061d74c53963">
+      <Filter>Source\CCE\NEAT\.git\objects\60</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\64">
+      <UniqueIdentifier>{4F535817-4259-4972-8FCF-C69F7047BED6}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\64\9a72bf2d3290e40f49e2100ba5585d6ff80649">
+      <Filter>Source\CCE\NEAT\.git\objects\64</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\65">
+      <UniqueIdentifier>{C0DD260B-B894-4E2D-8C3C-46769477E4AA}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\65\c4f04016988ca4f93c4b3da24b70d87d1b458e">
+      <Filter>Source\CCE\NEAT\.git\objects\65</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\66">
+      <UniqueIdentifier>{3624CE29-878E-4A0C-B725-09E46A02EC98}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\66\20e64762bc1c79da5a48dbe15aae39713b16c4">
+      <Filter>Source\CCE\NEAT\.git\objects\66</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\66\939bce36e9f140167d87df1d74053af4defc13">
+      <Filter>Source\CCE\NEAT\.git\objects\66</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\67">
+      <UniqueIdentifier>{C71DA0E0-46B9-48BD-9277-24D3E681ECE5}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\67\6ed01f78bb809a6a56b4da7bd408d2dc75a6e6">
+      <Filter>Source\CCE\NEAT\.git\objects\67</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\6b">
+      <UniqueIdentifier>{8026B111-26E9-4EEA-AA2C-9F3D7B749F0E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\6b\a6ffd786362d662b5ebd40cd3830a78a8d12b3">
+      <Filter>Source\CCE\NEAT\.git\objects\6b</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\6d">
+      <UniqueIdentifier>{7EB3BEC6-4FF1-42C1-B74D-37D3ED466B26}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\6d\ed78e626f4a992e2d9bd2ab3733739c385995f">
+      <Filter>Source\CCE\NEAT\.git\objects\6d</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\6e">
+      <UniqueIdentifier>{8CDE00C3-C70C-425B-99DC-3BE8207D7D48}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\6e\59409f4ff206a09ca36a4a825abb80a2e454e8">
+      <Filter>Source\CCE\NEAT\.git\objects\6e</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\6e\89fc255454a87c5b01463e1a63ee6594d19da8">
+      <Filter>Source\CCE\NEAT\.git\objects\6e</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\6e\fdb8d9849a957d50d76c5c834f34dbdd40440a">
+      <Filter>Source\CCE\NEAT\.git\objects\6e</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\70">
+      <UniqueIdentifier>{8A1A8DCC-AF76-4789-85A4-346DC6E86D4D}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\70\063433126768df973153219ec7d4aa28a4503a">
+      <Filter>Source\CCE\NEAT\.git\objects\70</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\72">
+      <UniqueIdentifier>{BF836FB2-C930-4A4E-9971-169230E6C40E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\72\eec21c72e0326186d5343b9490b59603a82263">
+      <Filter>Source\CCE\NEAT\.git\objects\72</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\75">
+      <UniqueIdentifier>{837653FD-73AB-4407-B0DC-35B1B0359089}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\75\90f3d650831159241423bfbea6a1a97930fe33">
+      <Filter>Source\CCE\NEAT\.git\objects\75</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\75\f565c8a46fb1e3bebdf964f6b10573e037cb8b">
+      <Filter>Source\CCE\NEAT\.git\objects\75</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\76">
+      <UniqueIdentifier>{CFAD2940-5D4F-4157-A27C-831707B0AEFE}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\76\93d784b2775c0d1278cba903666fc308291a9f">
+      <Filter>Source\CCE\NEAT\.git\objects\76</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\77">
+      <UniqueIdentifier>{ED8FC8F0-1486-47A4-B316-8B9BA892409A}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\77\fd763a0d574db53174626ca5b46e1214f11921">
+      <Filter>Source\CCE\NEAT\.git\objects\77</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\78">
+      <UniqueIdentifier>{E61ABBA9-246A-48B9-A4B1-254091A821D3}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\78\05f28a22216ddd01b9184796c274687af0dfe2">
+      <Filter>Source\CCE\NEAT\.git\objects\78</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\78\cd3c36bbf0344c2eaad664be1a11235e2b81a6">
+      <Filter>Source\CCE\NEAT\.git\objects\78</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\7b">
+      <UniqueIdentifier>{CE580F2F-7ECE-4C2A-9DA2-628E1D9CE319}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\7b\d29725fcf1f210407cc28893c3fa7dd8e5fd67">
+      <Filter>Source\CCE\NEAT\.git\objects\7b</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\7e">
+      <UniqueIdentifier>{E1323197-348D-4965-8BCA-A00D631B1218}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\7e\e37c0d552466b2096c5ad77687a6776560c2cb">
+      <Filter>Source\CCE\NEAT\.git\objects\7e</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\87">
+      <UniqueIdentifier>{CE572209-A1FE-4D31-B950-D4759E99C6F6}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\87\c0086de751bac3d47208b77d76b82d78f26702">
+      <Filter>Source\CCE\NEAT\.git\objects\87</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\89">
+      <UniqueIdentifier>{35BE9C88-55A7-4706-812D-5993087C38B0}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\89\e1b1b741f0e178a6833ac9c18313c47cc97ba8">
+      <Filter>Source\CCE\NEAT\.git\objects\89</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\8a">
+      <UniqueIdentifier>{25AF0C13-9458-4984-A1FE-67905AB8A818}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\8a\bf07c8cf941739570f337482ae604129a7e10e">
+      <Filter>Source\CCE\NEAT\.git\objects\8a</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\8c">
+      <UniqueIdentifier>{52720CA1-DE86-4E7D-AB83-610AF2674BB2}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\8c\c759e451f2c9fad600952f3d718c4f9079fb1d">
+      <Filter>Source\CCE\NEAT\.git\objects\8c</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\8d">
+      <UniqueIdentifier>{B8B67432-6AA3-422F-85FE-632B0336F771}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\8d\20d72065b63e648bbd5d48a38d4e660a85a1ce">
+      <Filter>Source\CCE\NEAT\.git\objects\8d</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\8d\d7e21c0e14f65a20f25b09fdf71fba221bd09c">
+      <Filter>Source\CCE\NEAT\.git\objects\8d</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\8d\e82311a6e29d5f7dcc7834b8d36cd94d5a3be9">
+      <Filter>Source\CCE\NEAT\.git\objects\8d</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\8f">
+      <UniqueIdentifier>{03251D38-5789-413C-9B07-FDDE8EED8757}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\8f\7aaaf0e5ac4fa3aff49a4974829a8fb74fae7c">
+      <Filter>Source\CCE\NEAT\.git\objects\8f</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\91">
+      <UniqueIdentifier>{A2D5C44F-D26E-4464-A5FC-A4737DE9E56F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\91\9a9ec2318061f408ea4f93c86eeb755bdee825">
+      <Filter>Source\CCE\NEAT\.git\objects\91</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\96">
+      <UniqueIdentifier>{F2B03BAC-46EF-4604-8C4E-93BE2BD15ABF}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\96\bb65ed827452ec29c24d15efeb4e8ecf198aa4">
+      <Filter>Source\CCE\NEAT\.git\objects\96</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\97">
+      <UniqueIdentifier>{0F8BBE9E-FAA5-41BA-B91D-20F804C07A26}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\97\2fa748e93c7ea7fa6631e9e9a31b13e66537ad">
+      <Filter>Source\CCE\NEAT\.git\objects\97</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\98">
+      <UniqueIdentifier>{39BFC984-CD46-48F6-B9FE-0044D5030DF9}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\98\09a1b90fc2dc5064469ba5a2df2d8ba95be2a1">
+      <Filter>Source\CCE\NEAT\.git\objects\98</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\9e">
+      <UniqueIdentifier>{22210CD0-1C5C-4121-AFF8-B4A0AD17AF42}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\9e\9c99501a15b4554f99449914dce3b63bdf0457">
+      <Filter>Source\CCE\NEAT\.git\objects\9e</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\a0">
+      <UniqueIdentifier>{B0905229-56E7-4778-824F-7E62E7BDFF7D}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a0\f74227b6fc73388cfa4baaaec895218f6a390f">
+      <Filter>Source\CCE\NEAT\.git\objects\a0</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\a2">
+      <UniqueIdentifier>{B94AD044-5710-49AC-A788-4D0CFDF0D621}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a2\5f3208896d5421876c30e0982f0cd4eba9354a">
+      <Filter>Source\CCE\NEAT\.git\objects\a2</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a2\ed3c161954eabb72b3ea3265ab7beb0a72bb64">
+      <Filter>Source\CCE\NEAT\.git\objects\a2</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\a5">
+      <UniqueIdentifier>{46078E71-6316-4E7F-9B83-463A79C973C7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a5\0cb67d020073f51935fdc5f0d3ed7e924466d3">
+      <Filter>Source\CCE\NEAT\.git\objects\a5</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\a7">
+      <UniqueIdentifier>{6841025E-B118-4599-B1C3-C1612C4A04F9}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a7\15a7464b0c2504dafee9ca4cd80a0879d23e63">
+      <Filter>Source\CCE\NEAT\.git\objects\a7</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a7\20d141efb762624f565025beacfb331f757ee3">
+      <Filter>Source\CCE\NEAT\.git\objects\a7</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\a8">
+      <UniqueIdentifier>{1AD68E4E-3B2C-4731-8F20-66153379EDCE}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a8\175cc0d4006883055124b4b391b685dd2f7da2">
+      <Filter>Source\CCE\NEAT\.git\objects\a8</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\a9">
+      <UniqueIdentifier>{CC40AE6C-FCB6-44E1-BC66-70BDAA700FC9}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\a9\a46e8c945fa698b68f68a841edd626a622dc4f">
+      <Filter>Source\CCE\NEAT\.git\objects\a9</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\ad">
+      <UniqueIdentifier>{4E07A830-93AA-4A6A-B616-3336BDB6B910}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ad\68dd2971c182b3f040fafa57192fb09477440f">
+      <Filter>Source\CCE\NEAT\.git\objects\ad</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ad\b74d7cbf8ebd07f722d4c6794472488e04e152">
+      <Filter>Source\CCE\NEAT\.git\objects\ad</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\af">
+      <UniqueIdentifier>{9A2812E9-EA86-47C8-B1BF-5FBE5B30BF31}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\af\5d6e9e07985da960e8b4fe8d7cffa316bfecb5">
+      <Filter>Source\CCE\NEAT\.git\objects\af</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\b4">
+      <UniqueIdentifier>{B5EF613C-D4AE-4CEA-AD15-70A1723F835A}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\b4\486f841291bd8662072aa4054d25972f3195f7">
+      <Filter>Source\CCE\NEAT\.git\objects\b4</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\b5">
+      <UniqueIdentifier>{CFAF910A-101D-429C-8753-5C64FEC37083}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\b5\9b684bc4dd149998062589682562905ac4e19d">
+      <Filter>Source\CCE\NEAT\.git\objects\b5</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\b6">
+      <UniqueIdentifier>{F02361DB-7FD3-4C3C-8DAD-E59C2C7577A4}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\b6\189097e41e6e22ec124e1fd264225913c2811d">
+      <Filter>Source\CCE\NEAT\.git\objects\b6</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\b9">
+      <UniqueIdentifier>{51BB8033-79A3-4773-A476-025EDCFF38C3}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\b9\3523ec96054c77d4a4eb8598bd7be1c0e8a1da">
+      <Filter>Source\CCE\NEAT\.git\objects\b9</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\b9\f5ca42eabfdb993d2edc00283f25e1f24906ae">
+      <Filter>Source\CCE\NEAT\.git\objects\b9</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\bc">
+      <UniqueIdentifier>{97D9DDFE-0C7F-489A-A23D-AD044266BA6B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\bc\0954df32f2f6d1b7a19d94ae76c79a4c7348c1">
+      <Filter>Source\CCE\NEAT\.git\objects\bc</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\bc\4ac348fc2f9349a45af9dbff413cee7d13b1be">
+      <Filter>Source\CCE\NEAT\.git\objects\bc</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\bd">
+      <UniqueIdentifier>{FCCE704F-2563-441F-8227-80D9AA4196B5}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\bd\fa768268ef1c500541863e8119ddc63756f010">
+      <Filter>Source\CCE\NEAT\.git\objects\bd</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\be">
+      <UniqueIdentifier>{4587D868-4CE1-4D9B-AE4A-E544B9227253}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\be\9daaedd8834b97943a2f140dc822d8b2ed6fb4">
+      <Filter>Source\CCE\NEAT\.git\objects\be</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\c0">
+      <UniqueIdentifier>{C0A4170B-4CC8-4C6B-94E9-D8FAE86E1D69}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\c0\af434cbe9a499e2e71b1d1d601e82fe0a6b686">
+      <Filter>Source\CCE\NEAT\.git\objects\c0</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\c2">
+      <UniqueIdentifier>{9CDF9306-EEB7-4662-8C2F-9B56DC3F966E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\c2\9ac8c6762e8ae1706061025cc555f56745c89e">
+      <Filter>Source\CCE\NEAT\.git\objects\c2</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\c2\e4f93d65c9990b06ac555e3d90b9fcbf7e5a2a">
+      <Filter>Source\CCE\NEAT\.git\objects\c2</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\c3">
+      <UniqueIdentifier>{7B318E10-1613-4C9E-87F9-AEE268A6AEFE}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\c3\848b08e38d0e65c0ca9eee92014d1702e7d7c9">
+      <Filter>Source\CCE\NEAT\.git\objects\c3</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\c7">
+      <UniqueIdentifier>{F5DC175E-E449-4DC8-BBF2-84E1713E3AF8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\c7\2b0fbe3d2cc0a352b40eb82fab2d9908cc59a3">
+      <Filter>Source\CCE\NEAT\.git\objects\c7</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\cb">
+      <UniqueIdentifier>{C7E95EFF-F5DC-4E28-AE2F-06FDA6F8392A}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\cb\9293080014f68cf41dfc2dcb54edcd9637b408">
+      <Filter>Source\CCE\NEAT\.git\objects\cb</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\cc">
+      <UniqueIdentifier>{F8F83FA2-DA7F-4091-8AAE-3D13DCD28268}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\cc\1c911ede23cb2ec254bfb39230cff6c9f8f663">
+      <Filter>Source\CCE\NEAT\.git\objects\cc</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\cc\3143c25952765b4a9c8afa18e3f12677643e7e">
+      <Filter>Source\CCE\NEAT\.git\objects\cc</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\cd">
+      <UniqueIdentifier>{C2AD3901-F378-4D4F-B1BC-7216CDF90B36}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\cd\d1bd745a62b77523e8894df467ba6b8da59ab3">
+      <Filter>Source\CCE\NEAT\.git\objects\cd</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\cf">
+      <UniqueIdentifier>{C2071370-8A5F-4386-8A40-D814BC14D603}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\cf\31b77aa313c9e1a6231b301ef9fce6837fe707">
+      <Filter>Source\CCE\NEAT\.git\objects\cf</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\d0">
+      <UniqueIdentifier>{AE281EB8-8D98-43BD-8BA0-7068ECF5BA31}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d0\32a858e8fb8e0ae0624d516f2be8e0b1110e01">
+      <Filter>Source\CCE\NEAT\.git\objects\d0</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d0\d9b4190a10b84e4772218fc6781f5874fb15f0">
+      <Filter>Source\CCE\NEAT\.git\objects\d0</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\d2">
+      <UniqueIdentifier>{5C1A9333-8899-47E3-B5D6-E18526731DA7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d2\5fdf975682cbb3b9a0cd83facb794bff29313f">
+      <Filter>Source\CCE\NEAT\.git\objects\d2</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d2\c4a8f3fecda3e0ecdc8134add836acf357aa6d">
+      <Filter>Source\CCE\NEAT\.git\objects\d2</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\d4">
+      <UniqueIdentifier>{D729B4C0-20E7-44E9-B11C-5AC8B88DDC63}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d4\cbadc9f86b2bc00c2d1a49d38e3b6b087f59a8">
+      <Filter>Source\CCE\NEAT\.git\objects\d4</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\d7">
+      <UniqueIdentifier>{072FF6BA-48A3-4FDD-BBB6-30FCC76EAA27}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d7\c69a53834217dc4405e974ba0613ef3c799108">
+      <Filter>Source\CCE\NEAT\.git\objects\d7</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\d8">
+      <UniqueIdentifier>{7D9A726F-9D94-4606-B863-48D4E1D98007}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d8\3a8aaa9ef23f17b09a1cbbe809e19549e8e23b">
+      <Filter>Source\CCE\NEAT\.git\objects\d8</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d8\3ab732d70c46a1dae18f20eef75f9658987124">
+      <Filter>Source\CCE\NEAT\.git\objects\d8</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d8\edbbd43ac30d5aa35c708e77fa1265b46791a2">
+      <Filter>Source\CCE\NEAT\.git\objects\d8</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\d9">
+      <UniqueIdentifier>{BE096946-563C-4D0A-873D-53F16A0D4426}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\d9\2e65f8261d7c4812dd487b5d84d06d42f0f54d">
+      <Filter>Source\CCE\NEAT\.git\objects\d9</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\de">
+      <UniqueIdentifier>{4651533B-879A-4B94-87C4-ED740856C9A5}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\de\cfcc35f695f123f2f9bf413ec0988a9c41c8cf">
+      <Filter>Source\CCE\NEAT\.git\objects\de</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\e1">
+      <UniqueIdentifier>{84429551-793F-4291-854F-6B8CE38DE2DB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e1\494304a6302a98112b644e1a7a14271a0a0396">
+      <Filter>Source\CCE\NEAT\.git\objects\e1</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e1\bb483179d1336a87a782675611640fbe3ef457">
+      <Filter>Source\CCE\NEAT\.git\objects\e1</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\e2">
+      <UniqueIdentifier>{8D2A6107-DF9E-4169-8CF7-C48CA1BDE123}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e2\2cac837c1785c609bc5e088f066333ec1dd5e9">
+      <Filter>Source\CCE\NEAT\.git\objects\e2</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e2\e435da00aa0cdf26ccc91a8756930d3ac6d856">
+      <Filter>Source\CCE\NEAT\.git\objects\e2</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\e4">
+      <UniqueIdentifier>{91787FBE-3909-4499-B621-EDE64287DFBB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e4\3f5622c72b4b59e9acc095864c9f5a533c8108">
+      <Filter>Source\CCE\NEAT\.git\objects\e4</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e4\78cf64ae57980d8175de4f213e2131f9b57de6">
+      <Filter>Source\CCE\NEAT\.git\objects\e4</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\e5">
+      <UniqueIdentifier>{E081C895-0217-42D3-A8F4-2DC9F12843C3}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e5\a9e5d104ef16cd2e3d88bccc94e82941ce7605">
+      <Filter>Source\CCE\NEAT\.git\objects\e5</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\e6">
+      <UniqueIdentifier>{4DC5286F-2E04-411C-AE86-D3E7B7E233B2}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e6\745726791909498492361b6a41b9a6a2ba31bb">
+      <Filter>Source\CCE\NEAT\.git\objects\e6</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\e7">
+      <UniqueIdentifier>{397129F8-8B9D-46B4-9313-3274D530D61E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\e7\8122804ed18e8f60d6beec46d1c6aec2b657e5">
+      <Filter>Source\CCE\NEAT\.git\objects\e7</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\ea">
+      <UniqueIdentifier>{B5C84B44-7BE8-44DE-A350-280F623BC4C2}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ea\6b61de805e3051188d97fa32a5e6dec6e239be">
+      <Filter>Source\CCE\NEAT\.git\objects\ea</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\ed">
+      <UniqueIdentifier>{671A35ED-31B4-49FA-B85C-21F84145A9B1}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ed\103ab8a01d815b2e00da26df3a8d871199fed9">
+      <Filter>Source\CCE\NEAT\.git\objects\ed</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ed\b3d7762cdd0b45645e3e25f5c9b511ec6c6980">
+      <Filter>Source\CCE\NEAT\.git\objects\ed</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\ee">
+      <UniqueIdentifier>{94B71D15-C5FF-4F71-9D3A-D902ED84C6F1}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ee\9107658e077601533ecb4e705c8c93f86202b1">
+      <Filter>Source\CCE\NEAT\.git\objects\ee</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\ef">
+      <UniqueIdentifier>{118E600D-61BE-418A-B314-20471F3C1ADA}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ef\4a4aae81883b492033bbe5bd82d4c6c0869d43">
+      <Filter>Source\CCE\NEAT\.git\objects\ef</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\f1">
+      <UniqueIdentifier>{33A81A6F-3859-4BB3-954B-B5EB1D26E819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\f1\d207e6bcbfd4d472fe68539654c0b5d8176ea3">
+      <Filter>Source\CCE\NEAT\.git\objects\f1</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\f3">
+      <UniqueIdentifier>{1B9160B0-BFF0-469C-B0C5-171CBF5AD296}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\f3\36fc54bb402ea94db295d071083677397513fb">
+      <Filter>Source\CCE\NEAT\.git\objects\f3</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\f8">
+      <UniqueIdentifier>{2E18F131-E689-406F-B3A4-175601A84897}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\f8\3e6a00744cd883ccee29a4f5dffd9adb328e24">
+      <Filter>Source\CCE\NEAT\.git\objects\f8</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\f8\86448728b19ebc6e618c5cecfe8c7f0cf65517">
+      <Filter>Source\CCE\NEAT\.git\objects\f8</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\f8\90379dc96208648ac32f048dc61a65fa8d5f68">
+      <Filter>Source\CCE\NEAT\.git\objects\f8</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\fc">
+      <UniqueIdentifier>{C305A255-254A-44EF-B794-201C8397352D}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\fc\0dabe0db4e6bd70cbe18942e2fb882a468080d">
+      <Filter>Source\CCE\NEAT\.git\objects\fc</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\fc\abb0167a87a2ccd02e755944e72430918b2456">
+      <Filter>Source\CCE\NEAT\.git\objects\fc</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\ff">
+      <UniqueIdentifier>{90642AB4-19ED-4B6E-81E7-DAE605A2D0A2}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\ff\83f11199370ad13df2721ca7a838a2ff9d7fe0">
+      <Filter>Source\CCE\NEAT\.git\objects\ff</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\objects\pack">
+      <UniqueIdentifier>{71BEF065-0707-4719-ACF6-246070716269}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\pack\pack-107efb4b5b737c9ce01355bbc702b033a9ef5e24.idx">
+      <Filter>Source\CCE\NEAT\.git\objects\pack</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\objects\pack\pack-107efb4b5b737c9ce01355bbc702b033a9ef5e24.pack">
+      <Filter>Source\CCE\NEAT\.git\objects\pack</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\refs">
+      <UniqueIdentifier>{185EA34E-0308-4466-A491-C8B168927FEB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CCE\NEAT\.git\refs\heads">
+      <UniqueIdentifier>{1D8F6978-C268-4B40-B73C-10B567A287AE}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\refs\heads\master">
+      <Filter>Source\CCE\NEAT\.git\refs\heads</Filter>
+    </None>
+    <Filter Include="Source\CCE\NEAT\.git\refs\remotes">
+      <UniqueIdentifier>{D960BED3-DD32-41FF-B758-065C63FC1042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CCE\NEAT\.git\refs\remotes\origin">
+      <UniqueIdentifier>{0C5B9B54-7CE3-403E-AE57-5EFCECB11FED}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE\NEAT\.git\refs\remotes\origin\HEAD">
+      <Filter>Source\CCE\NEAT\.git\refs\remotes\origin</Filter>
+    </None>
+    <None Include="..\..\Source\CCE\NEAT\.git\refs\remotes\origin\master">
+      <Filter>Source\CCE\NEAT\.git\refs\remotes\origin</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\CCE.uproject">
-      <Filter>Source\BuildStuff</Filter>
-    </None>
+    <ClInclude Include="..\..\Source\CCE\CCEGameState.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\CCE\CCEGameState.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
