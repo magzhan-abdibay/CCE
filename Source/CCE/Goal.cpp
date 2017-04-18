@@ -7,17 +7,15 @@ AGoal::AGoal()
 	PrimaryActorTick.bCanEverTick = true;
 	box= CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	box->bGenerateOverlapEvents = true;
-	box->SetRelativeScale3D(FVector(2, 2, 5));
 	RootComponent = box;
+	box->OnComponentBeginOverlap.AddDynamic(this, &AGoal::TriggerEnter);
+	box->OnComponentEndOverlap.AddDynamic(this, &AGoal::TriggerExit);
+
 	light = CreateDefaultSubobject<UPointLightComponent>(TEXT("light"));
 	light->Intensity = 10000;
 	light->SetLightColor(FColor::Red);
-	
 	light->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 
-	box->OnComponentBeginOverlap.AddDynamic(this, &AGoal::TriggerEnter);
-	box->OnComponentEndOverlap.AddDynamic(this, &AGoal::TriggerExit);
-	
 }
 
 void AGoal::BeginPlay()
