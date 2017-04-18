@@ -3,7 +3,6 @@
 
 AGoal::AGoal()
 {
-	
 	PrimaryActorTick.bCanEverTick = true;
 	box= CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	box->bGenerateOverlapEvents = true;
