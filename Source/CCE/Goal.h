@@ -16,12 +16,18 @@ class CCE_API AGoal : public AActor
 	UPROPERTY(EditAnywhere, Category = light)
 	class UPointLightComponent* light;
 
+	UPROPERTY(EditAnywhere, Category = Team)
+	int32 Team;
+
 public:	
 	AGoal();
 	
 	virtual void BeginPlay() override;
 	
 	virtual void Tick( float DeltaSeconds ) override;
+
+	FORCEINLINE int32  GetTeam() const { return Team; }
+	FORCEINLINE void SetTeam(int32 Value) { Team = Value; }
 
 protected:
 	UFUNCTION()

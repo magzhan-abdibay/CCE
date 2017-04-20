@@ -14,7 +14,7 @@ void ACCEGameState::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue,FString::FromInt(score++));
+	//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue,FString::FromInt(score++));
 
 
 }

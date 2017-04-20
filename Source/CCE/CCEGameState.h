@@ -1,13 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "GameFramework/GameState.h"
 #include "CCEGameState.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class CCE_API ACCEGameState : public AGameState
 {
@@ -16,8 +11,13 @@ public:
 	ACCEGameState();
 	virtual void Tick(float DeltaTime) override;
 
+	FORCEINLINE int32  GetScoreTeam0() const { return ScoreTeam0; }
+	FORCEINLINE void SetScoreTeam0(int32  Value) {ScoreTeam0= Value; }
+	FORCEINLINE int32  GetScoreTeam1() const { return ScoreTeam1; }
+	FORCEINLINE void SetScoreTeam1(int32 Value) { ScoreTeam1 = Value; }
+
 private:
-	int score = 0;
-	
+	int32 ScoreTeam0;
+	int32 ScoreTeam1;
 	
 };

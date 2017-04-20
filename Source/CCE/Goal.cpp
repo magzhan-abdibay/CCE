@@ -1,6 +1,7 @@
 #include "CCE.h"
 #include "Goal.h"
 #include "Ball.h"
+#include "CCEGameState.h"
 
 AGoal::AGoal()
 {
@@ -12,10 +13,9 @@ AGoal::AGoal()
 	box->OnComponentEndOverlap.AddDynamic(this, &AGoal::TriggerExit);
 
 	light = CreateDefaultSubobject<UPointLightComponent>(TEXT("light"));
-	light->Intensity = 10000;
+	light->Intensity = 100;
 	light->SetLightColor(FColor::Red);
 	light->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-
 }
 
 void AGoal::BeginPlay()
@@ -34,6 +34,16 @@ void AGoal::TriggerEnter(UPrimitiveComponent * HitComp, AActor * OtherActor, UPr
 {
 	if (OtherActor->IsA(ABall::StaticClass())) {
 		light->SetLightColor(FColor::Green);
+		ACCEGameState* const GameState = GetWorld() != NULL ? GetWorld()->GetGameState<ACCEGameState>() : NULL;
+		if (GameState != NULL) {
+			if (Team == 0) {
+				GameState->SetScoreTeam1(GameState->GetScoreTeam1() + 1);
+			} else if (Team == 1) {
+				GameState->SetScoreTeam0(GameState->GetScoreTeam0() + 1);
+			}
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, FString::FromInt(GameState->GetScoreTeam0()));
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, FString::FromInt(GameState->GetScoreTeam1()));
+		}
 	}
 }
 
