@@ -1,5 +1,6 @@
 #include "CCE.h"
 #include "Agent.h"
+#include "Ball.h"
 
 AAgent::AAgent()
 {
@@ -74,4 +75,22 @@ void AAgent::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void AAgent::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	for (TActorIterator<ABall> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		ABall *Mesh = *ActorItr;
+		FVector LinkStart = GetActorLocation();
+		FVector LinkEnd = ActorItr->GetActorLocation();
+
+		DrawDebugLine(GetWorld(),LinkStart,LinkEnd,FColor::Green,false, -1, 0, 1);
+
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, (LinkEnd-LinkStart).ToString());
+
+	}
+
 }

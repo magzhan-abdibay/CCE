@@ -27,6 +27,8 @@ public:
 
 	FORCEINLINE class UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 
+	virtual void Tick(float DeltaSeconds) override;
+
 protected:
 
 	void MoveForward(float Value);
