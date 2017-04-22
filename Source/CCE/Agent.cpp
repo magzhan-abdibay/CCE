@@ -1,6 +1,7 @@
 #include "CCE.h"
 #include "Agent.h"
 #include "Ball.h"
+#include "Goal.h"
 
 AAgent::AAgent()
 {
@@ -81,16 +82,50 @@ void AAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	for (TActorIterator<ABall> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	DistanceToBall = CalculateDistanceToBall();
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(DistanceToBall));
+
+	DistanceToTeammate = CalcualteDistanceToTeammate();
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat(DistanceToTeammate));
+
+	DistanceToGoal = CalculateDistanceToGoal();
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat(DistanceToGoal));
+}
+
+float AAgent::CalculateDistanceToBall() {
+	for (TActorIterator<ABall> BallItr(GetWorld()); BallItr; ++BallItr)
 	{
-		ABall *Mesh = *ActorItr;
 		FVector LinkStart = GetActorLocation();
-		FVector LinkEnd = ActorItr->GetActorLocation();
-
-		DrawDebugLine(GetWorld(),LinkStart,LinkEnd,FColor::Green,false, -1, 0, 1);
-
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, (LinkEnd-LinkStart).ToString());
-
+		FVector LinkEnd = BallItr->GetActorLocation();
+		DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0, 1);
+		return (LinkEnd - LinkStart).Size();
 	}
+	return 0.0f;
+}
 
+float AAgent::CalcualteDistanceToTeammate() {
+	for (TActorIterator<AAgent> AgentItr(GetWorld()); AgentItr; ++AgentItr)
+	{
+		if (*AgentItr != this && AgentItr->GetTeam()==this->Team) {
+			FVector LinkStart = GetActorLocation();
+			FVector LinkEnd = AgentItr->GetActorLocation();
+			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Red, false, -1, 1, 5.0f);
+			return (LinkEnd - LinkStart).Size();
+		}
+	}
+	return 0.0f;
+}
+
+float AAgent::CalculateDistanceToGoal() {
+	for (TActorIterator<AGoal> GoalItr(GetWorld()); GoalItr; ++GoalItr)
+	{
+		if (GoalItr->GetTeam()!=this->Team) {
+			FVector LinkStart = GetActorLocation();
+			FVector LinkEnd = GoalItr->GetActorLocation();
+			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Cyan, false, -1, 1, 5.0f);
+			//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat((LinkEnd - LinkStart).Size()));
+			return (LinkEnd - LinkStart).Size();
+		}
+	}
+	return 0.0f;
 }

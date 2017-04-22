@@ -17,7 +17,7 @@ class CCE_API AGoal : public AActor
 	class UPointLightComponent* light;
 
 	UPROPERTY(EditAnywhere, Category = Team)
-	int32 Team;
+	int8 Team;
 
 public:	
 	AGoal();
@@ -26,8 +26,8 @@ public:
 	
 	virtual void Tick( float DeltaSeconds ) override;
 
-	FORCEINLINE int32  GetTeam() const { return Team; }
-	FORCEINLINE void SetTeam(int32 Value) { Team = Value; }
+	FORCEINLINE int8  GetTeam() const { return Team; }
+	FORCEINLINE void SetTeam(int8 Value) { Team = Value; }
 
 protected:
 	UFUNCTION()
