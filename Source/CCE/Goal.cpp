@@ -2,6 +2,7 @@
 #include "Goal.h"
 #include "Ball.h"
 #include "CCEGameState.h"
+#include "DrawDebugHelpers.h"
 
 AGoal::AGoal()
 {

@@ -32,7 +32,7 @@ protected:
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);
-protected:
+
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 };
 
