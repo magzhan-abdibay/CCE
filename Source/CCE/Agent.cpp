@@ -97,7 +97,7 @@ float AAgent::CalculateDistanceToBall() {
 	{
 		FVector LinkStart = GetActorLocation();
 		FVector LinkEnd = BallItr->GetActorLocation();
-		DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0, 1);
+		DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0, 5.0f);
 		return (LinkEnd - LinkStart).Size();
 	}
 	return 0.0f;
