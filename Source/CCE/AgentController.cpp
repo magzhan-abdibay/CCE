@@ -8,24 +8,22 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "Engine/TargetPoint.h"
 
-AAgentController::AAgentController()
-{
-	AgentBlackBoardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("AgentBlackBoardComponent"));
-	AgentBehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("AgentBehaviorTreeComponent"));
+AAgentController::AAgentController() {
+  AgentBlackBoardComponent = CreateDefaultSubobject<UBlackboardComponent>(
+      TEXT("AgentBlackBoardComponent"));
+  AgentBehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(
+      TEXT("AgentBehaviorTreeComponent"));
 }
-void AAgentController::Possess(APawn * Value)
-{
-	Super::Possess(Value);
+void AAgentController::Possess(APawn *Value) {
+  Super::Possess(Value);
 
-	AAgent* Agent = Cast<AAgent>(Value);
+  AAgent *Agent = Cast<AAgent>(Value);
 
-	if(Agent){
-		if (Agent->GetBehaviorTree()->BlackboardAsset)
-		{
-			AgentBlackBoardComponent->InitializeBlackboard(*(Agent->GetBehaviorTree()->BlackboardAsset));
-		}
-		AgentBehaviorTreeComponent->StartTree(*Agent->GetBehaviorTree());
-	}
-	
+  if (Agent) {
+    if (Agent->GetBehaviorTree()->BlackboardAsset) {
+      AgentBlackBoardComponent->InitializeBlackboard(
+          *(Agent->GetBehaviorTree()->BlackboardAsset));
+    }
+    AgentBehaviorTreeComponent->StartTree(*Agent->GetBehaviorTree());
+  }
 }
-
