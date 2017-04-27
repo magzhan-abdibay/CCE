@@ -4,20 +4,18 @@
 #include "CCEGameState.generated.h"
 
 UCLASS()
-class CCE_API ACCEGameState : public AGameState
-{
-	GENERATED_BODY()
+class CCE_API ACCEGameState : public AGameState {
+  GENERATED_BODY()
 public:
-	ACCEGameState();
-	virtual void Tick(float DeltaTime) override;
+  ACCEGameState();
+  virtual void Tick(float DeltaTime) override;
 
-	FORCEINLINE int32  GetScoreTeam0() const { return ScoreTeam0; }
-	FORCEINLINE void SetScoreTeam0(int32  Value) {ScoreTeam0= Value; }
-	FORCEINLINE int32  GetScoreTeam1() const { return ScoreTeam1; }
-	FORCEINLINE void SetScoreTeam1(int32 Value) { ScoreTeam1 = Value; }
+  FORCEINLINE int32 GetScoreTeam0() const { return ScoreTeam0; }
+  FORCEINLINE void SetScoreTeam0(int32 Value) { ScoreTeam0 = Value; }
+  FORCEINLINE int32 GetScoreTeam1() const { return ScoreTeam1; }
+  FORCEINLINE void SetScoreTeam1(int32 Value) { ScoreTeam1 = Value; }
 
 private:
-	int32 ScoreTeam0;
-	int32 ScoreTeam1;
-	
+  int32 ScoreTeam0;
+  int32 ScoreTeam1;
 };
