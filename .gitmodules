@@ -1,0 +1,3 @@
+[submodule "NEAT"]
+	path = NEAT
+	url = git@github.com:magzhan-abdibay/NEAT.git
