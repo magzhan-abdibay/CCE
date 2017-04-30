@@ -1,5 +1,6 @@
 #include "CCE.h"
 #include "Ball.h"
+#include "Population.h"
 
 ABall::ABall() {
   PrimaryActorTick.bCanEverTick = true;
@@ -11,3 +12,7 @@ ABall::ABall() {
 void ABall::BeginPlay() { Super::BeginPlay(); }
 
 void ABall::Tick(float DeltaTime) { Super::Tick(DeltaTime); }
+
+void ABall::DoStuff() {
+	NEAT::Population *p = 0;
+}

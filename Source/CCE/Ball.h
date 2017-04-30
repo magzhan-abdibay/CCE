@@ -16,4 +16,7 @@ public:
   virtual void BeginPlay() override;
 
   virtual void Tick(float DeltaSeconds) override;
+  
+  //temporary stuff
+  void DoStuff();
 };
