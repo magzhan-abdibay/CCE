@@ -423,7 +423,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Game|x64'">
-    <IncludePath />
+    <IncludePath>$(SolutionDir)NEAT/NEAT/;$(IncludePath)</IncludePath>
     <ReferencePath />
     <LibraryPath />
     <LibraryWPath />
