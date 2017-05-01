@@ -1036,6 +1036,12 @@
     <ClInclude Include="..\..\Source\CCE\Ball.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\CCE\CartPole.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CCE\experiments.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\CCE\CCEGameState.cpp">
@@ -1045,6 +1051,12 @@
       <Filter>Source\CCE</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\CCE\Ball.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CCE\CartPole.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CCE\experiments.cpp">
       <Filter>Source\CCE</Filter>
     </ClCompile>
   </ItemGroup>
