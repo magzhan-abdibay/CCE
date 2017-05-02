@@ -88,16 +88,16 @@ void AAgent::Tick(float DeltaTime) {
   Super::Tick(DeltaTime);
 
   DistanceToBall = CalculateDistanceToBall();
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red,
-                                   FString::SanitizeFloat(DistanceToBall));
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red,
+  //                                 FString::SanitizeFloat(DistanceToBall));
 
   DistanceToTeammate = CalcualteDistanceToTeammate();
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,
-                                   FString::SanitizeFloat(DistanceToTeammate));
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,
+  //                                 FString::SanitizeFloat(DistanceToTeammate));
 
   DistanceToGoal = CalculateDistanceToGoal();
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,
-                                   FString::SanitizeFloat(DistanceToGoal));
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,
+  //                                 FString::SanitizeFloat(DistanceToGoal));
 }
 
 float AAgent::CalculateDistanceToBall() {

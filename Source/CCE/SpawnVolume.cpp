@@ -67,8 +67,8 @@ void ASpawnVolume::InitNeat() {
  * used instead of the usual generational NEAT
  * */
 void ASpawnVolume::Pole2TestRealTime() {
-  cout << "START DOUBLE POLE BALANCING REAL-TIME EVOLUTION VALIDATION" << endl;
-  cout << "Reading in the start genome" << endl;
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,"START DOUBLE POLE BALANCING REAL-TIME EVOLUTION VALIDATION" );
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, "Reading in the start genome");
   char curWord[20];
   int id;
   ifstream iFile(
@@ -76,15 +76,16 @@ void ASpawnVolume::Pole2TestRealTime() {
       ios::in);
   iFile >> curWord;
   iFile >> id;
-  cout << "Reading in Genome id " << id << endl;
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Reading in Genome id "))+ FString::FromInt(id));
+ 
   NEAT::Genome *startGenome = new NEAT::Genome(id, iFile);
   iFile.close();
-  cout << "Start Genome: " << startGenome << endl;
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Start Genome: ")) + FString::FromInt(id));
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Spawning Population off Genome")));
 
-  cout << "Spawning Population off Genome" << endl;
   Population = new NEAT::Population(startGenome, NEAT::popSize);
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Verifying Spawned Pop")));
 
-  cout << "Verifying Spawned Pop" << endl;
   Population->verifyPopulation();
 
   Cart = new CartPole(1);
@@ -115,7 +116,7 @@ int ASpawnVolume::Pole2RealTimeLoop() {
        curOrg != (Population->organisms).end(); ++curOrg) {
     // shouldn't happen
     if (((*curOrg)->gnome) == 0) {
-      cout << "ERROR EMPTY GENOME!" << endl;
+      //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
       cin >> pause;
     }
     if (Pole2Evaluate((*curOrg)))
@@ -156,7 +157,7 @@ void ASpawnVolume::NeatTick(int count) {
     if (NEAT::compatThreshold < 0.3)
       NEAT::compatThreshold = 0.3;
 
-    cout << "compatThreshold = " << NEAT::compatThreshold << endl;
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("compatThreshold = "))+FString::FromInt(NEAT::compatThreshold));
 
     // Go through entire population, reassigning organisms to new species
     vector<NEAT::Organism *>::iterator curOrg;
@@ -170,12 +171,12 @@ void ASpawnVolume::NeatTick(int count) {
   vector<NEAT::Species *>::iterator curSpec;
   for (curSpec = (Population->species).begin();
        curSpec != (Population->species).end(); curSpec++) {
-    cout << "Species " << (*curSpec)->id << " size"
-         << (*curSpec)->organisms.size() << " average= " << (*curSpec)->avgEst
-         << endl;
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Species "))+FString::FromInt((*curSpec)->id));
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("size ")) + FString::FromInt((*curSpec)->organisms.size()));
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("average= ")) + FString::FromInt((*curSpec)->avgEst));
   }
 
-  cout << "Pop size: " << Population->organisms.size() << endl;
+  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Pop size: ")) + FString::FromInt(Population->organisms.size()));
 
   // Here we call two rtNEAT calls:
   // 1) chooseParentSpecies() decides which species should produce the next
@@ -189,14 +190,12 @@ void ASpawnVolume::NeatTick(int count) {
   // Note that in a true real-time simulation, evaluation would be happening to
   // all individuals at all times.  That is, this call would not appear here in
   // a true online simulation.
-  cout << "Evaluating new baby: " << endl;
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "Evaluating new baby");
+  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Evaluating new baby: ")));
   if (Pole2Evaluate(newOrg))
     Win = true;
 
   if (Win) {
-    GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "WWW");
-    cout << "WINNER" << endl;
+    GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "WINNER");
     Population->printToFileBySpecies((char *)"rt_winpop");
     return;
   }
