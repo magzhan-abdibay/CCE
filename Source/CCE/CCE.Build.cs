@@ -8,7 +8,7 @@ public class CCE : ModuleRules
 	{
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "AIModule", "GameplayTasks" });
 
-        LoadBobsMagic(Target);
+        LoadNeatLibrary(Target);
     }
 
     private string ModulePath
@@ -21,7 +21,7 @@ public class CCE : ModuleRules
         get { return Path.GetFullPath(Path.Combine(ModulePath, "../../NEAT/")); }
     }
 
-    public bool LoadBobsMagic(TargetInfo Target)
+    public bool LoadNeatLibrary(TargetInfo Target)
     {
         bool isLibrarySupported = false;
 
