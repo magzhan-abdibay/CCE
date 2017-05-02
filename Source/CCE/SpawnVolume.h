@@ -1,6 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -21,45 +20,59 @@
 
 UCLASS()
 class CCE_API ASpawnVolume : public AActor {
-  GENERATED_BODY()
+	GENERATED_BODY()
 public:
-  /** Sets default values for this actor's properties */
-  ASpawnVolume();
+	ASpawnVolume();
 
-  /** Called when the game starts or when spawned */
-  virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 
-  /**  Called every frame */
-  virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float DeltaSeconds) override;
 
-  /** Find a random point within the BoxComponent */
-  UFUNCTION(BlueprintPure, Category = "Spawning")
-  FVector GetRandomPointInVolume();
+	virtual void Destroyed() override;
 
-  /**Returns the WhereToSpawn subobject */
-  FORCEINLINE class UBoxComponent *GetWhereToSpawn() const {
-    return WhereToSpawn;
-  }
+	/** Find a random point within the BoxComponent */
+	UFUNCTION(BlueprintPure, Category = "Spawning")
+		FVector GetRandomPointInVolume();
 
-protected:
-  /** what spawn subclass of Agent*/
-  UPROPERTY(EditAnywhere, Category = "Spawning")
-  TSubclassOf<class AAgent> WhatToSpawn;
+	/** Returns the WhereToSpawn subobject */
+	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const {
+		return WhereToSpawn;
+	}
 
 private:
-  /** Box Component to specify where agents should be spawned */
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning",
-            meta = (AllowPrivateAccess = "true"))
-  class UBoxComponent *WhereToSpawn;
+	/*Neat stuff*/
+	NEAT::Population *Population = 0;
+	
+	CartPole *Cart = 0;
+	
+	int CompatAdjustFrequency = 0;
+	
+	bool Win = false;
+	
+	int NumSpeciesTarget = 0;
+	
+	int OffspringCount = 0;
 
-  void SpawnAgent();
+	/** What spawn subclass of Agent*/
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+		TSubclassOf<class AAgent> WhatToSpawn;
 
-  /*Neat stuff*/
-  void InitNeat();
+	/** Box Component to specify where agents should be spawned */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning",
+		meta = (AllowPrivateAccess = "true"))
+		class UBoxComponent *WhereToSpawn;
 
-  NEAT::Population *pole2TestRealTime();
+	void SpawnAgent();
 
-  int pole2RealTimeLoop(NEAT::Population *pop, CartPole *cart);
+	/*Neat stuff*/
+	void InitNeat();
 
-  bool pole2Evaluate(NEAT::Organism *org, CartPole *cart);
+	void Pole2TestRealTime();
+
+	int Pole2RealTimeLoop();
+
+	void NeatTick(int count);
+
+	bool Pole2Evaluate(NEAT::Organism *org);
+
 };
