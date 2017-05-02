@@ -1,7 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
+#include <list>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include "Neat.h"
+#include "Network.h"
+#include "Population.h"
+#include "Organism.h"
+#include "Genome.h"
+#include "Species.h"
+#include "CartPole.h"
 #include "GameFramework/Actor.h"
 #include "SpawnVolume.generated.h"
 
@@ -39,4 +53,13 @@ private:
   class UBoxComponent *WhereToSpawn;
 
   void SpawnAgent();
+
+  /*Neat stuff*/
+  void InitNeat();
+
+  NEAT::Population *pole2TestRealTime();
+
+  int pole2RealTimeLoop(NEAT::Population *pop, CartPole *cart);
+
+  bool pole2Evaluate(NEAT::Organism *org, CartPole *cart);
 };

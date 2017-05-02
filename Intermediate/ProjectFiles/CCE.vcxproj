@@ -612,11 +612,9 @@
     <ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp" />
     <ClInclude Include="..\..\Source\CCE\CCEGameMode.h" />
     <ClCompile Include="..\..\Source\CCE\CCEGameState.cpp" />
-    <ClCompile Include="..\..\Source\CCE\experiments.cpp" />
     <ClCompile Include="..\..\Source\CCE\Goal.cpp" />
     <ClCompile Include="..\..\Source\CCE\SelectPoint.cpp" />
     <ClInclude Include="..\..\Source\CCE\CCEGameState.h" />
-    <ClInclude Include="..\..\Source\CCE\experiments.h" />
     <ClInclude Include="..\..\Source\CCE\Goal.h" />
     <ClInclude Include="..\..\Source\CCE\SelectPoint.h" />
     <ClCompile Include="..\..\Source\CCE\SpawnVolume.cpp" />

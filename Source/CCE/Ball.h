@@ -17,6 +17,4 @@ public:
 
   virtual void Tick(float DeltaSeconds) override;
   
-  //temporary stuff
-  void DoStuff();
 };
