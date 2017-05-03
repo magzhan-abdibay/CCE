@@ -9,12 +9,14 @@ ASpawnVolume::ASpawnVolume() {
   // Create the Box Component to represent the spawn volume
   WhereToSpawn = CreateDefaultSubobject<UBoxComponent>(TEXT("WhereToSpawn"));
   RootComponent = WhereToSpawn;
-
-  // Init NEAT
-  InitNeat();
 }
 
-void ASpawnVolume::BeginPlay() { Super::BeginPlay(); }
+void ASpawnVolume::BeginPlay() { 
+	Super::BeginPlay(); 
+	
+	// Init NEAT
+	InitNeat();
+}
 
 void ASpawnVolume::Tick(float DeltaTime) {
   Super::Tick(DeltaTime);
@@ -52,87 +54,77 @@ void ASpawnVolume::SpawnAgent() {
 }
 
 void ASpawnVolume::InitNeat() {
-  char *path =
+  char *NeatParamsPath =
       "E:\\UnrealProjects\\CCE\\NEAT\\NEATConsoleApplication\\pole2_markov.ne";
-  NEAT::loadNeatParams(path, true);
+  NEAT::loadNeatParams(NeatParamsPath, true);
 
-  Pole2TestRealTime();
-}
-
-/**
- * Real-time NEAT Validation
- * Perform evolution on double pole balacing using rtNEAT methods calls
- * Always uses Markov case (i.e. velocities provided)
- * This test is meant to validate the rtNEAT methods and show how they can be
- * used instead of the usual generational NEAT
- * */
-void ASpawnVolume::Pole2TestRealTime() {
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,"START DOUBLE POLE BALANCING REAL-TIME EVOLUTION VALIDATION" );
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, "Reading in the start genome");
-  char curWord[20];
-  int id;
-  ifstream iFile(
-      "E:\\UnrealProjects\\CCE\\NEAT\\NEATConsoleApplication\\pole2startgenes1",
-      ios::in);
-  iFile >> curWord;
-  iFile >> id;
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Reading in Genome id "))+ FString::FromInt(id));
- 
-  NEAT::Genome *startGenome = new NEAT::Genome(id, iFile);
-  iFile.close();
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Start Genome: ")) + FString::FromInt(id));
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Spawning Population off Genome")));
-
-  Population = new NEAT::Population(startGenome, NEAT::popSize);
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Verifying Spawned Pop")));
-
-  Population->verifyPopulation();
+  char *GenomeParamsPath =
+	  "E:\\UnrealProjects\\CCE\\NEAT\\NEATConsoleApplication\\pole2startgenes1";
+  NEAT::Genome *startGenome = ReadGenome(GenomeParamsPath);
 
   Cart = new CartPole(1);
-
-  // Start the evolution loop using rtNEAT method calls
-  Pole2RealTimeLoop();
-}
-
-int ASpawnVolume::Pole2RealTimeLoop() {
-  int pause;
-
   Cart->N_MARKOV_LONG = false;
   Cart->GENERALIZATION_TEST = false;
 
-  // We try to keep the number of species constant at this number
-  NumSpeciesTarget = NEAT::popSize / 15;
+  SpawnInitialPopulation(startGenome);
+}
 
-  // This is where we determine the frequency of compatibility threshold
-  // adjustment
-  CompatAdjustFrequency = NEAT::popSize / 10;
-  if (CompatAdjustFrequency < 1)
-    CompatAdjustFrequency = 1;
+NEAT::Genome* ASpawnVolume::ReadGenome(char * filePath) {
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "START DOUBLE POLE BALANCING REAL-TIME EVOLUTION VALIDATION");
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "Reading in the start genome");
+	char curWord[20];
+	int id;
+	ifstream iFile(filePath,ios::in);
+	iFile >> curWord;
+	iFile >> id;
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString(TEXT("Reading in Genome id ")) + FString::FromInt(id));
 
-  // Initially, we evaluate the whole population
-  // Evaluate each organism on a test
-  vector<NEAT::Organism *>::iterator curOrg;
-  for (curOrg = (Population->organisms).begin();
-       curOrg != (Population->organisms).end(); ++curOrg) {
-    // shouldn't happen
-    if (((*curOrg)->gnome) == 0) {
-      //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
-      cin >> pause;
-    }
-    if (Pole2Evaluate((*curOrg)))
-      Win = true;
-  }
+	NEAT::Genome *startGenome = new NEAT::Genome(id, iFile);
+	iFile.close();
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString(TEXT("Start Genome: ")) + FString::FromInt(id));
+	return startGenome;
+}
 
-  // Get ready for real-time loop
-  // Rank all the organisms from best to worst in each species
-  Population->rankWithinSpecies();
+void ASpawnVolume::SpawnInitialPopulation(NEAT::Genome* startGenome) {
 
-  // Assign each species an average fitness
-  // This average must be kept up-to-date by rtNEAT in order to select species
-  // probabailistically for reproduction
-  Population->estimateAllAverages();
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString(TEXT("Spawning Population off Genome")));
 
-  return 0;
+	Population = new NEAT::Population(startGenome, NEAT::popSize);
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Verifying Spawned Pop")));
+
+	Population->verifyPopulation();
+
+	// We try to keep the number of species constant at this number
+	NumSpeciesTarget = NEAT::popSize / 15;
+
+	// This is where we determine the frequency of compatibility threshold
+	// adjustment
+	CompatAdjustFrequency = NEAT::popSize / 10;
+	if (CompatAdjustFrequency < 1)
+		CompatAdjustFrequency = 1;
+
+	// Initially, we evaluate the whole population
+	// Evaluate each organism on a test
+	vector<NEAT::Organism *>::iterator curOrg;
+	for (curOrg = (Population->organisms).begin(); curOrg != (Population->organisms).end(); ++curOrg) {
+		// shouldn't happen
+		if (((*curOrg)->gnome) == 0) {
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
+			return;
+		}
+		if (Pole2Evaluate((*curOrg))) {
+			Win = true;
+		}
+	}
+
+	// Get ready for real-time loop
+	// Rank all the organisms from best to worst in each species
+	Population->rankWithinSpecies();
+
+	// Assign each species an average fitness
+	// This average must be kept up-to-date by rtNEAT in order to select species
+	// probabailistically for reproduction
+	Population->estimateAllAverages();
 }
 
 void ASpawnVolume::NeatTick(int count) {
@@ -175,7 +167,6 @@ void ASpawnVolume::NeatTick(int count) {
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("size ")) + FString::FromInt((*curSpec)->organisms.size()));
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("average= ")) + FString::FromInt((*curSpec)->avgEst));
   }
-
   GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Pop size: ")) + FString::FromInt(Population->organisms.size()));
 
   // Here we call two rtNEAT calls:

@@ -31,7 +31,7 @@ double CartPole::evalNet(Network *net) {
     double nMarkovFitness;
 
     double jiggleTotal=NULL; //total jiggle in last 100
-    int count;          //step counter
+    int count;				 //step counter
 
     if (N_MARKOV_LONG) nMarkovMax = 100000;
     else nMarkovMax = 1000;

@@ -67,6 +67,10 @@ private:
 	/*Neat stuff*/
 	void InitNeat();
 
+	NEAT::Genome* ReadGenome(char * filePath);
+
+	void SpawnInitialPopulation(NEAT::Genome* startGenome);
+
 	void Pole2TestRealTime();
 
 	int Pole2RealTimeLoop();
@@ -74,5 +78,7 @@ private:
 	void NeatTick(int count);
 
 	bool Pole2Evaluate(NEAT::Organism *org);
+
+	
 
 };
