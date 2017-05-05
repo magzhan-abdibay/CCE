@@ -15,12 +15,14 @@ void ASpawnVolume::BeginPlay() {
 	Super::BeginPlay(); 
 	
 	// Init NEAT
-	InitNeat();
+	//InitNeat();
+
+	ReadPopulation("E:\\UnrealProjects\\CCE\\Binaries\\Win64\\rt_winpop");
 }
 
 void ASpawnVolume::Tick(float DeltaTime) {
   Super::Tick(DeltaTime);
-  NeatTick(OffspringCount++);
+  //NeatTick(OffspringCount++);
 }
 
 FVector ASpawnVolume::GetRandomPointInVolume() {
@@ -49,8 +51,43 @@ void ASpawnVolume::SpawnAgent() {
       // spawn
       AAgent *const SpawnedActor = World->SpawnActor<AAgent>(
           WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
+
+	  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, SpawnedActor->GetController()->GetClass()->GetName());
+	 
     }
   }
+}
+
+NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
+
+	NEAT::Population *pop = new NEAT::Population(filePath);
+	
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Verifying population")));
+	pop->verifyPopulation();
+
+	// Initially, we evaluate the whole population
+	// Evaluate each organism on a test
+	vector<NEAT::Organism *>::iterator curOrg;
+	for (curOrg = (pop->organisms).begin(); curOrg != (pop->organisms).end(); ++curOrg) {
+		// shouldn't happen
+		if (((*curOrg)->gnome) == 0) {
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
+			return NULL;
+		}
+		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Fitness: "))+FString::FromInt((*curOrg)->fitness));
+		SpawnAgent();
+	}
+
+	// Get ready for real-time loop
+	// Rank all the organisms from best to worst in each species
+	pop->rankWithinSpecies();
+
+	// Assign each species an average fitness
+	// This average must be kept up-to-date by rtNEAT in order to select species
+	// probabailistically for reproduction
+	pop->estimateAllAverages();
+	
+	return pop;
 }
 
 void ASpawnVolume::InitNeat() {
@@ -90,8 +127,8 @@ void ASpawnVolume::SpawnInitialPopulation(NEAT::Genome* startGenome) {
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString(TEXT("Spawning Population off Genome")));
 
 	Population = new NEAT::Population(startGenome, NEAT::popSize);
+	
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Verifying Spawned Pop")));
-
 	Population->verifyPopulation();
 
 	// We try to keep the number of species constant at this number
@@ -213,15 +250,14 @@ bool ASpawnVolume::Pole2Evaluate(NEAT::Organism *org) {
     cout << " <<DUPLICATE OF CHAMPION>> ";
 
   // Output to screen
-  cout << "Org " << (org->gnome)->genomeId << " fitness: " << org->fitness;
-  cout << " (" << (org->gnome)->genes.size();
-  cout << " / " << (org->gnome)->nodes.size() << ")";
-  cout << "   ";
+  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Org  ")+FString::FromInt((org->gnome)->genomeId)));
+  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" fitness: ") + FString::FromInt(org->fitness)));
+  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" (") + FString::FromInt((org->gnome)->genes.size()))+ FString(TEXT(" / ") + FString::FromInt((org->gnome)->nodes.size())) + FString(TEXT(" ) ")));
+ 
   if (org->mutStructBaby)
-    cout << " [struct]";
+	  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" [struct]")));
   if (org->mateBaby)
-    cout << " [mate]";
-  cout << endl;
+	  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" [mate]")));
 #endif
 
   if ((!(Cart->GENERALIZATION_TEST)) && (!(Cart->N_MARKOV_LONG)))

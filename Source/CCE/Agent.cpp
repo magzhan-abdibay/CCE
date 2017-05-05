@@ -105,7 +105,7 @@ float AAgent::CalculateDistanceToBall() {
     FVector LinkStart = GetActorLocation();
     FVector LinkEnd = BallItr->GetActorLocation();
     DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0,
-                  5.0f);
+                  2.0f);
     return (LinkEnd - LinkStart).Size();
   }
   return 0.0f;
@@ -117,7 +117,7 @@ float AAgent::CalcualteDistanceToTeammate() {
       FVector LinkStart = GetActorLocation();
       FVector LinkEnd = AgentItr->GetActorLocation();
       DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Red, false, -1, 1,
-                    5.0f);
+                    2.0f);
       return (LinkEnd - LinkStart).Size();
     }
   }
@@ -130,7 +130,7 @@ float AAgent::CalculateDistanceToGoal() {
       FVector LinkStart = GetActorLocation();
       FVector LinkEnd = GoalItr->GetActorLocation();
       DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Cyan, false, -1, 1,
-                    5.0f);
+                    2.0f);
       // GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green,
       // FString::SanitizeFloat((LinkEnd - LinkStart).Size()));
       return (LinkEnd - LinkStart).Size();

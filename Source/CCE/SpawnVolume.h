@@ -64,8 +64,12 @@ private:
 
 	void SpawnAgent();
 
+	
+
 	/*Neat stuff*/
 	void InitNeat();
+	
+	NEAT::Population* ReadPopulation(char * filePath);
 
 	NEAT::Genome* ReadGenome(char * filePath);
 
