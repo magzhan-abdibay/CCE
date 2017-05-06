@@ -24,17 +24,11 @@ class AAgent : public ACharacter {
 public:
   AAgent();
 
-  FORCEINLINE class USpringArmComponent *GetCameraBoom() const {
-    return CameraBoom;
-  }
+  FORCEINLINE class USpringArmComponent *GetCameraBoom() const { return CameraBoom;}
 
-  FORCEINLINE class UCameraComponent *GetFollowCamera() const {
-    return FollowCamera;
-  }
+  FORCEINLINE class UCameraComponent *GetFollowCamera() const { return FollowCamera;}
 
-  FORCEINLINE class UBehaviorTree *GetBehaviorTree() const {
-    return BehaviorTree;
-  }
+  FORCEINLINE class UBehaviorTree *GetBehaviorTree() const {return BehaviorTree;}
 
   FORCEINLINE int8 GetTeam() const { return Team; }
 
@@ -50,9 +44,7 @@ public:
 
   FORCEINLINE float GetDistanceToTeammate() const { return DistanceToTeammate; }
 
-  FORCEINLINE void SetDistanceToTeammate(float Value) {
-    DistanceToTeammate = Value;
-  }
+  FORCEINLINE void SetDistanceToTeammate(float Value) {DistanceToTeammate = Value;}
 
   virtual void Tick(float DeltaSeconds) override;
 
@@ -66,9 +58,7 @@ private:
   float CalcualteDistanceToTeammate();
 
   void MoveForward(float Value);
-
   void MoveRight(float Value);
 
-  virtual void SetupPlayerInputComponent(
-      class UInputComponent *PlayerInputComponent) override;
+  virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 };

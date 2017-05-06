@@ -1,6 +1,7 @@
 #include "CCE.h"
 #include "SpawnVolume.h"
 #include "Agent.h"
+#include "AgentController.h"
 #include "Kismet/KismetMathLibrary.h"
 
 ASpawnVolume::ASpawnVolume() {
@@ -31,7 +32,7 @@ FVector ASpawnVolume::GetRandomPointInVolume() {
   return UKismetMathLibrary::RandomPointInBoundingBox(SpawnOrigin, SpawnExtent);
 }
 
-void ASpawnVolume::SpawnAgent() {
+AAgent* ASpawnVolume::SpawnAgent() {
   // If we have set something to spawn:
   if (WhatToSpawn != NULL) {
     // Check for a valid World:
@@ -52,10 +53,11 @@ void ASpawnVolume::SpawnAgent() {
       AAgent *const SpawnedActor = World->SpawnActor<AAgent>(
           WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 
-	  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, SpawnedActor->GetController()->GetClass()->GetName());
-	 
+	  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, SpawnedActor->GetController()->GetClass()->GetName());
+	  return SpawnedActor;
     }
   }
+  return NULL;
 }
 
 NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
@@ -75,7 +77,9 @@ NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
 			return NULL;
 		}
 		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Fitness: "))+FString::FromInt((*curOrg)->fitness));
-		SpawnAgent();
+		AAgent* SpwanedAgent=SpawnAgent();
+		DoStuff((*curOrg)->net, SpwanedAgent);
+
 	}
 
 	// Get ready for real-time loop
@@ -88,6 +92,33 @@ NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
 	pop->estimateAllAverages();
 	
 	return pop;
+}
+
+void ASpawnVolume::DoStuff(NEAT::Network *Net, AAgent* Agent) {
+	if (!Agent||!Net)
+		return;
+
+	AAgentController* AgentController=(AAgentController*)Agent->GetController();
+	AgentController->SetNeuralNetwork(Net);
+
+	double input[7];
+	input[0] = 0.8 / 4.8;
+	input[1] = 1 / 2;
+	input[2] = 0.5 / 0.52;
+	input[3] = 1.5 / 2;
+	input[4] = 1 / 0.52;
+	input[5] = 1 / 2;
+	input[6] = .5;
+
+	AgentController->GetNeuralNetwork()->loadSensors(input);
+
+	//Activate the net
+	//If it loops, exit returning only fitness of 1 step
+	if (!(AgentController->GetNeuralNetwork()->activate())) return;
+
+	double output = (*(AgentController->GetNeuralNetwork()->outputs.begin()))->activation;
+
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Emerald, FString::SanitizeFloat(output));
 }
 
 void ASpawnVolume::InitNeat() {

@@ -62,7 +62,7 @@ private:
 		meta = (AllowPrivateAccess = "true"))
 		class UBoxComponent *WhereToSpawn;
 
-	void SpawnAgent();
+	AAgent* SpawnAgent();
 
 	
 
@@ -83,6 +83,6 @@ private:
 
 	bool Pole2Evaluate(NEAT::Organism *org);
 
-	
+	void DoStuff(NEAT::Network *Net,AAgent* Agent);
 
 };
