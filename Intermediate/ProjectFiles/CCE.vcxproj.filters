@@ -59,12 +59,6 @@
     <ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\CCE\SelectPoint.cpp">
-      <Filter>Source\CCE</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\CCE\SelectPoint.h">
-      <Filter>Source\CCE</Filter>
-    </ClInclude>
     <ClCompile Include="..\..\Source\CCE\SpawnVolume.cpp">
       <Filter>Source\CCE</Filter>
     </ClCompile>

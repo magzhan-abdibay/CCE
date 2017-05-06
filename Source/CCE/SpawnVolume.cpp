@@ -18,7 +18,7 @@ void ASpawnVolume::BeginPlay() {
 	// Init NEAT
 	//InitNeat();
 
-	ReadPopulation("E:\\UnrealProjects\\CCE\\Binaries\\Win64\\rt_winpop");
+	ReadPopulation("E:\\UnrealProjects\\CCE\\Config\\Population");
 }
 
 void ASpawnVolume::Tick(float DeltaTime) {
@@ -118,7 +118,7 @@ void ASpawnVolume::DoStuff(NEAT::Network *Net, AAgent* Agent) {
 
 	double output = (*(AgentController->GetNeuralNetwork()->outputs.begin()))->activation;
 
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Emerald, FString::SanitizeFloat(output));
+	//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Emerald, FString::SanitizeFloat(output));
 }
 
 void ASpawnVolume::InitNeat() {

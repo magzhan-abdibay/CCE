@@ -2,61 +2,15 @@
 
 #include "CCE.h"
 #include "AgentController.h"
-#include "Agent.h"
-#include "AI/Navigation/NavigationPath.h"
-#include "BehaviorTree/BlackboardComponent.h"
-#include "BehaviorTree/BehaviorTreeComponent.h"
-#include "BehaviorTree/BehaviorTree.h"
-#include "Engine/TargetPoint.h"
 
-AAgentController::AAgentController() {
-  AgentBlackBoardComponent = CreateDefaultSubobject<UBlackboardComponent>(
-      TEXT("AgentBlackBoardComponent"));
-  AgentBehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>(
-      TEXT("AgentBehaviorTreeComponent"));
-}
+AAgentController::AAgentController() {}
 
 void AAgentController::Possess(APawn *Value) {
   Super::Possess(Value);
-
-  AAgent *Agent = Cast<AAgent>(Value);
-  /*
-  if (Agent) {
-    if (Agent->GetBehaviorTree()->BlackboardAsset) {
-      AgentBlackBoardComponent->InitializeBlackboard(
-          *(Agent->GetBehaviorTree()->BlackboardAsset));
-    }
-    AgentBehaviorTreeComponent->StartTree(*Agent->GetBehaviorTree());
-  }
-  */
-  
-
- // AAgent *Agent = Cast<AAgent>(Value);
-
-  FVector Dest = FVector(230, 230, 230);
-  UNavigationPath* Path = UNavigationSystem::FindPathToLocationSynchronously(this, Agent->GetActorLocation(), Dest, Agent);
-
-  if (Path && Path->IsValid())
-  {
-	  FAIMoveRequest Req;
-	  Req.SetAcceptanceRadius(50);
-	  Req.SetUsePathfinding(true);
-
-	  AAIController* AiController = Cast<AAIController>(Agent->GetController());
-	  if (AiController)
-	  {
-		  AiController->RequestMove(Req, Path->GetPath());
-	  }
-  }
+  Agent = Cast<AAgent>(Value);
 }
 
-/*
-void AAgentController::OnPossess(APawn *Value) {
-	Super::OnPossess(Value);
-
-	AAgent *Agent = Cast<AAgent>(Value);
-
-	FVector Dest = FVector(0, 0, 230);
+void AAgentController::MoveTo(FVector Dest) {
 	UNavigationPath* Path = UNavigationSystem::FindPathToLocationSynchronously(this, Agent->GetActorLocation(), Dest, Agent);
 
 	if (Path && Path->IsValid())
@@ -71,6 +25,41 @@ void AAgentController::OnPossess(APawn *Value) {
 			AiController->RequestMove(Req, Path->GetPath());
 		}
 	}
-
 }
-*/
+
+void AAgentController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	
+	EPathFollowingStatus::Type status = GetMoveStatus();
+	if (status == EPathFollowingStatus::Moving) {
+		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Emerald, "Moving");
+	}
+	else if (status == EPathFollowingStatus::Idle) {
+		double value=DoStuff();
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(value * 1000));
+		MoveTo(FVector(value*1000, value, 230));
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Black, "Else");
+	}
+}
+
+double AAgentController::DoStuff()
+{
+	double input[7];
+	input[0] = Agent->GetDistanceToBall() / 10000;
+	input[1] = Agent->GetDistanceToGoal() / 10000;
+	input[2] = Agent->GetDistanceToTeammate() / 10000;
+	input[3] = Agent->GetDistanceToBall() / 10000;
+	input[4] = Agent->GetDistanceToBall() / 10000;
+	input[5] = Agent->GetDistanceToBall() / 10000;
+	input[6] = .5;
+
+	NeuralNetwork->loadSensors(input);
+
+	//Activate the net
+	//If it loops, exit returning only fitness of 1 step
+	if (!(NeuralNetwork->activate())) return 1;
+
+	return  (*(NeuralNetwork->outputs.begin()))->activation;
+}
