@@ -36,21 +36,18 @@ AAgent::AAgent() {
   FollowCamera->bUsePawnControlRotation =false; 
 }
 
-void AAgent::SetupPlayerInputComponent(
-    class UInputComponent *PlayerInputComponent) {
+void AAgent::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) {
   // Set up gameplay key bindings
   check(PlayerInputComponent);
   PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-  PlayerInputComponent->BindAction("Jump", IE_Released, this,
-                                   &ACharacter::StopJumping);
+  PlayerInputComponent->BindAction("Jump", IE_Released, this,&ACharacter::StopJumping);
 
   PlayerInputComponent->BindAxis("MoveForward", this, &AAgent::MoveForward);
   PlayerInputComponent->BindAxis("MoveRight", this, &AAgent::MoveRight);
 
   // Rotation bindings
   PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-  PlayerInputComponent->BindAxis("LookUp", this,
-                                 &APawn::AddControllerPitchInput);
+  PlayerInputComponent->BindAxis("LookUp", this,&APawn::AddControllerPitchInput);
 }
 
 void AAgent::MoveForward(float Value) {
@@ -58,10 +55,8 @@ void AAgent::MoveForward(float Value) {
     // find out which way is forward
     const FRotator Rotation = Controller->GetControlRotation();
     const FRotator YawRotation(0, Rotation.Yaw, 0);
-
     // get forward vector
-    const FVector Direction =
-        FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    const FVector Direction =FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
     AddMovementInput(Direction, Value);
   }
 }
@@ -73,8 +68,7 @@ void AAgent::MoveRight(float Value) {
     const FRotator YawRotation(0, Rotation.Yaw, 0);
 
     // get right vector
-    const FVector Direction =
-        FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+    const FVector Direction =FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
     // add movement in that direction
     AddMovementInput(Direction, Value);
   }

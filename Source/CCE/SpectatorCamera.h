@@ -6,7 +6,14 @@
 UCLASS()
 class CCE_API ASpectatorCamera : public APawn {
   GENERATED_BODY()
-
+  
+  UPROPERTY(EditAnywhere)
+  float cameraSpeed = 1500.0f;
+  
+  UPROPERTY(EditAnywhere)
+  USpringArmComponent *CameraSpringArmComponent;
+  
+  UCameraComponent *CameraComponent;
 public:
   // Sets default values for this pawn's properties
   ASpectatorCamera();
@@ -20,12 +27,8 @@ public:
   // Called to bind functionality to input
   virtual void SetupPlayerInputComponent(class UInputComponent *Value) override;
 
-protected:
-  UPROPERTY(EditAnywhere)
-  float cameraSpeed = 1500.0f;
-  UPROPERTY(EditAnywhere)
-  USpringArmComponent *CameraSpringArmComponent;
-  UCameraComponent *CameraComponent;
+private:
+
   FVector2D MovementInput;
   FVector2D CameraInput;
 

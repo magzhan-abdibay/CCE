@@ -22,6 +22,10 @@ class CCE_API AAgentController : public AAIController {
   AAgent *Agent;
   
   void MoveTo(FVector Dest);
+
+  FVector GenerateTargetVector(FVector &value);
+
+  int TicksFromLastCalculate = 0;
 public:
   AAgentController();
 

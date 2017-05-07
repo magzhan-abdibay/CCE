@@ -7,16 +7,11 @@ UCLASS(config = Game)
 class AAgent : public ACharacter {
   GENERATED_BODY()
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
-            meta = (AllowPrivateAccess = "true"))
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,meta = (AllowPrivateAccess = "true"))
   class USpringArmComponent *CameraBoom;
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,
-            meta = (AllowPrivateAccess = "true"))
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,meta = (AllowPrivateAccess = "true"))
   class UCameraComponent *FollowCamera;
-
-  UPROPERTY(EditAnywhere, Category = Behavior)
-  class UBehaviorTree *BehaviorTree;
 
   UPROPERTY(EditAnywhere, Category = Team)
   int8 Team;
@@ -24,11 +19,15 @@ class AAgent : public ACharacter {
 public:
   AAgent();
 
+  virtual void Tick(float DeltaSeconds) override;
+
+  void MoveForward(float Value);
+  
+  void MoveRight(float Value);
+
   FORCEINLINE class USpringArmComponent *GetCameraBoom() const { return CameraBoom;}
 
   FORCEINLINE class UCameraComponent *GetFollowCamera() const { return FollowCamera;}
-
-  FORCEINLINE class UBehaviorTree *GetBehaviorTree() const {return BehaviorTree;}
 
   FORCEINLINE int8 GetTeam() const { return Team; }
 
@@ -46,8 +45,6 @@ public:
 
   FORCEINLINE void SetDistanceToTeammate(float Value) {DistanceToTeammate = Value;}
 
-  virtual void Tick(float DeltaSeconds) override;
-
 private:
   float DistanceToBall = 0.0f;
   float DistanceToGoal = 0.0f;
@@ -56,9 +53,6 @@ private:
   float CalculateDistanceToBall();
   float CalculateDistanceToGoal();
   float CalcualteDistanceToTeammate();
-
-  void MoveForward(float Value);
-  void MoveRight(float Value);
 
   virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 };

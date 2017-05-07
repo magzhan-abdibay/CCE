@@ -21,6 +21,16 @@
 UCLASS()
 class CCE_API ASpawnVolume : public AActor {
 	GENERATED_BODY()
+	
+	/** What spawn. Subclass of AAgent*/
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TSubclassOf<class AAgent> WhatToSpawn;
+
+	/** Box Component to specify where agents should be spawned */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning",
+	meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent *WhereToSpawn;
+
 public:
 	ASpawnVolume();
 
@@ -35,9 +45,8 @@ public:
 		FVector GetRandomPointInVolume();
 
 	/** Returns the WhereToSpawn subobject */
-	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const {
-		return WhereToSpawn;
-	}
+	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const {return WhereToSpawn;
+}
 
 private:
 	/*Neat stuff*/
@@ -53,20 +62,8 @@ private:
 	
 	int OffspringCount = 0;
 
-	/** What spawn subclass of Agent*/
-	UPROPERTY(EditAnywhere, Category = "Spawning")
-		TSubclassOf<class AAgent> WhatToSpawn;
-
-	/** Box Component to specify where agents should be spawned */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawning",
-		meta = (AllowPrivateAccess = "true"))
-		class UBoxComponent *WhereToSpawn;
-
 	AAgent* SpawnAgent();
 
-	
-
-	/*Neat stuff*/
 	void InitNeat();
 	
 	NEAT::Population* ReadPopulation(char * filePath);
