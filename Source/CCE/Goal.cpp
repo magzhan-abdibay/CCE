@@ -14,8 +14,7 @@ AGoal::AGoal() {
   Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("light"));
   Light->Intensity = 100;
   Light->SetLightColor(FColor::Red);
-  Light->AttachToComponent(Box,
-                           FAttachmentTransformRules::KeepWorldTransform);
+  Light->AttachToComponent(Box,FAttachmentTransformRules::KeepWorldTransform);
 
   RootComponent = Box;
 }

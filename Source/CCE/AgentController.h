@@ -15,19 +15,22 @@ UCLASS()
 class CCE_API AAgentController : public AAIController {
   GENERATED_BODY()
 
-  virtual void Possess(APawn *Pawn) override;
-
+private:
   NEAT::Network *NeuralNetwork;
   
   AAgent *Agent;
   
-  void MoveTo(FVector Dest);
-
-  FVector GenerateTargetVector(FVector &value);
-
   int TicksFromLastCalculate = 0;
+
+  double* LastCalculatedOutput;
+
+  void MoveTo(FVector Dest);
 public:
   AAgentController();
+
+  virtual void Tick(float DeltaSeconds) override;
+
+  virtual void Possess(APawn *Pawn) override;
 
   FORCEINLINE NEAT::Network *GetNeuralNetwork() const {return NeuralNetwork;}
 
@@ -35,7 +38,7 @@ public:
 
   FORCEINLINE AAgent *GetAgent() const { return Agent; }
 
-  virtual void Tick(float DeltaSeconds) override;
+  double* ActivateNeuralNetwork();
 
-  double DoStuff();
+  void ControlAgent(double* ControlValues);
 };

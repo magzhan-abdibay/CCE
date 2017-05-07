@@ -14,7 +14,7 @@ void AAgentController::MoveTo(FVector Dest) {
 	if (Path && Path->IsValid())
 	{
 		FAIMoveRequest Req;
-		//Req.SetAcceptanceRadius(50);
+		Req.SetAcceptanceRadius(50);
 		Req.SetUsePathfinding(true);
 
 		AAIController* AiController = Cast<AAIController>(Agent->GetController());
@@ -28,66 +28,59 @@ void AAgentController::MoveTo(FVector Dest) {
 void AAgentController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 	
-	if (TicksFromLastCalculate++ > 10) {
+	ControlAgent(LastCalculatedOutput);
+
+	if (TicksFromLastCalculate++ > 60) {
 		TicksFromLastCalculate = 0;
-
-		EPathFollowingStatus::Type status = GetMoveStatus();
-		if (status == EPathFollowingStatus::Moving) {
-			//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Emerald, "Moving");
-		}
-		else if (status == EPathFollowingStatus::Idle) {
-			double value = DoStuff();
-			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(value * 1000));
-			FVector Destination = FVector(value * 1000, value * 10, 230);
-			MoveTo(Destination);
-		}
-		else {
-			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Black, "Else");
-		}
+		LastCalculatedOutput = ActivateNeuralNetwork();
+		//for (int i = 0; i < 4; i++) {
+		//	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Black, FString::SanitizeFloat(LastCalculatedOutput[i]));
+		//}
 	}
+	
 }
 
-double AAgentController::DoStuff()
+double* AAgentController::ActivateNeuralNetwork()
 {
-	double input[7];
-	input[0] = Agent->GetDistanceToBall() / 10000;
-	input[1] = Agent->GetDistanceToGoal() / 10000;
-	input[2] = Agent->GetDistanceToTeammate() / 10000;
-	input[3] = Agent->GetDistanceToBall() / 10000;
-	input[4] = Agent->GetDistanceToBall() / 10000;
-	input[5] = Agent->GetDistanceToBall() / 10000;
-	input[6] = .5;
+	double* Input= new double[7];
+	double* Output= new double[4];
+	Input[0] = Agent->GetDistanceToBall() / 1000;
+	Input[1] = Agent->GetDistanceToBall() / 1000;
+	Input[2] = Agent->GetDistanceToBall() / 1000;
+	Input[3] = Agent->GetDistanceToBall() / 1000;
+	Input[4] = Agent->GetDistanceToBall() / 1000;
+	Input[5] = Agent->GetDistanceToBall() / 1000;
+	Input[6] = .5;
 
-	NeuralNetwork->loadSensors(input);
+	NeuralNetwork->loadSensors(Input);
 
-	//Activate the net
-	//If it loops, exit returning only fitness of 1 step
-	if (!(NeuralNetwork->activate())) return 1;
+	int i = 0;
+	std::vector<NEAT::NNode*>::iterator OutputIterator = NeuralNetwork->outputs.begin();
+	for (OutputIterator = NeuralNetwork->outputs.begin(); OutputIterator != NeuralNetwork->outputs.end(); OutputIterator++, i++) {
+		Output[i] = round((*OutputIterator)->activation);
+	}
 
-	return  (*(NeuralNetwork->outputs.begin()))->activation;
+	return Output;
 }
 
-FVector AAgentController::GenerateTargetVector(FVector &value)  {
-	int32 orientation = FMath::RandRange(1, 4);
-	int32 moveStep = 500;
-	FVector result;
-	switch (orientation) {
-	case 1:
+void AAgentController::ControlAgent(double *ControlValues)  {
+	if (!ControlValues)
+		return;
+	int16 moveStep = 500;
+	
+	FVector MovementVector = FVector::ZeroVector;
+	
+	if(ControlValues[0] == 1)
+		MovementVector+=FVector::ForwardVector * moveStep;
+	
+	if (ControlValues[1] == 1)
+		MovementVector -= FVector::ForwardVector * moveStep;
+	
+	if (ControlValues[2] == 1)
+		MovementVector += FVector::RightVector * moveStep;
+	
+	if (ControlValues[3] == 1)
+		MovementVector -= FVector::RightVector * moveStep;
 
-		result = FVector::ForwardVector * moveStep;
-		break;
-	case 2:
-		result = -FVector::ForwardVector * moveStep;
-		break;
-	case 3:
-		result = FVector::RightVector * moveStep;
-		break;
-	case 4:
-		result = -FVector::RightVector * moveStep;
-		break;
-	default:
-		result = FVector::ZeroVector;
-	}
-	result += value;
-	return result;
+	Agent->AddMovementInput(MovementVector, moveStep);
 }
