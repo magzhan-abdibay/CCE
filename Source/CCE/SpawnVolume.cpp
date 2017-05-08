@@ -16,9 +16,9 @@ void ASpawnVolume::BeginPlay() {
 	Super::BeginPlay(); 
 	
 	// Init NEAT
-	//InitNeat();
+	InitNeat();
 
-	ReadPopulation("E:\\UnrealProjects\\CCE\\Config\\Population");
+	//ReadPopulation("E:\\UnrealProjects\\CCE\\Config\\NEAT\\Population");
 }
 
 void ASpawnVolume::Tick(float DeltaTime) {
@@ -64,7 +64,6 @@ NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
 
 	NEAT::Population *pop = new NEAT::Population(filePath);
 	
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Verifying population")));
 	pop->verifyPopulation();
 
 	// Initially, we evaluate the whole population
@@ -76,10 +75,8 @@ NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return NULL;
 		}
-		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Fitness: "))+FString::FromInt((*curOrg)->fitness));
-		AAgent* SpwanedAgent=SpawnAgent();
-		DoStuff((*curOrg)->net, SpwanedAgent);
-
+		//Spawn Agent and Attach NN 
+		SpawnAgentAndAttachNeuralNetwork((*curOrg)->net);
 	}
 
 	// Get ready for real-time loop
@@ -94,47 +91,26 @@ NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
 	return pop;
 }
 
-void ASpawnVolume::DoStuff(NEAT::Network *Net, AAgent* Agent) {
-	if (!Agent||!Net)
-		return;
-
+void ASpawnVolume::SpawnAgentAndAttachNeuralNetwork(NEAT::Network *Net) {
+	AAgent* Agent = SpawnAgent();
 	AAgentController* AgentController=(AAgentController*)Agent->GetController();
 	AgentController->SetNeuralNetwork(Net);
-
-	double input[7];
-	input[0] = 0.8 / 4.8;
-	input[1] = 1 / 2;
-	input[2] = 0.5 / 0.52;
-	input[3] = 1.5 / 2;
-	input[4] = 1 / 0.52;
-	input[5] = 1 / 2;
-	input[6] = .5;
-
-	AgentController->GetNeuralNetwork()->loadSensors(input);
-
-	//Activate the net
-	//If it loops, exit returning only fitness of 1 step
-	if (!(AgentController->GetNeuralNetwork()->activate())) return;
-
-	double output = (*(AgentController->GetNeuralNetwork()->outputs.begin()))->activation;
-
-	//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Emerald, FString::SanitizeFloat(output));
 }
 
 void ASpawnVolume::InitNeat() {
   char *NeatParamsPath =
-      "E:\\UnrealProjects\\CCE\\NEAT\\NEATConsoleApplication\\pole2_markov.ne";
+      "E:\\UnrealProjects\\CCE\\Config\\NEAT\\NeatVariables.ne";
   NEAT::loadNeatParams(NeatParamsPath, true);
 
   char *GenomeParamsPath =
-	  "E:\\UnrealProjects\\CCE\\NEAT\\NEATConsoleApplication\\pole2startgenes1";
+	  "E:\\UnrealProjects\\CCE\\Config\\NEAT\\StartGene";
   NEAT::Genome *startGenome = ReadGenome(GenomeParamsPath);
 
-  Cart = new CartPole(1);
-  Cart->N_MARKOV_LONG = false;
-  Cart->GENERALIZATION_TEST = false;
+  Population=SpawnInitialPopulation(startGenome);
 
-  SpawnInitialPopulation(startGenome);
+  char *PrintPopulationPath =
+	  "E:\\UnrealProjects\\CCE\\Config\\NEAT\\WinnerPopulation";
+  Population->printToFileBySpecies(PrintPopulationPath);
 }
 
 NEAT::Genome* ASpawnVolume::ReadGenome(char * filePath) {
@@ -153,14 +129,14 @@ NEAT::Genome* ASpawnVolume::ReadGenome(char * filePath) {
 	return startGenome;
 }
 
-void ASpawnVolume::SpawnInitialPopulation(NEAT::Genome* startGenome) {
+NEAT::Population* ASpawnVolume::SpawnInitialPopulation(NEAT::Genome* startGenome) {
 
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString(TEXT("Spawning Population off Genome")));
 
-	Population = new NEAT::Population(startGenome, NEAT::popSize);
+	NEAT::Population* SpawnedPopulation = new NEAT::Population(startGenome, NEAT::popSize);
 	
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Verifying Spawned Pop")));
-	Population->verifyPopulation();
+	SpawnedPopulation->verifyPopulation();
 
 	// We try to keep the number of species constant at this number
 	NumSpeciesTarget = NEAT::popSize / 15;
@@ -174,25 +150,31 @@ void ASpawnVolume::SpawnInitialPopulation(NEAT::Genome* startGenome) {
 	// Initially, we evaluate the whole population
 	// Evaluate each organism on a test
 	vector<NEAT::Organism *>::iterator curOrg;
-	for (curOrg = (Population->organisms).begin(); curOrg != (Population->organisms).end(); ++curOrg) {
+	for (curOrg = (SpawnedPopulation->organisms).begin(); curOrg != (SpawnedPopulation->organisms).end(); ++curOrg) {
 		// shouldn't happen
 		if (((*curOrg)->gnome) == 0) {
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
-			return;
+			return NULL;
 		}
-		if (Pole2Evaluate((*curOrg))) {
-			Win = true;
-		}
+		
+		//Незабыть
+		//if (Pole2Evaluate((*curOrg))) {
+		//	Win = true;
+		//}
+
+		SpawnAgentAndAttachNeuralNetwork((*curOrg)->net);
 	}
 
 	// Get ready for real-time loop
 	// Rank all the organisms from best to worst in each species
-	Population->rankWithinSpecies();
+	SpawnedPopulation->rankWithinSpecies();
 
 	// Assign each species an average fitness
 	// This average must be kept up-to-date by rtNEAT in order to select species
 	// probabailistically for reproduction
-	Population->estimateAllAverages();
+	SpawnedPopulation->estimateAllAverages();
+
+	return SpawnedPopulation;
 }
 
 void ASpawnVolume::NeatTick(int count) {
@@ -250,8 +232,8 @@ void ASpawnVolume::NeatTick(int count) {
   // all individuals at all times.  That is, this call would not appear here in
   // a true online simulation.
   GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Evaluating new baby: ")));
-  if (Pole2Evaluate(newOrg))
-    Win = true;
+  //if (Pole2Evaluate(newOrg))
+  //  Win = true;
 
   if (Win) {
     GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "WINNER");

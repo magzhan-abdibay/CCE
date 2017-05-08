@@ -33,31 +33,34 @@ void AAgentController::Tick(float DeltaTime) {
 	if (TicksFromLastCalculate++ > 60) {
 		TicksFromLastCalculate = 0;
 		LastCalculatedOutput = ActivateNeuralNetwork();
-		//for (int i = 0; i < 4; i++) {
-		//	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Black, FString::SanitizeFloat(LastCalculatedOutput[i]));
-		//}
 	}
 	
 }
 
 double* AAgentController::ActivateNeuralNetwork()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Activating")));
 	double* Input= new double[7];
 	double* Output= new double[4];
-	Input[0] = Agent->GetDistanceToBall() / 1000;
-	Input[1] = Agent->GetDistanceToBall() / 1000;
-	Input[2] = Agent->GetDistanceToBall() / 1000;
-	Input[3] = Agent->GetDistanceToBall() / 1000;
-	Input[4] = Agent->GetDistanceToBall() / 1000;
-	Input[5] = Agent->GetDistanceToBall() / 1000;
+	Input[0] = Agent->GetDistanceToBall() ;
+	Input[1] = Agent->GetDistanceToBall() ;
+	Input[2] = Agent->GetDistanceToBall() ;
+	Input[3] = Agent->GetDistanceToBall() ;
+	Input[4] = Agent->GetDistanceToBall() ;
+	Input[5] = Agent->GetDistanceToBall() ;
 	Input[6] = .5;
+
+	for (int i = 0; i < 7; i++) {
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(Input[i]));
+	}
 
 	NeuralNetwork->loadSensors(Input);
 
 	int i = 0;
 	std::vector<NEAT::NNode*>::iterator OutputIterator = NeuralNetwork->outputs.begin();
 	for (OutputIterator = NeuralNetwork->outputs.begin(); OutputIterator != NeuralNetwork->outputs.end(); OutputIterator++, i++) {
-		Output[i] = round((*OutputIterator)->activation);
+		Output[i] = (*OutputIterator)->activation;
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat((*OutputIterator)->activation));
 	}
 
 	return Output;
@@ -71,16 +74,16 @@ void AAgentController::ControlAgent(double *ControlValues)  {
 	FVector MovementVector = FVector::ZeroVector;
 	
 	if(ControlValues[0] == 1)
-		MovementVector+=FVector::ForwardVector * moveStep;
+		MovementVector+=FVector::ForwardVector;
 	
 	if (ControlValues[1] == 1)
-		MovementVector -= FVector::ForwardVector * moveStep;
+		MovementVector -= FVector::ForwardVector;
 	
 	if (ControlValues[2] == 1)
-		MovementVector += FVector::RightVector * moveStep;
+		MovementVector += FVector::RightVector;
 	
 	if (ControlValues[3] == 1)
-		MovementVector -= FVector::RightVector * moveStep;
+		MovementVector -= FVector::RightVector;
 
 	Agent->AddMovementInput(MovementVector, moveStep);
 }

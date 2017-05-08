@@ -42,7 +42,7 @@ public:
 
 	/** Find a random point within the BoxComponent */
 	UFUNCTION(BlueprintPure, Category = "Spawning")
-		FVector GetRandomPointInVolume();
+	FVector GetRandomPointInVolume();
 
 	/** Returns the WhereToSpawn subobject */
 	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const {return WhereToSpawn;
@@ -70,7 +70,7 @@ private:
 
 	NEAT::Genome* ReadGenome(char * filePath);
 
-	void SpawnInitialPopulation(NEAT::Genome* startGenome);
+	NEAT::Population* SpawnInitialPopulation(NEAT::Genome* startGenome);
 
 	void Pole2TestRealTime();
 
@@ -80,6 +80,6 @@ private:
 
 	bool Pole2Evaluate(NEAT::Organism *org);
 
-	void DoStuff(NEAT::Network *Net,AAgent* Agent);
+	void SpawnAgentAndAttachNeuralNetwork(NEAT::Network *Net);
 
 };
