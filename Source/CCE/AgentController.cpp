@@ -8,23 +8,6 @@ void AAgentController::Possess(APawn *Value) {
   Agent = Cast<AAgent>(Value);
 }
 
-void AAgentController::MoveTo(FVector Dest) {
-	UNavigationPath* Path = UNavigationSystem::FindPathToLocationSynchronously(this, Agent->GetActorLocation(), Dest, Agent);
-
-	if (Path && Path->IsValid())
-	{
-		FAIMoveRequest Req;
-		Req.SetAcceptanceRadius(50);
-		Req.SetUsePathfinding(true);
-
-		AAIController* AiController = Cast<AAIController>(Agent->GetController());
-		if (AiController)
-		{
-			AiController->RequestMove(Req, Path->GetPath());
-		}
-	}
-}
-
 void AAgentController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 	
@@ -33,6 +16,7 @@ void AAgentController::Tick(float DeltaTime) {
 	if (TicksFromLastCalculate++ > 60) {
 		TicksFromLastCalculate = 0;
 		LastCalculatedOutput = ActivateNeuralNetwork();
+		NeatOrganism->fitness = EvaluateFitness();
 	}
 	
 }
@@ -54,16 +38,26 @@ double* AAgentController::ActivateNeuralNetwork()
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(Input[i]));
 	}
 
-	NeuralNetwork->loadSensors(Input);
+	NeatOrganism->net->loadSensors(Input);
 
 	int i = 0;
-	std::vector<NEAT::NNode*>::iterator OutputIterator = NeuralNetwork->outputs.begin();
-	for (OutputIterator = NeuralNetwork->outputs.begin(); OutputIterator != NeuralNetwork->outputs.end(); OutputIterator++, i++) {
+	std::vector<NEAT::NNode*>::iterator OutputIterator = NeatOrganism->net->outputs.begin();
+	for (OutputIterator = NeatOrganism->net->outputs.begin(); OutputIterator != NeatOrganism->net->outputs.end(); OutputIterator++, i++) {
 		Output[i] = (*OutputIterator)->activation;
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat((*OutputIterator)->activation));
 	}
 
 	return Output;
+}
+
+double AAgentController::EvaluateFitness() {
+	double Result = 0.0f;
+	if (LastCalculatedOutput) {
+		for (int i = 0; i < 4; i++) {
+			Result += LastCalculatedOutput[i];
+		}
+	}
+	return Result;
 }
 
 void AAgentController::ControlAgent(double *ControlValues)  {

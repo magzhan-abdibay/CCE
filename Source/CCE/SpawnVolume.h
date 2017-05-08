@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+
 #include "Neat.h"
 #include "Network.h"
 #include "Population.h"
@@ -15,6 +16,10 @@
 #include "Genome.h"
 #include "Species.h"
 #include "CartPole.h"
+
+#include "Agent.h"
+#include "AgentController.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/Actor.h"
 #include "SpawnVolume.generated.h"
 
@@ -45,15 +50,12 @@ public:
 	FVector GetRandomPointInVolume();
 
 	/** Returns the WhereToSpawn subobject */
-	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const {return WhereToSpawn;
-}
+	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const {return WhereToSpawn;}
 
 private:
 	/*Neat stuff*/
 	NEAT::Population *Population = 0;
-	
-	CartPole *Cart = 0;
-	
+		
 	int CompatAdjustFrequency = 0;
 	
 	bool Win = false;
@@ -62,7 +64,7 @@ private:
 	
 	int OffspringCount = 0;
 
-	AAgent* SpawnAgent();
+	int TicksFromLastCalculate = 0;
 
 	void InitNeat();
 	
@@ -70,16 +72,13 @@ private:
 
 	NEAT::Genome* ReadGenome(char * filePath);
 
+	AAgent* SpawnAgent();
+
 	NEAT::Population* SpawnInitialPopulation(NEAT::Genome* startGenome);
 
-	void Pole2TestRealTime();
-
-	int Pole2RealTimeLoop();
+	bool EvaluateAgent(AAgentController* AgentController);
 
 	void NeatTick(int count);
 
-	bool Pole2Evaluate(NEAT::Organism *org);
-
-	void SpawnAgentAndAttachNeuralNetwork(NEAT::Network *Net);
-
+	AAgentController* SpawnAgentAndAttachNeatOrganism(NEAT::Organism *Org);
 };

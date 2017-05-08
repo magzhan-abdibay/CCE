@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AIController.h"
-#include "Network.h"
+#include "Organism.h"
 #include "Agent.h"
 #include "AI/Navigation/NavigationPath.h"
 #include "Runtime/AIModule/Classes/Navigation/PathFollowingComponent.h"
@@ -16,7 +16,7 @@ class CCE_API AAgentController : public AAIController {
   GENERATED_BODY()
 
 private:
-  NEAT::Network *NeuralNetwork;
+  NEAT::Organism *NeatOrganism;
   
   AAgent *Agent;
   
@@ -24,7 +24,6 @@ private:
 
   double* LastCalculatedOutput;
 
-  void MoveTo(FVector Dest);
 public:
   AAgentController();
 
@@ -32,13 +31,15 @@ public:
 
   virtual void Possess(APawn *Pawn) override;
 
-  FORCEINLINE NEAT::Network *GetNeuralNetwork() const {return NeuralNetwork;}
+  FORCEINLINE NEAT::Organism *GetNeatOrganism() const { return NeatOrganism; }
 
-  FORCEINLINE void SetNeuralNetwork(NEAT::Network *Value) {NeuralNetwork = Value;}
+  FORCEINLINE void SetNeatOrganism(NEAT::Organism *Value) { NeatOrganism = Value; }
 
   FORCEINLINE AAgent *GetAgent() const { return Agent; }
 
   double* ActivateNeuralNetwork();
+
+  double EvaluateFitness();
 
   void ControlAgent(double* ControlValues);
 };

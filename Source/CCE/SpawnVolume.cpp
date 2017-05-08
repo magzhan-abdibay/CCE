@@ -1,8 +1,5 @@
 #include "CCE.h"
 #include "SpawnVolume.h"
-#include "Agent.h"
-#include "AgentController.h"
-#include "Kismet/KismetMathLibrary.h"
 
 ASpawnVolume::ASpawnVolume() {
   PrimaryActorTick.bCanEverTick = true;
@@ -23,7 +20,10 @@ void ASpawnVolume::BeginPlay() {
 
 void ASpawnVolume::Tick(float DeltaTime) {
   Super::Tick(DeltaTime);
-  //NeatTick(OffspringCount++);
+  if (TicksFromLastCalculate++ > 60) {
+	  TicksFromLastCalculate = 0;
+	  NeatTick(OffspringCount++);
+  }
 }
 
 FVector ASpawnVolume::GetRandomPointInVolume() {
@@ -53,7 +53,6 @@ AAgent* ASpawnVolume::SpawnAgent() {
       AAgent *const SpawnedActor = World->SpawnActor<AAgent>(
           WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 
-	  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, SpawnedActor->GetController()->GetClass()->GetName());
 	  return SpawnedActor;
     }
   }
@@ -76,7 +75,11 @@ NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
 			return NULL;
 		}
 		//Spawn Agent and Attach NN 
-		SpawnAgentAndAttachNeuralNetwork((*curOrg)->net);
+		AAgentController* AgentController=SpawnAgentAndAttachNeatOrganism((*curOrg));
+		(*curOrg)->fitness = AgentController->EvaluateFitness();
+		if (EvaluateAgent(AgentController))
+			Win = true;
+
 	}
 
 	// Get ready for real-time loop
@@ -89,12 +92,6 @@ NEAT::Population* ASpawnVolume::ReadPopulation(char * filePath) {
 	pop->estimateAllAverages();
 	
 	return pop;
-}
-
-void ASpawnVolume::SpawnAgentAndAttachNeuralNetwork(NEAT::Network *Net) {
-	AAgent* Agent = SpawnAgent();
-	AAgentController* AgentController=(AAgentController*)Agent->GetController();
-	AgentController->SetNeuralNetwork(Net);
 }
 
 void ASpawnVolume::InitNeat() {
@@ -157,12 +154,10 @@ NEAT::Population* ASpawnVolume::SpawnInitialPopulation(NEAT::Genome* startGenome
 			return NULL;
 		}
 		
-		//Незабыть
-		//if (Pole2Evaluate((*curOrg))) {
-		//	Win = true;
-		//}
-
-		SpawnAgentAndAttachNeuralNetwork((*curOrg)->net);
+		AAgentController* AgentController = SpawnAgentAndAttachNeatOrganism((*curOrg));
+		(*curOrg)->fitness = AgentController->EvaluateFitness();
+		if (EvaluateAgent(AgentController))
+			Win = true;
 	}
 
 	// Get ready for real-time loop
@@ -177,6 +172,13 @@ NEAT::Population* ASpawnVolume::SpawnInitialPopulation(NEAT::Genome* startGenome
 	return SpawnedPopulation;
 }
 
+AAgentController* ASpawnVolume::SpawnAgentAndAttachNeatOrganism(NEAT::Organism *Org) {
+	AAgent* Agent = SpawnAgent();
+	AAgentController* AgentController = (AAgentController*)Agent->GetController();
+	AgentController->SetNeatOrganism(Org);
+	return AgentController;
+}
+
 void ASpawnVolume::NeatTick(int count) {
 
   if (Win)
@@ -184,8 +186,7 @@ void ASpawnVolume::NeatTick(int count) {
   if (CompatAdjustFrequency == 0)
     return;
 
-  // Every popSize reproductions, adjust the compatThresh to better match the
-  // numSpeciesTarger  and reassign the population to new species
+  // Every popSize reproductions, adjust the compatThresh to better match the numSpeciesTarger  and reassign the population to new species
   if (count % CompatAdjustFrequency == 0) {
     int numSpecies = (int)Population->species.size();
     double compatMod = 0.1; // Modify compat thresh to control speciation
@@ -210,30 +211,31 @@ void ASpawnVolume::NeatTick(int count) {
   }
 
   // For printing only
-  vector<NEAT::Species *>::iterator curSpec;
-  for (curSpec = (Population->species).begin();
-       curSpec != (Population->species).end(); curSpec++) {
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Species "))+FString::FromInt((*curSpec)->id));
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("size ")) + FString::FromInt((*curSpec)->organisms.size()));
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("average= ")) + FString::FromInt((*curSpec)->avgEst));
-  }
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Pop size: ")) + FString::FromInt(Population->organisms.size()));
+  //vector<NEAT::Species *>::iterator curSpec;
+  //for (curSpec = (Population->species).begin();
+  //     curSpec != (Population->species).end(); curSpec++) {
+  // GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Species "))+FString::FromInt((*curSpec)->id));
+  // GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("size ")) + FString::FromInt((*curSpec)->organisms.size()));
+  //	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("average= ")) + FString::FromInt((*curSpec)->avgEst));
+  //}
+  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Pop size: ")) + FString::FromInt(Population->organisms.size()));
 
   // Here we call two rtNEAT calls:
   // 1) chooseParentSpecies() decides which species should produce the next
   // offspring  2) reproduceOne(...) creates a single offspring from the chosen
   // species
-  NEAT::Organism *newOrg =
-      (Population->chooseParentSpecies())
-          ->reproduceOne(count, Population, Population->species);
+  
+  NEAT::Organism *newOrg =(Population->chooseParentSpecies())->reproduceOne(count, Population, Population->species);
+  AAgentController* AgentController = SpawnAgentAndAttachNeatOrganism(newOrg);
+  newOrg->fitness = AgentController->EvaluateFitness();
+  if (EvaluateAgent(AgentController))
+	  Win = true;
 
   // Now we evaluate the new individual
   // Note that in a true real-time simulation, evaluation would be happening to
   // all individuals at all times.  That is, this call would not appear here in
   // a true online simulation.
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Evaluating new baby: ")));
-  //if (Pole2Evaluate(newOrg))
-  //  Win = true;
+
 
   if (Win) {
     GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "WINNER");
@@ -245,76 +247,22 @@ void ASpawnVolume::NeatTick(int count) {
   newOrg->species->estimateAverage();
 
   // Remove the worst organism
-  Population->removeWorst();
+  //Population->removeWorst();
 }
 
-bool ASpawnVolume::Pole2Evaluate(NEAT::Organism *org) {
-  NEAT::Network *net;
-
-  int pause;
-
-  net = org->net;
-
-  // Try to balance a pole now
-  org->fitness = Cart->evalNet(net);
-
-#ifndef NO_SCREEN_OUT
-  if (org->popChampChild)
-    cout << " <<DUPLICATE OF CHAMPION>> ";
-
-  // Output to screen
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Org  ")+FString::FromInt((org->gnome)->genomeId)));
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" fitness: ") + FString::FromInt(org->fitness)));
-  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" (") + FString::FromInt((org->gnome)->genes.size()))+ FString(TEXT(" / ") + FString::FromInt((org->gnome)->nodes.size())) + FString(TEXT(" ) ")));
- 
-  if (org->mutStructBaby)
-	  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" [struct]")));
-  if (org->mateBaby)
-	  GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT(" [mate]")));
-#endif
-
-  if ((!(Cart->GENERALIZATION_TEST)) && (!(Cart->N_MARKOV_LONG)))
-    if (org->popChampChild) {
-      cout << org->gnome << endl;
-      // DEBUG CHECK
-      if (org->highFit > org->fitness) {
-        cout << "ALERT: ORGANISM DAMAGED" << endl;
-        printGenomeToFile(org->gnome, "failure_champ_genome");
-        cin >> pause;
-      }
-    }
-
-  // Decide if its a winner, in Markov Case
-  if (Cart->MARKOV) {
-    if (org->fitness >= (Cart->MAX_FITNESS - 1)) {
-      org->winner = true;
-      return true;
-    } else {
-      org->winner = false;
-      return false;
-    }
-  }
-  // if doing the long test non-markov
-  else if (Cart->N_MARKOV_LONG) {
-    if (org->fitness >= 99999) {
-      org->winner = true;
-      return true;
-    } else {
-      org->winner = false;
-      return false;
-    }
-  } else if (Cart->GENERALIZATION_TEST) {
-    if (org->fitness >= 999) {
-      org->winner = true;
-      return true;
-    } else {
-      org->winner = false;
-      return false;
-    }
-  } else {
-    org->winner = false;
-    return false; // Winners not decided here in non-Markov
-  }
+bool ASpawnVolume::EvaluateAgent(AAgentController* AgentController) {
+	NEAT::Organism *Org = AgentController->GetNeatOrganism();
+	NEAT::Network *Net= Org->net;
+	Org->fitness = AgentController->EvaluateFitness();
+	
+	if (Org->fitness >= 2) {
+		Org->winner = true;
+		return true;
+	}
+	else {
+		Org->winner = false;
+		return false;
+	}
 }
 
 void ASpawnVolume::Destroyed() {
