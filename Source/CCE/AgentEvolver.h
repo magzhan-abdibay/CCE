@@ -66,7 +66,7 @@ private:
 
 	NEAT::Population* SpawnInitialPopulation(NEAT::Genome* startGenome);
 
-	AAgentController* AttachOrganismToAgentController(AAgent* Agent, NEAT::Organism *Org);
+	AAgentController* AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism *Org);
 
 	AAgentController* FindWorstAgentController();
 

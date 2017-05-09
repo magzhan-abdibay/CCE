@@ -17,7 +17,7 @@ void AAgentEvolver::BeginPlay() {
 
 void AAgentEvolver::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (TicksFromLastCalculate++ > 60) {
+	if (TicksFromLastCalculate++ > 4) {
 		TicksFromLastCalculate = 0;
 		NeatTick(OffspringCount++);
 	}
@@ -33,10 +33,6 @@ void AAgentEvolver::InitNeat() {
 	NEAT::Genome *startGenome = ReadGenome(GenomeParamsPath);
 
 	Population = SpawnInitialPopulation(startGenome);
-
-	char *PrintPopulationPath =
-		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\WinnerPopulation";
-	Population->printToFileBySpecies(PrintPopulationPath);
 }
 
 NEAT::Genome* AAgentEvolver::ReadGenome(char * FilePath) {
@@ -61,17 +57,25 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char * filePath) {
 
 	// Initially, we evaluate the whole population
 	// Evaluate each organism on a test
-	std::vector<NEAT::Organism *>::iterator curOrg;
-	for (curOrg = (pop->organisms).begin(); curOrg != (pop->organisms).end(); ++curOrg) {
+	std::vector<NEAT::Organism *>::iterator CurOrg;
+	for (CurOrg = (pop->organisms).begin(); CurOrg != (pop->organisms).end(); ++CurOrg) {
 		// shouldn't happen
-		if (((*curOrg)->gnome) == 0) {
+		if (((*CurOrg)->gnome) == 0) {
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return nullptr;
 		}
 		//Spawn Agent and Attach NN 
-		AAgentController* AgentController = AttachOrganismToAgentController(SpawnAgent(), (*curOrg));
-		if (EvaluateAgent(AgentController))
-			Win = true;
+		AAgent* Agent = SpawnAgent();
+		if (Agent) {
+			AAgentController* AgentController = (AAgentController*)Agent->GetController();
+			if (AgentController) {
+				AgentController = AttachOrganismToAgentController(AgentController, (*CurOrg));
+				AgentControllers.push_back(AgentController);
+				if (EvaluateAgent(AgentController)) {
+					Win = true;
+				}
+			}
+		}
 
 	}
 
@@ -112,9 +116,18 @@ NEAT::Population* AAgentEvolver::SpawnInitialPopulation(NEAT::Genome* startGenom
 			return nullptr;
 		}
 
-		AAgentController* AgentController = AttachOrganismToAgentController(SpawnAgent(), (*CurOrg));
-		if (EvaluateAgent(AgentController))
-			Win = true;
+		AAgent* Agent = SpawnAgent();
+		if (Agent) {
+			AAgentController* AgentController =(AAgentController*) Agent->GetController();
+			if (AgentController) {
+				AgentController = AttachOrganismToAgentController(AgentController, (*CurOrg));
+				AgentControllers.push_back(AgentController);
+				if (EvaluateAgent(AgentController)) {
+					Win = true;
+				}
+			}
+		}
+				
 	}
 
 	// Get ready for real-time loop
@@ -129,23 +142,13 @@ NEAT::Population* AAgentEvolver::SpawnInitialPopulation(NEAT::Genome* startGenom
 	return SpawnedPopulation;
 }
 
-AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgent* Agent, NEAT::Organism *Org) {
-	if (Agent) {
-		AAgentController* AgentController = (AAgentController*)Agent->GetController();
-		if (AgentController) {
-			AgentController->SetNeatOrganism(Org);
-			Org->fitness = AgentController->EvaluateFitness();
-			AgentControllers.push_back(AgentController);
-			return AgentController;
-		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("AgentController is null"));
-		}
+AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism *Org) {
+	if (AgentController) {
+		AgentController->SetNeatOrganism(Org);
+		Org->fitness = AgentController->EvaluateFitness();
+		return AgentController;
 	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Agent is null"));
-	}
-	return nullptr;
+		return nullptr;
 }
 
 void AAgentEvolver::NeatTick(int count) {
@@ -175,11 +178,11 @@ void AAgentEvolver::NeatTick(int count) {
 			Population->reassignSpecies(*CurOrg);
 		}
 	}
-	NEAT::Organism* WorstOrganism = Population->removeWorst();
+	
 	NEAT::Organism *NewOrg = (Population->chooseParentSpecies())->reproduceOne(count, Population, Population->species);
+	NEAT::Organism* WorstOrganism = Population->removeWorst();
 	AAgentController* AgentController = FindAgentControllerByNeatOrganism(WorstOrganism);
-	AAgent* Agent = AgentController->GetAgent();
-	AgentController = AttachOrganismToAgentController(Agent, NewOrg);
+	AgentController = AttachOrganismToAgentController(AgentController, NewOrg);
 	if (EvaluateAgent(AgentController))
 		Win = true;
 
@@ -189,7 +192,9 @@ void AAgentEvolver::NeatTick(int count) {
 	// a true online simulation.
 	if (Win) {
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, "WINNER");
-		Population->printToFileBySpecies((char *)"rt_winpop");
+		char *PrintPopulationPath =
+			"E:\\UnrealProjects\\CCE\\Config\\NEAT\\WinnerPopulation";
+		Population->printToFileBySpecies(PrintPopulationPath);
 		return;
 	}
 
@@ -219,11 +224,11 @@ AAgentController* AAgentEvolver::FindWorstAgentController() {
 }
 
 AAgentController* AAgentEvolver::FindAgentControllerByNeatOrganism(NEAT::Organism* Org) {
-	std::vector<AAgentController *>::iterator ÑurAgentConntoller;
-	for (ÑurAgentConntoller = AgentControllers.begin(); ÑurAgentConntoller != AgentControllers.end(); ++ÑurAgentConntoller) {
+	for (std::vector<AAgentController *>::iterator ÑurAgentConntoller = AgentControllers.begin(); ÑurAgentConntoller != AgentControllers.end(); ++ÑurAgentConntoller) {
 		if ((*ÑurAgentConntoller)->GetNeatOrganism() == Org)
 			return (*ÑurAgentConntoller);
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("NUUUUUUUUUUUUULLL"));
 	return nullptr;
 }
 

@@ -13,7 +13,7 @@ void AAgentController::Tick(float DeltaTime) {
 	
 	ControlAgent(LastCalculatedOutput);
 
-	if (TicksFromLastCalculate++ > 60) {
+	if (TicksFromLastCalculate++ > 4) {
 		TicksFromLastCalculate = 0;
 		LastCalculatedOutput = ActivateNeuralNetwork();
 		NeatOrganism->fitness = EvaluateFitness();
@@ -26,25 +26,27 @@ double* AAgentController::ActivateNeuralNetwork()
 	//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Activating")));
 	double* Input= new double[7];
 	double* Output= new double[4];
-	Input[0] = Agent->GetDistanceToBall()/10000 ;
-	Input[1] = Agent->GetDistanceToGoal()/10000 ;
-	Input[2] = Agent->GetDistanceToTeammate()/ 10000;
-	Input[3] = Agent->GetDistanceToBall()/ 10000;
-	Input[4] = Agent->GetDistanceToBall()/ 10000;
-	Input[5] = Agent->GetDistanceToBall()/ 10000;
+	Input[0] = Agent->GetDistanceToBall() ;
+	Input[1] = Agent->GetDistanceToGoal() ;
+	Input[2] = Agent->GetDistanceToTeammate();
+	Input[3] = Agent->GetDistanceToBall();
+	Input[4] = Agent->GetDistanceToBall();
+	Input[5] = Agent->GetDistanceToBall();
 	Input[6] = .5;
 
 	//for (int i = 0; i < 7; i++) {
-		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(Input[i]));
+		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(Input[i]));
 	//}
 
 	NeatOrganism->net->loadSensors(Input);
+
+	NeatOrganism->net->activate();
 
 	int i = 0;
 	std::vector<NEAT::NNode*>::iterator OutputIterator = NeatOrganism->net->outputs.begin();
 	for (OutputIterator = NeatOrganism->net->outputs.begin(); OutputIterator != NeatOrganism->net->outputs.end(); OutputIterator++, i++) {
 		Output[i] = (*OutputIterator)->activation;
-		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat((*OutputIterator)->activation));
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((*OutputIterator)->activation));
 	}
 
 	return Output;
