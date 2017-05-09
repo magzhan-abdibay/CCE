@@ -10,12 +10,6 @@ AGoal::AGoal() {
   Box->bGenerateOverlapEvents = true;
   Box->OnComponentBeginOverlap.AddDynamic(this, &AGoal::TriggerEnter);
   Box->OnComponentEndOverlap.AddDynamic(this, &AGoal::TriggerExit);
-
-  Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("light"));
-  Light->Intensity = 100;
-  Light->SetLightColor(FColor::Red);
-  Light->AttachToComponent(Box,FAttachmentTransformRules::KeepWorldTransform);
-
   RootComponent = Box;
 }
 
@@ -38,7 +32,6 @@ void AGoal::TriggerEnter(UPrimitiveComponent *HitComp, AActor *OtherActor,
                                   SpawnInfo);
 
     OtherActor->SetActorLocation(ActorLocation);
-    Light->SetLightColor(FColor::Green);
     ACCEGameState *const GameState =
         GetWorld() != NULL ? GetWorld()->GetGameState<ACCEGameState>() : NULL;
 
@@ -63,6 +56,6 @@ void AGoal::TriggerExit(class UPrimitiveComponent *HitComp,
                         class UPrimitiveComponent *OtherComp,
                         int32 OtherBodyIndex) {
   if (OtherActor->IsA(ABall::StaticClass())) {
-    Light->SetLightColor(FColor::Yellow);
+    //TODO: do something or delete
   }
 }

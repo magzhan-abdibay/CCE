@@ -11,10 +11,5 @@ class CCE_API ABall : public AActor {
   class UStaticMeshComponent *Mesh;
 
 public:
-  ABall();
-
-  virtual void BeginPlay() override;
-
-  virtual void Tick(float DeltaSeconds) override;
-  
+  ABall();  
 };

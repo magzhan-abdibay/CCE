@@ -9,17 +9,6 @@
 
 ACCEGameMode::ACCEGameMode()
 {
-	DefaultPawnClass = AAgent::StaticClass();
+	DefaultPawnClass = ASpectatorCamera::StaticClass();
 	GameStateClass = ACCEGameState::StaticClass();
 }
-
-/*
-void ACCEGameMode::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, "asas");
-
-
-}
-*/

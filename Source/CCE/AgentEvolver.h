@@ -25,9 +25,9 @@ UCLASS()
 class CCE_API AAgentEvolver : public AActor {
 	GENERATED_BODY()
 
-		/** What spawn. Subclass of AAgent*/
-		UPROPERTY(EditAnywhere, Category = "Spawning")
-		TSubclassOf<class AAgent> WhatToSpawn;
+	/** What spawn. Subclass of AAgent*/
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TSubclassOf<class AAgent> WhatToSpawn;
 
 	class UBoxComponent *WhereToSpawn;
 public:
@@ -37,13 +37,11 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	virtual void Destroyed() override;
-
 	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const { return WhereToSpawn; }
 
 private:
 
-	std::vector<AAgentController *> AgentControllers;
+	std::vector<AAgentController*> AgentControllers;
 
 	NEAT::Population *Population;
 
@@ -55,29 +53,26 @@ private:
 
 	int TicksFromLastCalculate = 0;
 
-	bool Win = false;
+	bool WinnnerFound = false;
 
 
 	void InitNeat();
+
+	void NeatTick(int count);
 
 	NEAT::Population* ReadPopulation(char * filePath);
 
 	NEAT::Genome* ReadGenome(char * filePath);
 
-	NEAT::Population* SpawnInitialPopulation(NEAT::Genome* startGenome);
+	NEAT::Population* GeneratePopulation(NEAT::Genome* startGenome);
 
 	AAgentController* AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism *Org);
 
-	AAgentController* FindWorstAgentController();
-
 	AAgentController* FindAgentControllerByNeatOrganism(NEAT::Organism* Org);
 
-	bool EvaluateAgent(AAgentController* AgentController);
-
-	void NeatTick(int count);
-
+	bool EvaluateAgentController(AAgentController* AgentController);
+	
 	AAgent* SpawnAgent();
 
-	FVector GetRandomPointInVolume();
 };
 

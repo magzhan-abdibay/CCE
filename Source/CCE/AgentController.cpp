@@ -13,7 +13,7 @@ void AAgentController::Tick(float DeltaTime) {
 	
 	ControlAgent(LastCalculatedOutput);
 
-	if (TicksFromLastCalculate++ > 4) {
+	if (TicksFromLastCalculate++ > 60) {
 		TicksFromLastCalculate = 0;
 		LastCalculatedOutput = ActivateNeuralNetwork();
 		NeatOrganism->fitness = EvaluateFitness();
@@ -46,7 +46,7 @@ double* AAgentController::ActivateNeuralNetwork()
 	std::vector<NEAT::NNode*>::iterator OutputIterator = NeatOrganism->net->outputs.begin();
 	for (OutputIterator = NeatOrganism->net->outputs.begin(); OutputIterator != NeatOrganism->net->outputs.end(); OutputIterator++, i++) {
 		Output[i] = (*OutputIterator)->activation;
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((*OutputIterator)->activation));
+		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((*OutputIterator)->activation));
 	}
 
 	return Output;

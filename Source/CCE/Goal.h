@@ -11,9 +11,6 @@ class CCE_API AGoal : public AActor {
   UPROPERTY(EditAnywhere, Category = "Box")
   class UBoxComponent *Box;
 
-  UPROPERTY(EditAnywhere, Category = "Light")
-  class UPointLightComponent *Light;
-
   UPROPERTY(EditAnywhere, Category = "Team")
   int8 Team;
 

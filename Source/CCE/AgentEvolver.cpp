@@ -32,7 +32,7 @@ void AAgentEvolver::InitNeat() {
 		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\StartGene";
 	NEAT::Genome *startGenome = ReadGenome(GenomeParamsPath);
 
-	Population = SpawnInitialPopulation(startGenome);
+	Population = GeneratePopulation(startGenome);
 }
 
 NEAT::Genome* AAgentEvolver::ReadGenome(char * FilePath) {
@@ -91,7 +91,7 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char * filePath) {
 	return pop;
 }
 
-NEAT::Population* AAgentEvolver::SpawnInitialPopulation(NEAT::Genome* startGenome) {
+NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* startGenome) {
 
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString(TEXT("Spawning Population off Genome")));
 
@@ -125,7 +125,12 @@ NEAT::Population* AAgentEvolver::SpawnInitialPopulation(NEAT::Genome* startGenom
 				if (EvaluateAgent(AgentController)) {
 					Win = true;
 				}
+			} else {
+				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, FString("AgentController null"));
 			}
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, FString("Agent null"));
 		}
 				
 	}
@@ -148,16 +153,17 @@ AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentControlle
 		Org->fitness = AgentController->EvaluateFitness();
 		return AgentController;
 	}
-		return nullptr;
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("AttachOrganismToAgentController null"));
+	return nullptr;
 }
 
-void AAgentEvolver::NeatTick(int count) {
+void AAgentEvolver::NeatTick(int OffspringCount) {
 
 	if (Win)
 		return;
 
 	// Every popSize reproductions, adjust the compatThresh to better match the NumSpeciesTarget  and reassign the population to new species
-	if (CompatAdjustFrequency && count % CompatAdjustFrequency == 0) {
+	if (CompatAdjustFrequency && OffspringCount % CompatAdjustFrequency == 0) {
 
 		int NumSpecies = (int)Population->species.size();
 		double CompatMod = 0.1; // Modify compat thresh to control speciation
@@ -178,14 +184,22 @@ void AAgentEvolver::NeatTick(int count) {
 			Population->reassignSpecies(*CurOrg);
 		}
 	}
-	
-	NEAT::Organism *NewOrg = (Population->chooseParentSpecies())->reproduceOne(count, Population, Population->species);
+
+
 	NEAT::Organism* WorstOrganism = Population->removeWorst();
 	AAgentController* AgentController = FindAgentControllerByNeatOrganism(WorstOrganism);
-	AgentController = AttachOrganismToAgentController(AgentController, NewOrg);
-	if (EvaluateAgent(AgentController))
-		Win = true;
-
+	if (AgentController){
+		NEAT::Organism *NewOrg = (Population->chooseParentSpecies())->reproduceOne(OffspringCount, Population, Population->species);
+		AgentController = AttachOrganismToAgentController(AgentController, NewOrg);
+		// Now we reestimate the baby's species' fitness
+		NewOrg->species->estimateAverage();
+		if (EvaluateAgent(AgentController)) {
+			Win = true;
+		}
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Black, FString::SanitizeFloat(Population->organisms.size()));
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Black, FString::SanitizeFloat(AgentControllers.size()));
+	
 	// Now we evaluate the new individual
 	// Note that in a true real-time simulation, evaluation would be happening to
 	// all individuals at all times.  That is, this call would not appear here in
@@ -198,36 +212,20 @@ void AAgentEvolver::NeatTick(int count) {
 		return;
 	}
 
-	// Now we reestimate the baby's species' fitness
-	NewOrg->species->estimateAverage();
 
-	// Remove the worst organism
-	//Population->removeWorst();
-	//FindWorstAgentController();
+
+
 }
 
-AAgentController* AAgentEvolver::FindWorstAgentController() {
-	double AdjustedFitness;
-	double MinFitness = 999999;
-	AAgentController* WorstAgentController = nullptr;
-
-	std::vector<AAgentController *>::iterator ÑurAgentConntoller;
-	for (ÑurAgentConntoller = AgentControllers.begin(); ÑurAgentConntoller != AgentControllers.end(); ++ÑurAgentConntoller) {
-		AdjustedFitness = ((*ÑurAgentConntoller)->GetNeatOrganism()->fitness) / ((*ÑurAgentConntoller)->GetNeatOrganism()->species->organisms.size());
-		if ((AdjustedFitness < MinFitness) && (((*ÑurAgentConntoller)->GetNeatOrganism()->timeAlive) >= NEAT::timeAliveMinimum)) {
-			MinFitness = AdjustedFitness;
-			WorstAgentController = (*ÑurAgentConntoller);
-		}
-	}
-
-	return WorstAgentController;
-}
 
 AAgentController* AAgentEvolver::FindAgentControllerByNeatOrganism(NEAT::Organism* Org) {
 	for (std::vector<AAgentController *>::iterator ÑurAgentConntoller = AgentControllers.begin(); ÑurAgentConntoller != AgentControllers.end(); ++ÑurAgentConntoller) {
-		if ((*ÑurAgentConntoller)->GetNeatOrganism() == Org)
+		if ((*ÑurAgentConntoller)->GetNeatOrganism() == Org) {
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("SUUUC"));
 			return (*ÑurAgentConntoller);
+		}
 	}
+
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("NUUUUUUUUUUUUULLL"));
 	return nullptr;
 }
@@ -235,9 +233,7 @@ AAgentController* AAgentEvolver::FindAgentControllerByNeatOrganism(NEAT::Organis
 bool AAgentEvolver::EvaluateAgent(AAgentController* AgentController) {
 	if (AgentController) {
 		NEAT::Organism *Org = AgentController->GetNeatOrganism();
-		NEAT::Network *Net = Org->net;
 		Org->fitness = AgentController->EvaluateFitness();
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(Org->fitness));
 		if (Org->fitness >= 1) {
 			Org->winner = true;
 			return true;
@@ -247,15 +243,7 @@ bool AAgentEvolver::EvaluateAgent(AAgentController* AgentController) {
 			return false;
 		}
 	}
-	else {
-		return false;
-	}
-}
-
-FVector AAgentEvolver::GetRandomPointInVolume() {
-	FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
-	FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;
-	return UKismetMathLibrary::RandomPointInBoundingBox(SpawnOrigin, SpawnExtent);
+	return false;
 }
 
 AAgent* AAgentEvolver::SpawnAgent() {
@@ -263,29 +251,25 @@ AAgent* AAgentEvolver::SpawnAgent() {
 		UWorld *const World = GetWorld();
 		if (World) {
 			FActorSpawnParameters SpawnParams;
-
 			SpawnParams.Owner = this;
-
 			SpawnParams.Instigator = Instigator;
+			SpawnParams.bNoCollisionFail = true;
 
-			FVector SpawnLocation = GetRandomPointInVolume();
+			FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
+			FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;
+			FVector SpawnLocation = UKismetMathLibrary::RandomPointInBoundingBox(SpawnOrigin, SpawnExtent);
 
 			FRotator SpawnRotation(0, FMath::FRand() * 360.0f, 0);
 
 			AAgent *const SpawnedActor = World->SpawnActor<AAgent>(
 				WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
-
+			if (!SpawnedActor) {
+				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("SpawnAgent is null"));
+			}
 			return SpawnedActor;
 		}
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("SpawnAgent is null"));
 	return nullptr;
 }
-
-void AAgentEvolver::Destroyed() {
-	Super::Destroyed();
-	if (Population) {
-		delete Population;
-	}
-}
-
 
