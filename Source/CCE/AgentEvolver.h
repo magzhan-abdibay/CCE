@@ -40,6 +40,14 @@ public:
 	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const { return WhereToSpawn; }
 
 private:
+	char *FileNeatParamsPath =
+		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\NeatVariables.ne";
+
+	char *FileStartGenomePath =
+		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\StartGene";
+
+	char *FileWinnerPopulationPath =
+		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\WinnerPopulation";
 
 	std::vector<AAgentController*> AgentControllers;
 
@@ -55,8 +63,7 @@ private:
 
 	bool WinnnerFound = false;
 
-
-	void InitNeat();
+	void NeatInit();
 
 	void NeatTick(int count);
 

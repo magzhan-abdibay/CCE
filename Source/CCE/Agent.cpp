@@ -18,60 +18,7 @@ AAgent::AAgent() {
   // ...at this rotation rate
   GetCharacterMovement()->RotationRate =FRotator(0.0f, 540.0f, 0.0f); 
   GetCharacterMovement()->JumpZVelocity = 600.f;
-  GetCharacterMovement()->AirControl = 0.2f;
-
-  // Create a camera boom (pulls in towards the player if there is a collision)
-  CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-  CameraBoom->SetupAttachment(RootComponent);
-  // The camera follows at this distance behind the character
-  CameraBoom->TargetArmLength =300.0f;
-  // Rotate the arm based on the controller
-  CameraBoom->bUsePawnControlRotation = true; 
-
-  // Create a follow camera
-  FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-  // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
-  FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); 
-  // Camera does not rotate relative to arm
-  FollowCamera->bUsePawnControlRotation =false; 
-}
-
-void AAgent::SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) {
-  // Set up gameplay key bindings
-  check(PlayerInputComponent);
-  PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-  PlayerInputComponent->BindAction("Jump", IE_Released, this,&ACharacter::StopJumping);
-
-  PlayerInputComponent->BindAxis("MoveForward", this, &AAgent::MoveForward);
-  PlayerInputComponent->BindAxis("MoveRight", this, &AAgent::MoveRight);
-
-  // Rotation bindings
-  PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-  PlayerInputComponent->BindAxis("LookUp", this,&APawn::AddControllerPitchInput);
-}
-
-void AAgent::MoveForward(float Value) {
-  if ((Controller != nullptr) && (Value != 0.0f)) {
-    // find out which way is forward
-    const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator YawRotation(0, Rotation.Yaw, 0);
-    // get forward vector
-    const FVector Direction =FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-    AddMovementInput(Direction, Value);
-  }
-}
-
-void AAgent::MoveRight(float Value) {
-  if ((Controller != nullptr) && (Value != 0.0f)) {
-    // find out which way is right
-    const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-    // get right vector
-    const FVector Direction =FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-    // add movement in that direction
-    AddMovementInput(Direction, Value);
-  }
+  GetCharacterMovement()->AirControl = 0.2f; 
 }
 
 void AAgent::Tick(float DeltaTime) {

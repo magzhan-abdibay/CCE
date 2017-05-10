@@ -7,12 +7,6 @@ UCLASS(config = Game)
 class AAgent : public ACharacter {
   GENERATED_BODY()
 
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,meta = (AllowPrivateAccess = "true"))
-  class USpringArmComponent *CameraBoom;
-
-  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera,meta = (AllowPrivateAccess = "true"))
-  class UCameraComponent *FollowCamera;
-
   UPROPERTY(EditAnywhere, Category = Team)
   int8 Team;
 
@@ -20,14 +14,6 @@ public:
   AAgent();
 
   virtual void Tick(float DeltaSeconds) override;
-
-  void MoveForward(float Value);
-  
-  void MoveRight(float Value);
-
-  FORCEINLINE class USpringArmComponent *GetCameraBoom() const { return CameraBoom;}
-
-  FORCEINLINE class UCameraComponent *GetFollowCamera() const { return FollowCamera;}
 
   FORCEINLINE int8 GetTeam() const { return Team; }
 
@@ -53,6 +39,4 @@ private:
   float CalculateDistanceToBall();
   float CalculateDistanceToGoal();
   float CalcualteDistanceToTeammate();
-
-  virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 };

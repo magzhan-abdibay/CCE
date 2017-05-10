@@ -71,9 +71,6 @@
     <ClInclude Include="..\..\Source\CCE\Ball.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
-    <None Include="..\..\Source\CCE\CCE.Build.cs">
-      <Filter>Source\CCE</Filter>
-    </None>
     <ClCompile Include="..\..\Source\CCE\CCE.cpp">
       <Filter>Source\CCE</Filter>
     </ClCompile>
@@ -104,5 +101,8 @@
     <ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
       <Filter>Source\CCE</Filter>
     </ClInclude>
+    <None Include="..\..\Source\CCE\CCE.Build.cs">
+      <Filter>Source</Filter>
+    </None>
   </ItemGroup>
 </Project>
