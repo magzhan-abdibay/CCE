@@ -14,32 +14,32 @@
 UCLASS()
 class CCE_API AAgentController : public AAIController {
   GENERATED_BODY()
-
 private:
-  NEAT::Organism *NeatOrganism;
-  
-  AAgent *Agent;
-  
-  int TicksFromLastCalculate = 0;
+	NEAT::Organism *NeatOrganism;
 
-  double* LastCalculatedOutput;
+	AAgent *Agent;
+
+	int TicksFromLastCalculate = 0;
+
+	double* LastCalculatedOutput;
+
+	void ControlAgent(double* ControlValues);
+
+	double* ActivateNeuralNetwork();
 
 public:
-  AAgentController();
+	AAgentController();
 
-  virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float DeltaSeconds) override;
 
-  virtual void Possess(APawn *Pawn) override;
+	virtual void Possess(APawn *Pawn) override;
 
-  FORCEINLINE NEAT::Organism *GetNeatOrganism() const { return NeatOrganism; }
+	double EvaluateFitness();
 
-  FORCEINLINE void SetNeatOrganism(NEAT::Organism *Value) { NeatOrganism = Value; }
+	FORCEINLINE NEAT::Organism *GetNeatOrganism() const { return NeatOrganism; }
 
-  FORCEINLINE AAgent *GetAgent() const { return Agent; }
+	FORCEINLINE void SetNeatOrganism(NEAT::Organism *Value) { NeatOrganism = Value; }
 
-  double* ActivateNeuralNetwork();
+	FORCEINLINE AAgent *GetAgent() const { return Agent; }
 
-  double EvaluateFitness();
-
-  void ControlAgent(double* ControlValues);
 };
