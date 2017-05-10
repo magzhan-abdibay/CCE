@@ -23,7 +23,6 @@ void AAgentController::Tick(float DeltaTime) {
 
 double* AAgentController::ActivateNeuralNetwork()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("Activating")));
 	double* Input= new double[7];
 	double* Output= new double[4];
 	Input[0] = Agent->GetDistanceToBall() ;

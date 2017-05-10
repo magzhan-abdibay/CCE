@@ -79,7 +79,7 @@ private:
 
 	bool EvaluateAgentController(AAgentController* AgentController);
 	
-	AAgent* SpawnAgent();
+	AAgent* SpawnAgent(int8 Team);
 
 };
 

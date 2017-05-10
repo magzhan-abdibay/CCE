@@ -27,9 +27,9 @@ void AAgentEvolver::NeatInit() {
 
 	NEAT::loadNeatParams(FileNeatParamsPath, true);
 
-	NEAT::Genome *startGenome = ReadGenome(FileStartGenomePath);
+	NEAT::Genome *StartGenome = ReadGenome(FileStartGenomePath);
 
-	Population = GeneratePopulation(startGenome);
+	Population = GeneratePopulation(StartGenome);
 }
 
 NEAT::Genome* AAgentEvolver::ReadGenome(char * FilePath) {
@@ -54,7 +54,8 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char * FilePath) {
 
 	// Initially, we evaluate the whole population
 	// Evaluate each organism on a test
-	for (std::vector<NEAT::Organism *>::iterator CurOrg = (ReadPopulation->organisms).begin(); CurOrg != (ReadPopulation->organisms).end(); ++CurOrg) {
+	int Count = 0;
+	for (std::vector<NEAT::Organism *>::iterator CurOrg = (ReadPopulation->organisms).begin(); CurOrg != (ReadPopulation->organisms).end(); ++CurOrg, ++Count) {
 		// shouldn't happen
 		if (((*CurOrg)->gnome) == 0) {
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
@@ -62,7 +63,7 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char * FilePath) {
 		}
 		
 		//Spawn Agent and Attach NN 
-		AAgent* Agent = SpawnAgent();
+		AAgent* Agent = SpawnAgent(Count%2);
 		if (Agent) {
 			AAgentController* AgentController = (AAgentController*)Agent->GetController();
 			if (AgentController) {
@@ -106,15 +107,15 @@ NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome) {
 
 	// Initially, we evaluate the whole population
 	// Evaluate each organism on a test
-	std::vector<NEAT::Organism *>::iterator CurOrg;
-	for (CurOrg = (SpawnedPopulation->organisms).begin(); CurOrg != (SpawnedPopulation->organisms).end(); ++CurOrg) {
+	int Count = 0;
+	for (std::vector<NEAT::Organism *>::iterator CurOrg = (SpawnedPopulation->organisms).begin(); CurOrg != (SpawnedPopulation->organisms).end(); ++CurOrg, ++Count) {
 		// shouldn't happen
 		if (((*CurOrg)->gnome) == 0) {
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return nullptr;
 		}
 
-		AAgent* Agent = SpawnAgent();
+		AAgent* Agent = SpawnAgent(Count%2);
 		if (Agent) {
 			AAgentController* AgentController =(AAgentController*) Agent->GetController();
 			if (AgentController) {
@@ -233,7 +234,7 @@ bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController) {
 	return false;
 }
 
-AAgent* AAgentEvolver::SpawnAgent() {
+AAgent* AAgentEvolver::SpawnAgent(int8 Team) {
 	if (WhatToSpawn) {
 		UWorld *const World = GetWorld();
 		if (World) {
@@ -251,6 +252,8 @@ AAgent* AAgentEvolver::SpawnAgent() {
 			AAgent *const SpawnedActor = World->SpawnActor<AAgent>(
 				WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 			if (SpawnedActor) {
+				SpawnedActor->SetTeam(Team);
+				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::FromInt(SpawnedActor->GetTeam()));
 				return SpawnedActor;
 			}
 		}

@@ -15,6 +15,8 @@ public:
 
   virtual void Tick(float DeltaSeconds) override;
 
+  virtual void BeginPlay() override;
+
   FORCEINLINE int8 GetTeam() const { return Team; }
 
   FORCEINLINE void SetTeam(int8 Value) { Team = Value; }
