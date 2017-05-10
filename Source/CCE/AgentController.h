@@ -19,7 +19,9 @@ private:
 
 	AAgent *Agent;
 
-	int TicksFromLastCalculate = 0;
+	int8 TicksFromLastCalculate = 0;
+
+	int8 const CalculatingFrequencyInTicks = 60;
 
 	double* LastCalculatedOutput;
 

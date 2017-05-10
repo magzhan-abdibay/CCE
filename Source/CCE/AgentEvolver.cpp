@@ -17,7 +17,7 @@ void AAgentEvolver::BeginPlay() {
 
 void AAgentEvolver::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	if (TicksFromLastCalculate++ > 4) {
+	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks) {
 		TicksFromLastCalculate = 0;
 		NeatTick(OffspringCount++);
 	}
@@ -181,6 +181,15 @@ void AAgentEvolver::NeatTick(int Offsprings) {
 		}
 	}
 
+	//For printing only
+	for (std::vector<NEAT::Species *>::iterator curSpec = (Population->species).begin(); curSpec != (Population->species).end(); curSpec++) {
+		std::cout << "Species " << (*curSpec)->id << " size" << (*curSpec)->organisms.size() << " average= "
+			<< (*curSpec)->avgEst << std::endl;
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Species ")+FString::FromInt((*curSpec)->id)
+			+ FString(" size ") + FString::FromInt((*curSpec)->organisms.size())
+			+ FString(" average= ") + FString::SanitizeFloat((*curSpec)->avgEst));
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Pop size: ") + FString::FromInt(Population->organisms.size()));
 
 	NEAT::Organism* WorstOrganism = Population->removeWorst();
 	AAgentController* AgentController = FindAgentControllerByNeatOrganism(WorstOrganism);
@@ -201,6 +210,8 @@ void AAgentEvolver::NeatTick(int Offsprings) {
 	if (WinnnerFound) {
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, "Winner found");
 		Population->printToFileBySpecies(FileWinnerPopulationPath);
+		//TEMPORARY: Completely meaningless stuff
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		return;
 	}
 }
@@ -221,7 +232,7 @@ bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController) {
 	if (AgentController) {
 		NEAT::Organism *Org = AgentController->GetNeatOrganism();
 		Org->fitness = AgentController->EvaluateFitness();
-		if (Org->fitness >= 1) {
+		if (Org->fitness >= 3.0f) {
 			Org->winner = true;
 			return true;
 		}
@@ -253,7 +264,7 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team) {
 				WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 			if (SpawnedActor) {
 				SpawnedActor->SetTeam(Team);
-				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::FromInt(SpawnedActor->GetTeam()));
+				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("Spawned Agent - Team: ") + FString::FromInt(SpawnedActor->GetTeam()));
 				return SpawnedActor;
 			}
 		}

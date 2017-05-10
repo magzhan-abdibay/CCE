@@ -46,7 +46,7 @@ float AAgent::CalculateDistanceToBall() {
   for (TActorIterator<ABall> BallItr(GetWorld()); BallItr; ++BallItr) {
     FVector LinkStart = GetActorLocation();
     FVector LinkEnd = BallItr->GetActorLocation();
-    DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0, 1.0f);
+    DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0, 2.0f);
     return (LinkEnd - LinkStart).Size();
   }
   return 0.0f;
