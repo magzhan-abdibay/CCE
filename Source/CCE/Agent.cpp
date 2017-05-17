@@ -20,16 +20,12 @@ void AAgent::Tick(float DeltaTime) {
   Super::Tick(DeltaTime);
 
   DistanceToBall = CalculateDistanceToBall();
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red,
-  //                                 FString::SanitizeFloat(DistanceToBall));
-
-  DistanceToTeammate = CalcualteDistanceToTeammate();
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,
-  //                                 FString::SanitizeFloat(DistanceToTeammate));
-
+  
   DistanceToGoal = CalculateDistanceToGoal();
-  //GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan,
-  //                                 FString::SanitizeFloat(DistanceToGoal));
+ 
+  DistanceToTeammates = CalcualteDistanceToTeammates();
+  
+  DistanceToOpponents = CalcualteDistanceToOpponents();
 }
 
 void AAgent::BeginPlay()
@@ -52,18 +48,6 @@ float AAgent::CalculateDistanceToBall() {
   return 0.0f;
 }
 
-float AAgent::CalcualteDistanceToTeammate() {
-  for (TActorIterator<AAgent> AgentItr(GetWorld()); AgentItr; ++AgentItr) {
-    if (*AgentItr != this && AgentItr->GetTeam() == this->Team) {
-      FVector LinkStart = GetActorLocation();
-      FVector LinkEnd = AgentItr->GetActorLocation();
-      DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Red, false, -1, 1, 2.0f);
-      return (LinkEnd - LinkStart).Size();
-    }
-  }
-  return 0.0f;
-}
-
 float AAgent::CalculateDistanceToGoal() {
   for (TActorIterator<AGoal> GoalItr(GetWorld()); GoalItr; ++GoalItr) {
     if (GoalItr->GetTeam() != this->Team) {
@@ -74,4 +58,56 @@ float AAgent::CalculateDistanceToGoal() {
     }
   }
   return 0.0f;
+}
+
+std::vector<float> AAgent::CalcualteDistanceToTeammates() {
+
+	std::vector<float> distances;
+	TArray<AActor*> ClosestAgents = GetClosestAgents();
+	for (AActor* Actor : ClosestAgents) {
+		AAgent* Agent = Cast<AAgent>(Actor);
+		if (Agent && Agent != this && Agent->GetTeam() == this->GetTeam())
+		{
+			FVector LinkStart = GetActorLocation();
+			FVector LinkEnd = Agent->GetActorLocation();
+			distances.push_back((LinkEnd - LinkStart).Size());
+			//debug info
+			FColor TeamColor = Agent->GetTeam() == 0 ? FColor::Red : FColor::Blue;
+			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, TeamColor, false, -1, 1, 1.0f);
+		}
+	}
+	return distances;
+}
+
+std::vector<float> AAgent::CalcualteDistanceToOpponents() {
+
+	std::vector<float> distances;
+	TArray<AActor*> ClosestAgents = GetClosestAgents();
+	for (AActor* Actor : ClosestAgents) {
+		AAgent* Agent = Cast<AAgent>(Actor);
+		if (Agent && Agent != this && Agent->GetTeam() != this->GetTeam())
+		{
+			FVector LinkStart = GetActorLocation();
+			FVector LinkEnd = Agent->GetActorLocation();
+			distances.push_back((LinkEnd - LinkStart).Size());
+			//debug info
+			FColor TeamColor = Agent->GetTeam() == 0 ? FColor::Red : FColor::Blue;
+			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, TeamColor, false, -1, 1, 1.0f);
+		}
+	}
+	return distances;
+}
+
+TArray<AActor*> AAgent::GetClosestAgents() {
+
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAgent::StaticClass(), FoundActors);
+	FoundActors.Sort([this](const AActor& FirstActor, const AActor& SecondActor) {
+		FVector CurrActorLocation = this->GetActorLocation();
+		FVector FirstActorLocation = FirstActor.GetActorLocation();
+		FVector SecondActorLocation = SecondActor.GetActorLocation();
+		float DistanceToFirstActor = (CurrActorLocation - FirstActorLocation).Size();
+		float DistanceToSecondtActor = (CurrActorLocation - SecondActorLocation).Size();
+		return DistanceToFirstActor > DistanceToSecondtActor; });
+	return FoundActors;
 }

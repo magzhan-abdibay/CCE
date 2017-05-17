@@ -1,15 +1,28 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include <vector>
 #include "Agent.generated.h"
 
 UCLASS(config = Game)
 class AAgent : public ACharacter {
   GENERATED_BODY()
 
-  UPROPERTY(EditAnywhere, Category = Team)
-  int8 Team;
+private:
+	UPROPERTY(EditAnywhere, Category = Team)
+	int8 Team;
 
+	float DistanceToBall = 0.0f;
+	float DistanceToGoal = 0.0f;
+	std::vector<float> DistanceToTeammates;
+	std::vector<float> DistanceToOpponents;
+
+	float CalculateDistanceToBall();
+	float CalculateDistanceToGoal();
+	std::vector<float> CalcualteDistanceToTeammates();
+	std::vector<float> CalcualteDistanceToOpponents();
+
+	TArray<AActor*> GetClosestAgents();
 public:
   AAgent();
 
@@ -29,16 +42,11 @@ public:
 
   FORCEINLINE void SetDistanceToGoal(float Value) { DistanceToGoal = Value; }
 
-  FORCEINLINE float GetDistanceToTeammate() const { return DistanceToTeammate; }
+  FORCEINLINE std::vector<float> GetDistanceToTeammates() const { return DistanceToTeammates; }
 
-  FORCEINLINE void SetDistanceToTeammate(float Value) {DistanceToTeammate = Value;}
+  FORCEINLINE void SetDistanceToTeammates(std::vector<float> Value) { DistanceToTeammates = Value; }
 
-private:
-  float DistanceToBall = 0.0f;
-  float DistanceToGoal = 0.0f;
-  float DistanceToTeammate = 0.0f;
+  FORCEINLINE std::vector<float> GetDistanceToOpponents() const { return DistanceToOpponents; }
 
-  float CalculateDistanceToBall();
-  float CalculateDistanceToGoal();
-  float CalcualteDistanceToTeammate();
+  FORCEINLINE void SetDistanceToOpponents(std::vector<float> Value) { DistanceToOpponents = Value; }
 };

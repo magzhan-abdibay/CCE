@@ -28,8 +28,8 @@ double* AAgentController::ActivateNeuralNetwork()
 	double MaxDistance = 9000.0f;
 	Input[0] = Agent->GetDistanceToBall()/ MaxDistance;
 	Input[1] = Agent->GetDistanceToGoal()/ MaxDistance;
-	Input[2] = Agent->GetDistanceToTeammate()/ MaxDistance;
-	Input[3] = Agent->GetDistanceToTeammate()/ MaxDistance;
+	//Input[2] = Agent->GetDistanceToTeammate()/ MaxDistance;
+	//Input[3] = Agent->GetDistanceToTeammate()/ MaxDistance;
 	Input[4] = Agent->GetDistanceToBall()/ MaxDistance;
 	Input[5] = Agent->GetDistanceToBall()/ MaxDistance;
 	Input[6] = .5;
