@@ -122,7 +122,7 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
 	FVector StartTrace = this->GetActorLocation();
 
-	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::ForwardVector*RayCastLenght) + StartTrace, ECC_WorldStatic, *TraceParams))
+	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::ForwardVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
 		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
 		Result.push_back(HitResult->Distance);
@@ -131,7 +131,7 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 		Result.push_back(0.0f);
 	}
 	
-	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::ForwardVector*RayCastLenght) + StartTrace, ECC_WorldStatic, *TraceParams))
+	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::ForwardVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
 		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
 		Result.push_back(HitResult->Distance);
@@ -140,7 +140,7 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 		Result.push_back(0.0f);
 	}
 
-	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::RightVector*RayCastLenght) + StartTrace, ECC_WorldStatic, *TraceParams))
+	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::RightVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
 		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
 		Result.push_back(HitResult->Distance);
@@ -149,7 +149,7 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 		Result.push_back(0.0f);
 	}
 
-	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::RightVector*RayCastLenght) + StartTrace, ECC_WorldStatic, *TraceParams))
+	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::RightVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
 		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
 		Result.push_back(HitResult->Distance);
