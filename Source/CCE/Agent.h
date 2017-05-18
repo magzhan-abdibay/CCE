@@ -16,11 +16,13 @@ private:
 	float DistanceToGoal = 0.0f;
 	std::vector<float> DistanceToTeammates;
 	std::vector<float> DistanceToOpponents;
+	std::vector<float> DistanceToWalls;
 
 	float CalculateDistanceToBall();
 	float CalculateDistanceToGoal();
 	std::vector<float> CalcualteDistanceToTeammates();
 	std::vector<float> CalcualteDistanceToOpponents();
+	std::vector<float> CalcualteDistanceToWalls();
 
 	TArray<AActor*> GetClosestAgents();
 public:
@@ -49,4 +51,8 @@ public:
   FORCEINLINE std::vector<float> GetDistanceToOpponents() const { return DistanceToOpponents; }
 
   FORCEINLINE void SetDistanceToOpponents(std::vector<float> Value) { DistanceToOpponents = Value; }
+
+  FORCEINLINE std::vector<float> GetDistanceToWalls() const { return DistanceToWalls; }
+
+  FORCEINLINE void SetDistanceToWalls(std::vector<float> Value) { DistanceToWalls = Value; }
 };
