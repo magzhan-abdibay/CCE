@@ -124,7 +124,7 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::ForwardVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
+		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 1.0f);
 		Result.push_back(HitResult->Distance);
 	}
 	else {
@@ -133,7 +133,7 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 	
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::ForwardVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
+		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 1.0f);
 		Result.push_back(HitResult->Distance);
 	}
 	else {
@@ -142,7 +142,7 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::RightVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
+		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 1.0f);
 		Result.push_back(HitResult->Distance);
 	}
 	else {
@@ -151,15 +151,15 @@ std::vector<float> AAgent::CalcualteDistanceToWalls()
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::RightVector*RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->TraceEnd, FColor::Yellow, false, -1, 1, 2.0f);
+		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 1.0f);
 		Result.push_back(HitResult->Distance);
 	}
 	else {
 		Result.push_back(0.0f);
 	}
 
-	for (std::vector<float>::iterator it = Result.begin(); it != Result.end(); ++it) {
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(*it));
-	}
+	//for (std::vector<float>::iterator it = Result.begin(); it != Result.end(); ++it) {
+	//	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(*it));
+	//}
 	return Result;
 }

@@ -23,20 +23,24 @@ void AAgentController::Tick(float DeltaTime) {
 
 double* AAgentController::ActivateNeuralNetwork()
 {
-	double* Input= new double[7];
+	double* Input= new double[11];
 	double* Output= new double[4];
 	double MaxDistance = 9000.0f;
 	Input[0] = Agent->GetDistanceToBall()/ MaxDistance;
 	Input[1] = Agent->GetDistanceToGoal()/ MaxDistance;
-	//Input[2] = Agent->GetDistanceToTeammate()/ MaxDistance;
-	//Input[3] = Agent->GetDistanceToTeammate()/ MaxDistance;
-	Input[4] = Agent->GetDistanceToBall()/ MaxDistance;
-	Input[5] = Agent->GetDistanceToBall()/ MaxDistance;
-	Input[6] = .5;
+	Input[2] = Agent->GetDistanceToTeammates()[0] / MaxDistance;
+	Input[3] = Agent->GetDistanceToTeammates()[1] / MaxDistance;
+	Input[4] = Agent->GetDistanceToOpponents()[0] / MaxDistance;
+	Input[5] = Agent->GetDistanceToOpponents()[1] / MaxDistance;
+	Input[6] = Agent->GetDistanceToWalls()[0]/ MaxDistance;
+	Input[7] = Agent->GetDistanceToWalls()[1]/ MaxDistance;
+	Input[8] = Agent->GetDistanceToWalls()[2]/ MaxDistance;
+	Input[9] = Agent->GetDistanceToWalls()[3] / MaxDistance;
+	Input[10] = .5;
 
-	//for (int i = 0; i < 7; i++) {
-	//	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(Input[i]));
-	//}
+	for (int i = 0; i < 10; i++) {
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(Input[i]));
+	}
 
 	NeatOrganism->net->loadSensors(Input);
 
