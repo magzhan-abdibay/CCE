@@ -12,4 +12,6 @@ class CCE_API ABall : public AActor {
 
 public:
   ABall();  
+
+  virtual void BeginPlay() override;
 };

@@ -38,9 +38,9 @@ double* AAgentController::ActivateNeuralNetwork()
 	Input[9] = Agent->GetDistanceToWalls()[3] / MaxDistance;
 	Input[10] = .5;
 
-	for (int i = 0; i < 10; i++) {
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(Input[i]));
-	}
+	//for (int i = 0; i < 10; i++) {
+	//	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(Input[i]));
+	//}
 
 	NeatOrganism->net->loadSensors(Input);
 
@@ -58,12 +58,15 @@ double* AAgentController::ActivateNeuralNetwork()
 
 double AAgentController::EvaluateFitness() {
 	double Result = 0.0f;
+	double MaxValue = 10000.0f;
+
 	if (LastCalculatedOutput) {
-		for (int i = 0; i < 4; i++) {
-			Result += LastCalculatedOutput[i];
-		}
-		Result-=Agent->GetDistanceToGoal()/9000;
+		//for (int i = 0; i < 4; i++) {
+		//	Result += LastCalculatedOutput[i];
+		//}
+		Result = MaxValue -Agent->GetDistanceToGoal();
 	}
+
 	return Result;
 }
 

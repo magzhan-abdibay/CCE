@@ -6,3 +6,8 @@ ABall::ABall() {
   Mesh->SetSimulatePhysics(true);
   RootComponent = Mesh;
 }
+
+void ABall::BeginPlay() { 
+	Super::BeginPlay();
+	//Mesh->SetPhysicsLinearVelocity(FVector(10050.f, 5000, 0));
+}

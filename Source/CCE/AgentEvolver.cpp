@@ -211,7 +211,7 @@ void AAgentEvolver::NeatTick(int Offsprings) {
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, "Winner found");
 		Population->printToFileBySpecies(FileWinnerPopulationPath);
 		//TEMPORARY: Completely meaningless stuff
-		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		return;
 	}
 }
@@ -232,7 +232,8 @@ bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController) {
 	if (AgentController) {
 		NEAT::Organism *Org = AgentController->GetNeatOrganism();
 		Org->fitness = AgentController->EvaluateFitness();
-		if (Org->fitness >= 3.0f) {
+		double DesirableValue = 8500.0f;
+		if (Org->fitness >= DesirableValue) {
 			Org->winner = true;
 			return true;
 		}
