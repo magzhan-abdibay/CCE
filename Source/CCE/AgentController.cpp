@@ -10,14 +10,38 @@ void AAgentController::Possess(APawn *Value) {
 
 void AAgentController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	
+	/*
 	ControlAgent(LastCalculatedOutput);
 
 	if (TicksFromLastCalculate++ >  CalculatingFrequencyInTicks) {
 		TicksFromLastCalculate = 0;
 		LastCalculatedOutput = ActivateNeuralNetwork();
 		NeatOrganism->fitness = EvaluateFitness();
+		TicksFromLastCalculate = 0;
+		
+		EPathFollowingStatus::Type status = GetMoveStatus();
+		if (status == EPathFollowingStatus::Moving) {
+		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Emerald, "Moving");
+		
+		}else if (status == EPathFollowingStatus::Idle) {
+			
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(1 * 1000));
+			FVector Destination;
+			for (TActorIterator<ABall> BallItr(GetWorld()); BallItr; ++BallItr) {
+				Destination = BallItr->GetActorLocation();
+			}
+			
+			MoveTo(Destination);
+			
+			
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Black, "Else");
+		
+		}
+
 	}
+	*/
 	
 }
 
@@ -73,7 +97,7 @@ double AAgentController::EvaluateFitness() {
 void AAgentController::ControlAgent(double *ControlValues)  {
 	if (!ControlValues)
 		return;
-	int16 moveStep = 500;
+	int16 moveStep = 5;
 	
 	FVector MovementVector = FVector::ZeroVector;
 	
@@ -88,6 +112,8 @@ void AAgentController::ControlAgent(double *ControlValues)  {
 	
 	//if (round(ControlValues[3]) == 1)
 		MovementVector -= ControlValues[3]*FVector::RightVector;
-
+		
+	//Magic
+		//MovementVector += Agent->GetTeam() == 0 ? FVector::RightVector : -FVector::RightVector;
 	Agent->AddMovementInput(MovementVector, moveStep);
 }

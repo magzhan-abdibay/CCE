@@ -10,17 +10,19 @@ AAgentEvolver::AAgentEvolver() {
 
 void AAgentEvolver::BeginPlay() {
 	Super::BeginPlay();
-	NeatInit();
+	//NeatInit();
 
 	//ReadPopulation("E:\\UnrealProjects\\CCE\\Config\\NEAT\\Population");
 }
 
 void AAgentEvolver::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	/*
 	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks) {
 		TicksFromLastCalculate = 0;
 		NeatTick(OffspringCount++);
 	}
+	*/
 }
 
 void AAgentEvolver::NeatInit() {
@@ -253,7 +255,7 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team) {
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
-			SpawnParams.bNoCollisionFail = true;
+			//SpawnParams.bNoCollisionFail = true;
 
 			FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
 			FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;
