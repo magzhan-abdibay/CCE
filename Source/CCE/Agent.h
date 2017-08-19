@@ -2,11 +2,14 @@
 
 #include "GameFramework/Character.h"
 #include <vector>
+#include "AgentBase.h"
 #include "Agent.generated.h"
 
 UCLASS(config = Game)
-class AAgent : public ACharacter {
-  GENERATED_BODY()
+
+class AAgent : public AAgentBase
+{
+	GENERATED_BODY()
 
 private:
 	UPROPERTY(EditAnywhere, Category = Team)
@@ -26,33 +29,33 @@ private:
 
 	TArray<AActor*> GetClosestAgents();
 public:
-  AAgent();
+	AAgent();
 
-  virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float DeltaSeconds) override;
 
-  virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 
-  FORCEINLINE int8 GetTeam() const { return Team; }
+	FORCEINLINE int8 GetTeam() const { return Team; }
 
-  FORCEINLINE void SetTeam(int8 Value) { Team = Value; }
+	FORCEINLINE void SetTeam(int8 Value) { Team = Value; }
 
-  FORCEINLINE float GetDistanceToBall() const { return DistanceToBall; }
+	FORCEINLINE float GetDistanceToBall() const { return DistanceToBall; }
 
-  FORCEINLINE void SetDistanceToBall(float Value) { DistanceToBall = Value; }
+	FORCEINLINE void SetDistanceToBall(float Value) { DistanceToBall = Value; }
 
-  FORCEINLINE float GetDistanceToGoal() const { return DistanceToGoal; }
+	FORCEINLINE float GetDistanceToGoal() const { return DistanceToGoal; }
 
-  FORCEINLINE void SetDistanceToGoal(float Value) { DistanceToGoal = Value; }
+	FORCEINLINE void SetDistanceToGoal(float Value) { DistanceToGoal = Value; }
 
-  FORCEINLINE std::vector<float> GetDistanceToTeammates() const { return DistanceToTeammates; }
+	FORCEINLINE std::vector<float> GetDistanceToTeammates() const { return DistanceToTeammates; }
 
-  FORCEINLINE void SetDistanceToTeammates(std::vector<float> Value) { DistanceToTeammates = Value; }
+	FORCEINLINE void SetDistanceToTeammates(std::vector<float> Value) { DistanceToTeammates = Value; }
 
-  FORCEINLINE std::vector<float> GetDistanceToOpponents() const { return DistanceToOpponents; }
+	FORCEINLINE std::vector<float> GetDistanceToOpponents() const { return DistanceToOpponents; }
 
-  FORCEINLINE void SetDistanceToOpponents(std::vector<float> Value) { DistanceToOpponents = Value; }
+	FORCEINLINE void SetDistanceToOpponents(std::vector<float> Value) { DistanceToOpponents = Value; }
 
-  FORCEINLINE std::vector<float> GetDistanceToWalls() const { return DistanceToWalls; }
+	FORCEINLINE std::vector<float> GetDistanceToWalls() const { return DistanceToWalls; }
 
-  FORCEINLINE void SetDistanceToWalls(std::vector<float> Value) { DistanceToWalls = Value; }
+	FORCEINLINE void SetDistanceToWalls(std::vector<float> Value) { DistanceToWalls = Value; }
 };

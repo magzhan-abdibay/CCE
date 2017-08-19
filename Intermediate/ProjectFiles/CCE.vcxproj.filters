@@ -1,109 +1,118 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<None Include="..\..\CCE.uproject" />
-		<Filter Include="Source">
-			<UniqueIdentifier>{35C99750-E162-47F4-829D-76BAE9DE9FE2}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\CCE.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<None Include="..\..\Source\CCEEditor.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<Filter Include="Config">
-			<UniqueIdentifier>{A684C6E7-6A13-4D46-9C53-57E6D8ABB484}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Config\DefaultEditor.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultEngine.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultGame.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultInput.ini">
-			<Filter>Config</Filter>
-		</None >
-		<Filter Include="Config\NEAT">
-			<UniqueIdentifier>{A7EEA897-73E6-4767-9B82-7CEC4B7EBEB7}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Config\NEAT\NeatVariables.ne">
-			<Filter>Config\NEAT</Filter>
-		</None >
-		<None Include="..\..\Config\NEAT\Population">
-			<Filter>Config\NEAT</Filter>
-		</None >
-		<None Include="..\..\Config\NEAT\StartGene">
-			<Filter>Config\NEAT</Filter>
-		</None >
-		<None Include="..\..\Config\NEAT\WinnerPopulation">
-			<Filter>Config\NEAT</Filter>
-		</None >
-		<Filter Include="Source\CCE">
-			<UniqueIdentifier>{9A1812FD-0677-4885-8781-31F3B46A256A}</UniqueIdentifier>
-		</Filter>
-		<ClCompile Include="..\..\Source\CCE\Agent.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\Agent.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\AgentController.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\AgentController.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\AgentEvolver.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\AgentEvolver.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\Ball.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\Ball.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<None Include="..\..\Source\CCE\CCE.Build.cs">
-			<Filter>Source\CCE</Filter>
-		</None >
-		<ClCompile Include="..\..\Source\CCE\CCE.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\CCE.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\CCEGameState.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\CCEGameState.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\Goal.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\Goal.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp">
-			<Filter>Source\CCE</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
-			<Filter>Source\CCE</Filter>
-		</ClInclude >
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\CCE.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{35C99750-E162-47F4-829D-76BAE9DE9FE2}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CCE.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\CCEEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{A684C6E7-6A13-4D46-9C53-57E6D8ABB484}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Config\NEAT">
+      <UniqueIdentifier>{A7EEA897-73E6-4767-9B82-7CEC4B7EBEB7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\NEAT\NeatVariables.ne">
+      <Filter>Config\NEAT</Filter>
+    </None>
+    <None Include="..\..\Config\NEAT\Population">
+      <Filter>Config\NEAT</Filter>
+    </None>
+    <None Include="..\..\Config\NEAT\StartGene">
+      <Filter>Config\NEAT</Filter>
+    </None>
+    <None Include="..\..\Config\NEAT\WinnerPopulation">
+      <Filter>Config\NEAT</Filter>
+    </None>
+    <Filter Include="Source\CCE">
+      <UniqueIdentifier>{9A1812FD-0677-4885-8781-31F3B46A256A}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\CCE\Agent.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\Agent.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\AgentController.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\AgentController.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\AgentEvolver.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\AgentEvolver.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\Ball.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\Ball.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\CCE\CCE.Build.cs">
+      <Filter>Source\CCE</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\CCE\CCE.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\CCE.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\CCEGameMode.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\CCEGameMode.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\CCEGameState.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\CCEGameState.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\Goal.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\Goal.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CCE\SpectatorCamera.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CCE\SpectatorCamera.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\CCE\AgentBase.h">
+      <Filter>Source\CCE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\CCE\AgentBase.cpp">
+      <Filter>Source\CCE</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
