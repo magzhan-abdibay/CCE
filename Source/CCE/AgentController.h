@@ -33,6 +33,8 @@ public:
 
 	virtual void Possess(APawn* Pawn) override;
 
+	double* CalcualteOutput();
+
 	double EvaluateFitness();
 
 	FORCEINLINE NEAT::Organism* GetNeatOrganism() const { return NeatOrganism; }
