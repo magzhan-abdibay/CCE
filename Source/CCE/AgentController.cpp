@@ -1,7 +1,10 @@
 #include "CCE.h"
 #include "AgentController.h"
 
-AAgentController::AAgentController(){}
+AAgentController::AAgentController()
+{
+}
+
 
 void AAgentController::Possess(APawn* Value)
 {
@@ -14,12 +17,14 @@ void AAgentController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
 	ControlAgent(LastCalculatedOutput);
-	
-	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks) {
+
+	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks)
+	{
 		TicksFromLastCalculate = 0;
-		
-		LastCalculatedOutput= ActivateNeuralNetwork();
+
+		LastCalculatedOutput = ActivateNeuralNetwork();
 
 		NeatOrganism->fitness = EvaluateFitness();
 	}
@@ -68,9 +73,6 @@ double AAgentController::EvaluateFitness()
 
 	if (LastCalculatedOutput)
 	{
-		//for (int i = 0; i < 4; i++) {
-		//	Result += LastCalculatedOutput[i];
-		//}
 		Result = MaxValue - Agent->GetDistanceToGoal();
 	}
 
@@ -79,9 +81,11 @@ double AAgentController::EvaluateFitness()
 
 void AAgentController::ControlAgent(double* ControlValues)
 {
-	if (!ControlValues) {
+	if (!ControlValues)
+	{
 		return;
 	}
+
 	int16 moveStep = 5;
 
 	FVector MovementVector = FVector::ZeroVector;
