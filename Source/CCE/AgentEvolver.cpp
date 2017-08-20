@@ -15,25 +15,20 @@ void AAgentEvolver::BeginPlay()
 
 	NeatInit();
 
-	ReadPopulation(FileInitialPopulationPath);
+	ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileInitialPopulationPath)));
 }
 
 void AAgentEvolver::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks)
-	{
-		TicksFromLastCalculate = 0;
-		NeatTick(OffspringCount++);
-	}
+	NeatTick();
 }
 
 void AAgentEvolver::NeatInit()
 {
-	NEAT::loadNeatParams(FileNeatParamsPath, true);
+	NEAT::loadNeatParams(static_cast<char*>(TCHAR_TO_ANSI(*FileNeatParamsPath)), true);
 
-	NEAT::Genome* StartGenome = ReadGenome(FileStartGenomePath);
+	NEAT::Genome* StartGenome = ReadGenome(static_cast<char*>(TCHAR_TO_ANSI(*FileStartGenomePath)));
 
 	Population = GeneratePopulation(StartGenome);
 }
@@ -169,6 +164,15 @@ AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentControlle
 	return nullptr;
 }
 
+void AAgentEvolver::NeatTick()
+{
+	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks)
+	{
+		TicksFromLastCalculate = 0;
+		NeatTick(OffspringCount++);
+	}
+}
+
 void AAgentEvolver::NeatTick(int Offsprings)
 {
 	if (WinnnerFound)
@@ -237,13 +241,12 @@ void AAgentEvolver::NeatTick(int Offsprings)
 	if (WinnnerFound)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, "Winner found");
-		Population->printToFileBySpecies(FileWinnerPopulationPath);
+		Population->printToFileBySpecies(static_cast<char*>(TCHAR_TO_ANSI(*FileWinnerPopulationPath)));
 		//TEMPORARY: Completely meaningless stuff
 		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		return;
 	}
 }
-
 
 AAgentController* AAgentEvolver::FindAgentControllerByNeatOrganism(NEAT::Organism* Org)
 {
@@ -312,4 +315,3 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team)
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("SpawnAgent is null"));
 	return nullptr;
 }
-

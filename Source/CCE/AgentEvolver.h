@@ -22,14 +22,16 @@
 #include "AgentEvolver.generated.h"
 
 UCLASS()
-class CCE_API AAgentEvolver : public AActor {
+
+class CCE_API AAgentEvolver : public AActor
+{
 	GENERATED_BODY()
 
-	/** What spawn. Subclass of AAgent*/
-	UPROPERTY(EditAnywhere, Category = "Spawning")
-	TSubclassOf<class AAgent> WhatToSpawn;
+		/** What spawn. Subclass of AAgent*/
+		UPROPERTY(EditAnywhere, Category = "Spawning")
+		TSubclassOf<class AAgent> WhatToSpawn;
 
-	class UBoxComponent *WhereToSpawn;
+	class UBoxComponent* WhereToSpawn;
 public:
 	AAgentEvolver();
 
@@ -37,54 +39,42 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	FORCEINLINE class UBoxComponent *GetWhereToSpawn() const { return WhereToSpawn; }
+	FORCEINLINE class UBoxComponent* GetWhereToSpawn() const { return WhereToSpawn; }
 
 private:
-	char *FileNeatParamsPath =
-		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\NeatVariables.ne";
-
-	char *FileStartGenomePath =
-		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\StartGene";
-
-	char *FileWinnerPopulationPath =
-		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\WinnerPopulation";
-
-	char* FileInitialPopulationPath =
-		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\Population";
+	//TODO: make it editable from UEditor
+	FString FileNeatParamsPath = FPaths::GameConfigDir().Append("\\NEAT\\NeatVariables.ne");
+	FString FileStartGenomePath = FPaths::GameConfigDir().Append("\\NEAT\\StartGene");
+	FString FileWinnerPopulationPath = FPaths::GameConfigDir().Append("\\NEAT\\WinnerPopulation");
+	FString FileInitialPopulationPath = FPaths::GameConfigDir().Append("\\NEAT\\Population");
 
 	std::vector<AAgentController*> AgentControllers;
-
-	NEAT::Population *Population;
-
+	NEAT::Population* Population;
 	int CompatAdjustFrequency = 0;
-
 	int NumSpeciesTarget = 0;
-
 	int OffspringCount = 0;
-
 	int8 TicksFromLastCalculate = 0;
-
 	int8 const CalculatingFrequencyInTicks = 60;
-
 	bool WinnnerFound = false;
 
 	void NeatInit();
 
 	void NeatTick(int count);
 
-	NEAT::Population* ReadPopulation(char * filePath);
+	void NeatTick();
 
-	NEAT::Genome* ReadGenome(char * filePath);
+	NEAT::Population* ReadPopulation(char* filePath);
+
+	NEAT::Genome* ReadGenome(char* filePath);
 
 	NEAT::Population* GeneratePopulation(NEAT::Genome* startGenome);
 
-	AAgentController* AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism *Org);
+	AAgentController* AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism* Org);
 
 	AAgentController* FindAgentControllerByNeatOrganism(NEAT::Organism* Org);
 
 	bool EvaluateAgentController(AAgentController* AgentController);
-	
-	AAgent* SpawnAgent(int8 Team);
 
+	AAgent* SpawnAgent(int8 Team);
 };
 
