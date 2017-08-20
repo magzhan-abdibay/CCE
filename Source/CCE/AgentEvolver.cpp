@@ -1,40 +1,45 @@
 #include "CCE.h"
 #include "AgentEvolver.h"
 
-AAgentEvolver::AAgentEvolver() {
+AAgentEvolver::AAgentEvolver()
+{
 	PrimaryActorTick.bCanEverTick = true;
 
 	WhereToSpawn = CreateDefaultSubobject<UBoxComponent>(TEXT("WhereToSpawn"));
 	RootComponent = WhereToSpawn;
 }
 
-void AAgentEvolver::BeginPlay() {
+void AAgentEvolver::BeginPlay()
+{
 	Super::BeginPlay();
-	//NeatInit();
 
-	//ReadPopulation("E:\\UnrealProjects\\CCE\\Config\\NEAT\\Population");
+	NeatInit();
+
+	ReadPopulation(FileInitialPopulationPath);
 }
 
-void AAgentEvolver::Tick(float DeltaTime) {
+void AAgentEvolver::Tick(float DeltaTime)
+{
 	Super::Tick(DeltaTime);
-	/*
-	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks) {
+
+	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks)
+	{
 		TicksFromLastCalculate = 0;
 		NeatTick(OffspringCount++);
 	}
-	*/
 }
 
-void AAgentEvolver::NeatInit() {
-
+void AAgentEvolver::NeatInit()
+{
 	NEAT::loadNeatParams(FileNeatParamsPath, true);
 
-	NEAT::Genome *StartGenome = ReadGenome(FileStartGenomePath);
+	NEAT::Genome* StartGenome = ReadGenome(FileStartGenomePath);
 
 	Population = GeneratePopulation(StartGenome);
 }
 
-NEAT::Genome* AAgentEvolver::ReadGenome(char * FilePath) {
+NEAT::Genome* AAgentEvolver::ReadGenome(char* FilePath)
+{
 	UE_LOG(LogTemp, Warning, TEXT("Reading in the start genome"));
 	char CurWord[20];
 	int Id;
@@ -43,40 +48,44 @@ NEAT::Genome* AAgentEvolver::ReadGenome(char * FilePath) {
 	InFile >> Id;
 
 	UE_LOG(LogTemp, Warning, TEXT("Reading in Genome"));
-	NEAT::Genome *startGenome = new NEAT::Genome(Id, InFile);
+	NEAT::Genome* startGenome = new NEAT::Genome(Id, InFile);
 	InFile.close();
 	return startGenome;
 }
 
-NEAT::Population* AAgentEvolver::ReadPopulation(char * FilePath) {
-
-	NEAT::Population *ReadPopulation = new NEAT::Population(FilePath);
+NEAT::Population* AAgentEvolver::ReadPopulation(char* FilePath)
+{
+	NEAT::Population* ReadPopulation = new NEAT::Population(FilePath);
 
 	ReadPopulation->verifyPopulation();
 
 	// Initially, we evaluate the whole population
 	// Evaluate each organism on a test
 	int Count = 0;
-	for (std::vector<NEAT::Organism *>::iterator CurOrg = (ReadPopulation->organisms).begin(); CurOrg != (ReadPopulation->organisms).end(); ++CurOrg, ++Count) {
+	for (std::vector<NEAT::Organism *>::iterator CurOrg = (ReadPopulation->organisms).begin(); CurOrg != (ReadPopulation->organisms).end(); ++CurOrg , ++Count)
+	{
 		// shouldn't happen
-		if (((*CurOrg)->gnome) == 0) {
+		if (((*CurOrg)->gnome) == 0)
+		{
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return nullptr;
 		}
-		
+
 		//Spawn Agent and Attach NN 
-		AAgent* Agent = SpawnAgent(Count%2);
-		if (Agent) {
+		AAgent* Agent = SpawnAgent(Count % 2);
+		if (Agent)
+		{
 			AAgentController* AgentController = (AAgentController*)Agent->GetController();
-			if (AgentController) {
+			if (AgentController)
+			{
 				AgentController = AttachOrganismToAgentController(AgentController, (*CurOrg));
 				AgentControllers.push_back(AgentController);
-				if (EvaluateAgentController(AgentController)) {
+				if (EvaluateAgentController(AgentController))
+				{
 					WinnnerFound = true;
 				}
 			}
 		}
-
 	}
 
 	// Get ready for real-time loop
@@ -91,8 +100,8 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char * FilePath) {
 	return ReadPopulation;
 }
 
-NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome) {
-
+NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome)
+{
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Spawning Population off Genome")));
 
 	NEAT::Population* SpawnedPopulation = new NEAT::Population(StartGenome, NEAT::popSize);
@@ -103,31 +112,37 @@ NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome) {
 
 	// This is where we determine the frequency of compatibility threshold adjustment
 	CompatAdjustFrequency = NEAT::popSize / 10;
-	if (CompatAdjustFrequency < 1) {
+	if (CompatAdjustFrequency < 1)
+	{
 		CompatAdjustFrequency = 1;
 	}
 
 	// Initially, we evaluate the whole population
 	// Evaluate each organism on a test
 	int Count = 0;
-	for (std::vector<NEAT::Organism *>::iterator CurOrg = (SpawnedPopulation->organisms).begin(); CurOrg != (SpawnedPopulation->organisms).end(); ++CurOrg, ++Count) {
+	for (std::vector<NEAT::Organism *>::iterator CurOrg = (SpawnedPopulation->organisms).begin(); CurOrg != (SpawnedPopulation->organisms).end(); ++CurOrg , ++Count)
+	{
 		// shouldn't happen
-		if (((*CurOrg)->gnome) == 0) {
+		if (((*CurOrg)->gnome) == 0)
+		{
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return nullptr;
 		}
 
-		AAgent* Agent = SpawnAgent(Count%2);
-		if (Agent) {
-			AAgentController* AgentController =(AAgentController*) Agent->GetController();
-			if (AgentController) {
+		AAgent* Agent = SpawnAgent(Count % 2);
+		if (Agent)
+		{
+			AAgentController* AgentController = (AAgentController*)Agent->GetController();
+			if (AgentController)
+			{
 				AgentController = AttachOrganismToAgentController(AgentController, (*CurOrg));
 				AgentControllers.push_back(AgentController);
-				if (EvaluateAgentController(AgentController)) {
+				if (EvaluateAgentController(AgentController))
+				{
 					WinnnerFound = true;
 				}
 			}
-		}		
+		}
 	}
 
 	// Get ready for real-time loop
@@ -142,8 +157,10 @@ NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome) {
 	return SpawnedPopulation;
 }
 
-AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism *Org) {
-	if (AgentController) {
+AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism* Org)
+{
+	if (AgentController)
+	{
 		AgentController->SetNeatOrganism(Org);
 		Org->fitness = AgentController->EvaluateFitness();
 		return AgentController;
@@ -152,64 +169,73 @@ AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentControlle
 	return nullptr;
 }
 
-void AAgentEvolver::NeatTick(int Offsprings) {
-
-	if (WinnnerFound) {
+void AAgentEvolver::NeatTick(int Offsprings)
+{
+	if (WinnnerFound)
+	{
 		return;
 	}
 
 	// Every popSize reproductions, adjust the compatThresh to better match the NumSpeciesTarget  and reassign the population to new species
-	if (CompatAdjustFrequency && Offsprings % CompatAdjustFrequency == 0) {
-
+	if (CompatAdjustFrequency && Offsprings % CompatAdjustFrequency == 0)
+	{
 		int NumSpecies = (int)Population->species.size();
 		// Modify compat thresh to control speciation
-		double CompatMod = 0.1; 
+		double CompatMod = 0.1;
 
 		// This tinkers with the compatibility threshold						
-		if (NumSpecies < NumSpeciesTarget) {
+		if (NumSpecies < NumSpeciesTarget)
+		{
 			NEAT::compatThreshold -= CompatMod;
 		}
-		else if (NumSpecies > NumSpeciesTarget) {
+		else if (NumSpecies > NumSpeciesTarget)
+		{
 			NEAT::compatThreshold += CompatMod;
 		}
 
-		if (NEAT::compatThreshold < 0.3) {
+		if (NEAT::compatThreshold < 0.3)
+		{
 			NEAT::compatThreshold = 0.3;
 		}
 
 		// Go through entire population, reassigning organisms to new species
-		for (std::vector<NEAT::Organism *>::iterator CurOrg = (Population->organisms).begin(); CurOrg != Population->organisms.end(); ++CurOrg) {
+		for (std::vector<NEAT::Organism *>::iterator CurOrg = (Population->organisms).begin(); CurOrg != Population->organisms.end(); ++CurOrg)
+		{
 			Population->reassignSpecies(*CurOrg);
 		}
 	}
 
 	//For printing only
-	for (std::vector<NEAT::Species *>::iterator curSpec = (Population->species).begin(); curSpec != (Population->species).end(); curSpec++) {
+	for (std::vector<NEAT::Species *>::iterator curSpec = (Population->species).begin(); curSpec != (Population->species).end(); curSpec++)
+	{
 		std::cout << "Species " << (*curSpec)->id << " size" << (*curSpec)->organisms.size() << " average= "
 			<< (*curSpec)->avgEst << std::endl;
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Species ")+FString::FromInt((*curSpec)->id)
-			+ FString(" size ") + FString::FromInt((*curSpec)->organisms.size())
-			+ FString(" average= ") + FString::SanitizeFloat((*curSpec)->avgEst));
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Species ") + FString::FromInt((*curSpec)->id)
+		                                 + FString(" size ") + FString::FromInt((*curSpec)->organisms.size())
+		                                 + FString(" average= ") + FString::SanitizeFloat((*curSpec)->avgEst));
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Pop size: ") + FString::FromInt(Population->organisms.size()));
 
 	NEAT::Organism* WorstOrganism = Population->removeWorst();
 	AAgentController* AgentController = FindAgentControllerByNeatOrganism(WorstOrganism);
-	if (AgentController){
-		NEAT::Organism *NewOrg = (Population->chooseParentSpecies())->reproduceOne(Offsprings, Population, Population->species);
+	if (AgentController)
+	{
+		NEAT::Organism* NewOrg = (Population->chooseParentSpecies())->reproduceOne(Offsprings, Population, Population->species);
 		AgentController = AttachOrganismToAgentController(AgentController, NewOrg);
 		// Now we reestimate the baby's species' fitness
 		NewOrg->species->estimateAverage();
-		if (EvaluateAgentController(AgentController)) {
+		if (EvaluateAgentController(AgentController))
+		{
 			WinnnerFound = true;
 		}
 	}
-	
+
 	// Now we evaluate the new individual
 	// Note that in a true real-time simulation, evaluation would be happening to
 	// all individuals at all times.  That is, this call would not appear here in
 	// a true online simulation.
-	if (WinnnerFound) {
+	if (WinnnerFound)
+	{
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, "Winner found");
 		Population->printToFileBySpecies(FileWinnerPopulationPath);
 		//TEMPORARY: Completely meaningless stuff
@@ -219,9 +245,12 @@ void AAgentEvolver::NeatTick(int Offsprings) {
 }
 
 
-AAgentController* AAgentEvolver::FindAgentControllerByNeatOrganism(NEAT::Organism* Org) {
-	for (std::vector<AAgentController *>::iterator ÑurAgentConntoller = AgentControllers.begin(); ÑurAgentConntoller != AgentControllers.end(); ++ÑurAgentConntoller) {
-		if ((*ÑurAgentConntoller)->GetNeatOrganism() == Org) {
+AAgentController* AAgentEvolver::FindAgentControllerByNeatOrganism(NEAT::Organism* Org)
+{
+	for (std::vector<AAgentController *>::iterator ÑurAgentConntoller = AgentControllers.begin(); ÑurAgentConntoller != AgentControllers.end(); ++ÑurAgentConntoller)
+	{
+		if ((*ÑurAgentConntoller)->GetNeatOrganism() == Org)
+		{
 			return (*ÑurAgentConntoller);
 		}
 	}
@@ -230,16 +259,20 @@ AAgentController* AAgentEvolver::FindAgentControllerByNeatOrganism(NEAT::Organis
 	return nullptr;
 }
 
-bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController) {
-	if (AgentController) {
-		NEAT::Organism *Org = AgentController->GetNeatOrganism();
+bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController)
+{
+	if (AgentController)
+	{
+		NEAT::Organism* Org = AgentController->GetNeatOrganism();
 		Org->fitness = AgentController->EvaluateFitness();
 		double DesirableValue = 8500.0f;
-		if (Org->fitness >= DesirableValue) {
+		if (Org->fitness >= DesirableValue)
+		{
 			Org->winner = true;
 			return true;
 		}
-		else {
+		else
+		{
 			Org->winner = false;
 			return false;
 		}
@@ -248,10 +281,13 @@ bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController) {
 	return false;
 }
 
-AAgent* AAgentEvolver::SpawnAgent(int8 Team) {
-	if (WhatToSpawn) {
-		UWorld *const World = GetWorld();
-		if (World) {
+AAgent* AAgentEvolver::SpawnAgent(int8 Team)
+{
+	if (WhatToSpawn)
+	{
+		UWorld*const World = GetWorld();
+		if (World)
+		{
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
@@ -263,9 +299,10 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team) {
 
 			FRotator SpawnRotation(0, FMath::FRand() * 360.0f, 0);
 
-			AAgent *const SpawnedActor = World->SpawnActor<AAgent>(
+			AAgent*const SpawnedActor = World->SpawnActor<AAgent>(
 				WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
-			if (SpawnedActor) {
+			if (SpawnedActor)
+			{
 				SpawnedActor->SetTeam(Team);
 				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("Spawned Agent - Team: ") + FString::FromInt(SpawnedActor->GetTeam()));
 				return SpawnedActor;

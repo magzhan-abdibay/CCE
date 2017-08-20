@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GameFramework/Character.h"
 #include <vector>
 #include "AgentBase.h"
 #include "Agent.generated.h"

@@ -41,13 +41,16 @@ public:
 
 private:
 	char *FileNeatParamsPath =
-		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\NeatVariables.ne";
+		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\NeatVariables.ne";
 
 	char *FileStartGenomePath =
-		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\StartGene";
+		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\StartGene";
 
 	char *FileWinnerPopulationPath =
-		"E:\\UnrealProjects\\CCE\\Config\\NEAT\\WinnerPopulation";
+		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\WinnerPopulation";
+
+	char* FileInitialPopulationPath =
+		"C:\\UnrealProjects\\CCE_4.16\\Config\\NEAT\\Population";
 
 	std::vector<AAgentController*> AgentControllers;
 
