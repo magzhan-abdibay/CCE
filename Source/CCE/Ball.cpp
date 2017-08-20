@@ -8,7 +8,5 @@ ABall::ABall() {
 }
 
 void ABall::BeginPlay() { 
-	Super::BeginPlay();
-	//Mesh->SetPhysicsLinearVelocity(FVector(10050.f, 5000, 0));
-	Mesh->AddImpulse(FVector(1000, 0, 0),NAME_None,true);
+	Super::BeginPlay();	
 }

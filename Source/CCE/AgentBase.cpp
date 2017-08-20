@@ -1,5 +1,6 @@
 #include "CCE.h"
 #include "AgentBase.h"
+#include "Ball.h"
 
 AAgentBase::AAgentBase()
 {
@@ -30,13 +31,7 @@ AAgentBase::AAgentBase()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
-
-//////////////////////////////////////////////////////////////////////////
-// Input
 
 void AAgentBase::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
@@ -79,15 +74,23 @@ void AAgentBase::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 
 void AAgentBase::Kick()
 {
+	float KickDistance = 200.0f;
+	float KickPower = 800.0f;
+	float BallHalfHeight = 20.0f;
+
 	FHitResult* HitResult = new FHitResult();
-	FVector StartTrace = RootComponent->GetComponentLocation();
+	FVector StartTrace = GetCapsuleComponent()->GetComponentLocation() - FVector::UpVector * (GetCapsuleComponent()->GetScaledCapsuleRadius() - BallHalfHeight);
 	FVector ForwardVector = RootComponent->GetForwardVector();
-	FVector EndTrace = ((ForwardVector * 50000.0f) + StartTrace);
+	FVector EndTrace = ((ForwardVector * KickDistance) + StartTrace);
 	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, EndTrace, ECC_Visibility, *TraceParams))
 	{
-		DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor::Red, true);
+		if (HitResult->GetActor()->GetClass()->IsChildOf(ABall::StaticClass()))
+		{
+			HitResult->GetComponent()->AddImpulse((ForwardVector * KickPower), NAME_None, true);
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Red, false);
+		}
 	}
 }
 
