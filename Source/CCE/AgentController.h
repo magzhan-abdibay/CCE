@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "Organism.h"
 #include "Agent.h"
+#include "Ball.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "AgentController.generated.h"
 
@@ -30,8 +31,11 @@ public:
 	AAgentController();
 
 	virtual void Tick(float DeltaSeconds) override;
+	void MoveAgent();
 
 	virtual void Possess(APawn* Pawn) override;
+
+	double* CalcualteOutput();
 
 	double EvaluateFitness();
 
