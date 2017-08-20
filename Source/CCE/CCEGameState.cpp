@@ -3,4 +3,4 @@
 
 ACCEGameState::ACCEGameState() { PrimaryActorTick.bCanEverTick = true; }
 
-void ACCEGameState::Tick(float DeltaTime) {Super::Tick(DeltaTime);}
+void ACCEGameState::Tick(float DeltaTime) { Super::Tick(DeltaTime); }

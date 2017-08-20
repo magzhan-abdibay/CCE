@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "CCE.h"
 #include "AgentBase.h"
 
@@ -72,7 +70,7 @@ void AAgentBase::OnResetVR()
 
 void AAgentBase::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
-	// jump, but only on the first touch
+	// kick, but only on the first touch
 	if (FingerIndex == ETouchIndex::Touch1)
 	{
 		Kick();
