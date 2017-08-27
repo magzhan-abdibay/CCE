@@ -15,7 +15,7 @@ void AAgentEvolver::BeginPlay()
 
 	NeatInit();
 
-	ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileInitialPopulationPath)));
+	//ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileInitialPopulationPath)));
 }
 
 void AAgentEvolver::Tick(float DeltaTime)
@@ -294,7 +294,7 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team)
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
-			//SpawnParams.bNoCollisionFail = true;
+//			SpawnParams.bNoFail = true;
 
 			FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
 			FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;
@@ -302,8 +302,7 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team)
 
 			FRotator SpawnRotation(0, FMath::FRand() * 360.0f, 0);
 
-			AAgent*const SpawnedActor = World->SpawnActor<AAgent>(
-				WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
+			AAgent*const SpawnedActor = World->SpawnActor<AAgent>(WhatToSpawn, SpawnLocation, SpawnRotation, SpawnParams);
 			if (SpawnedActor)
 			{
 				SpawnedActor->SetTeam(Team);

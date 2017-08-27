@@ -12,7 +12,7 @@ class AAgent : public AAgentBase
 
 private:
 	UPROPERTY(EditAnywhere, Category = Team)
-	int8 Team;
+	int8 Team = 0;
 
 	float DistanceToBall = 0.0f;
 	float DistanceToGoal = 0.0f;
@@ -27,16 +27,15 @@ private:
 	std::vector<float> CalcualteDistanceToWalls();
 
 	TArray<AActor*> GetClosestAgents();
+	void DifferentiateTeamsByColor();
 public:
 	AAgent();
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	virtual void BeginPlay() override;
-
 	FORCEINLINE int8 GetTeam() const { return Team; }
 
-	FORCEINLINE void SetTeam(int8 Value) { Team = Value; }
+	FORCEINLINE void SetTeam(int8 Value){Team = Value; DifferentiateTeamsByColor();}
 
 	FORCEINLINE float GetDistanceToBall() const { return DistanceToBall; }
 

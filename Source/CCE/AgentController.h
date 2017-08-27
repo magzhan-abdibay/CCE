@@ -7,7 +7,6 @@
 #include "AgentController.generated.h"
 
 UCLASS()
-
 class CCE_API AAgentController : public AAIController
 {
 	GENERATED_BODY()

@@ -57,7 +57,6 @@ void AAgentBase::SetupPlayerInputComponent(class UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AAgentBase::OnResetVR);
 }
 
-
 void AAgentBase::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
