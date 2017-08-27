@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "Organism.h"
 #include "Agent.h"
+#include "Ball.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "AgentController.generated.h"
 
