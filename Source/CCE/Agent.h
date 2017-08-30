@@ -20,11 +20,11 @@ private:
 	std::vector<float> DistanceToOpponents;
 	std::vector<float> DistanceToWalls;
 
-	float CalculateDistanceToBall();
-	float CalculateDistanceToGoal();
+	float CalculateDistanceToBall() const;
+	float CalculateDistanceToGoal() const;
 	std::vector<float> CalcualteDistanceToTeammates();
 	std::vector<float> CalcualteDistanceToOpponents();
-	std::vector<float> CalcualteDistanceToWalls();
+	std::vector<float> CalcualteDistanceToWalls() const;
 
 	TArray<AActor*> GetClosestAgents();
 	void DifferentiateTeamsByColor();

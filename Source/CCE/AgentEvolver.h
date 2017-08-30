@@ -27,9 +27,9 @@ class CCE_API AAgentEvolver : public AActor
 {
 	GENERATED_BODY()
 
-		/** What spawn. Subclass of AAgent*/
-		UPROPERTY(EditAnywhere, Category = "Spawning")
-		TSubclassOf<class AAgent> WhatToSpawn;
+	/** What spawn. Subclass of AAgent*/
+	UPROPERTY(EditAnywhere, Category = "Spawning")
+	TSubclassOf<class AAgent> WhatToSpawn;
 
 	class UBoxComponent* WhereToSpawn;
 public:
