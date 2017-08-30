@@ -27,7 +27,7 @@ void AAgentController::Tick(float DeltaTime)
 	}
 }
 
-double* AAgentController::ActivateNeuralNetwork()
+double* AAgentController::ActivateNeuralNetwork() const
 {
 	double* Input = new double[11];
 	double* Output = new double[4];
@@ -63,7 +63,7 @@ double* AAgentController::ActivateNeuralNetwork()
 	return Output;
 }
 
-double AAgentController::EvaluateFitness()
+double AAgentController::EvaluateFitness() const
 {
 	double Result = 0.0f;
 	double MaxValue = 10000.0f;
@@ -76,7 +76,7 @@ double AAgentController::EvaluateFitness()
 	return Result;
 }
 
-void AAgentController::ControlAgent(double* ControlValues)
+void AAgentController::ControlAgent(double* ControlValues) const
 {
 	if (!ControlValues)
 	{

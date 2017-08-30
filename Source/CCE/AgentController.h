@@ -22,9 +22,9 @@ private:
 
 	double* LastCalculatedOutput;
 
-	void ControlAgent(double* ControlValues);
+	void ControlAgent(double* ControlValues) const;
 
-	double* ActivateNeuralNetwork();
+	double* ActivateNeuralNetwork() const;
 
 public:
 	AAgentController();
@@ -35,7 +35,7 @@ public:
 
 	double* CalcualteOutput();
 
-	double EvaluateFitness();
+	double EvaluateFitness() const;
 
 	FORCEINLINE NEAT::Organism* GetNeatOrganism() const { return NeatOrganism; }
 	FORCEINLINE void SetNeatOrganism(NEAT::Organism* Value) { NeatOrganism = Value; }

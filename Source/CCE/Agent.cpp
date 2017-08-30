@@ -25,7 +25,6 @@ void AAgent::Tick(float DeltaTime)
 void AAgent::DifferentiateTeamsByColor()
 {
 	UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(0), this);
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("Team: ") + FString::FromInt(Team));
 	FLinearColor BodyColor = Team == 0 ? FLinearColor::Blue : FLinearColor::Red;
 	DynamicMaterial->SetVectorParameterValue("BodyColor", BodyColor);
 	GetMesh()->SetMaterial(0, DynamicMaterial);

@@ -97,7 +97,7 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char* FilePath)
 
 NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Spawning Population off Genome")));
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString(TEXT("Generating population")));
 
 	NEAT::Population* SpawnedPopulation = new NEAT::Population(StartGenome, NEAT::popSize);
 	SpawnedPopulation->verifyPopulation();
@@ -212,13 +212,11 @@ void AAgentEvolver::NeatTick(int Offsprings)
 	//For printing only
 	for (std::vector<NEAT::Species *>::iterator curSpec = (Population->species).begin(); curSpec != (Population->species).end(); curSpec++)
 	{
-		std::cout << "Species " << (*curSpec)->id << " size" << (*curSpec)->organisms.size() << " average= "
-			<< (*curSpec)->avgEst << std::endl;
-		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Species ") + FString::FromInt((*curSpec)->id)
-		                                 + FString(" size ") + FString::FromInt((*curSpec)->organisms.size())
-		                                 + FString(" average= ") + FString::SanitizeFloat((*curSpec)->avgEst));
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Species: ") + FString::FromInt((*curSpec)->id)
+		                                 + FString(" Size: ") + FString::FromInt((*curSpec)->organisms.size())
+		                                 + FString(" Average fitness: ") + FString::SanitizeFloat((*curSpec)->avgEst));
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Pop size: ") + FString::FromInt(Population->organisms.size()));
+	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Population size: ") + FString::FromInt(Population->organisms.size()));
 
 	NEAT::Organism* WorstOrganism = Population->removeWorst();
 	AAgentController* AgentController = FindAgentControllerByNeatOrganism(WorstOrganism);
@@ -306,7 +304,7 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team)
 			if (SpawnedActor)
 			{
 				SpawnedActor->SetTeam(Team);
-				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString("Spawned Agent - Team: ") + FString::FromInt(SpawnedActor->GetTeam()));
+				GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Magenta, FString("Spawning Agent - Team: ") + FString::FromInt(SpawnedActor->GetTeam()));
 				return SpawnedActor;
 			}
 		}
