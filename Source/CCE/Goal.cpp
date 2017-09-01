@@ -43,10 +43,10 @@ void AGoal::TriggerEnter(UPrimitiveComponent *HitComp, AActor *OtherActor,
       } else if (Team == 1) {
         GameState->SetScoreTeam0(GameState->GetScoreTeam0() + 1);
       }
-      GEngine->AddOnScreenDebugMessage(
-          -1, 7.f, FColor::Blue, FString::FromInt(GameState->GetScoreTeam0()));
-      GEngine->AddOnScreenDebugMessage(
-          -1, 7.f, FColor::Blue, FString::FromInt(GameState->GetScoreTeam1()));
+//      GEngine->AddOnScreenDebugMessage(
+//          -1, 7.f, FColor::Blue, FString::FromInt(GameState->GetScoreTeam0()));
+//      GEngine->AddOnScreenDebugMessage(
+//          -1, 7.f, FColor::Blue, FString::FromInt(GameState->GetScoreTeam1()));
     }
   }
 }

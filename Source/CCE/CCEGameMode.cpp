@@ -1,10 +1,23 @@
 #include "CCE.h"
 #include "CCEGameMode.h"
-#include "CCEGameState.h"
-#include "Agent.h"
+#include "UserWidget.h"
 
-ACCEGameMode::ACCEGameMode()
+void ACCEGameMode::BeginPlay()
 {
-//	DefaultPawnClass = AAgent::StaticClass();
-	GameStateClass = ACCEGameState::StaticClass();
+	Super::BeginPlay();
+
+	if(ScoreWidgetClass!=nullptr)
+	{
+		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), ScoreWidgetClass);
+		if(CurrentWidget!=nullptr)
+		{
+			CurrentWidget->AddToViewport();
+		}
+	}
+}
+
+ACCEGameMode::ACCEGameMode(): CurrentWidget(nullptr)
+{
+	//	DefaultPawnClass = AAgent::StaticClass();
+	//	GameStateClass = ACCEGameState::StaticClass();
 }
