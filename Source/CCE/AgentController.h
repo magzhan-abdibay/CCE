@@ -30,6 +30,7 @@ public:
 	AAgentController();
 
 	virtual void Tick(float DeltaSeconds) override;
+	void MoveAgent();
 
 	virtual void Possess(APawn* Pawn) override;
 

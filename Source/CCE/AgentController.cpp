@@ -5,6 +5,7 @@ AAgentController::AAgentController()
 {
 }
 
+
 void AAgentController::Possess(APawn* Value)
 {
 	Super::Possess(Value);
@@ -14,6 +15,7 @@ void AAgentController::Possess(APawn* Value)
 void AAgentController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 
 	ControlAgent(LastCalculatedOutput);
 
