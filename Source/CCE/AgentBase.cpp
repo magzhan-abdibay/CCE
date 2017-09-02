@@ -73,24 +73,6 @@ void AAgentBase::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 
 void AAgentBase::Kick()
 {
-	float KickDistance = 200.0f;
-	float KickPower = 800.0f;
-	float BallHalfHeight = 20.0f;
-
-	FHitResult* HitResult = new FHitResult();
-	FVector StartTrace = GetCapsuleComponent()->GetComponentLocation() - FVector::UpVector * (GetCapsuleComponent()->GetScaledCapsuleRadius() - BallHalfHeight);
-	FVector ForwardVector = RootComponent->GetForwardVector();
-	FVector EndTrace = ((ForwardVector * KickDistance) + StartTrace);
-	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
-
-	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, EndTrace, ECC_Visibility, *TraceParams))
-	{
-		if (HitResult->GetActor()->GetClass()->IsChildOf(ABall::StaticClass()))
-		{
-			HitResult->GetComponent()->AddImpulse((ForwardVector * KickPower), NAME_None, true);
-			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Red, false);
-		}
-	}
 }
 
 void AAgentBase::TurnAtRate(float Rate)

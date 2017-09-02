@@ -15,12 +15,12 @@ void AAgentEvolver::BeginPlay()
 
 	NeatInit();
 
-	//ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileInitialPopulationPath)));
 }
 
 void AAgentEvolver::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 	NeatTick();
 }
 
@@ -31,9 +31,11 @@ void AAgentEvolver::NeatInit()
 	NEAT::Genome* StartGenome = ReadGenome(static_cast<char*>(TCHAR_TO_ANSI(*FileStartGenomePath)));
 
 	Population = GeneratePopulation(StartGenome);
+
+	//Population=ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileInitialPopulationPath)));
 }
 
-NEAT::Genome* AAgentEvolver::ReadGenome(char* FilePath)
+NEAT::Genome* AAgentEvolver::ReadGenome(char* FilePath) const
 {
 	UE_LOG(LogTemp, Warning, TEXT("Reading in the start genome"));
 	char CurWord[20];
@@ -70,7 +72,7 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char* FilePath)
 		AAgent* Agent = SpawnAgent(Count % 2);
 		if (Agent)
 		{
-			AAgentController* AgentController = (AAgentController*)Agent->GetController();
+			AAgentController* AgentController = static_cast<AAgentController*>(Agent->GetController());
 			if (AgentController)
 			{
 				AgentController = AttachOrganismToAgentController(AgentController, (*CurOrg));
@@ -127,7 +129,7 @@ NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome)
 		AAgent* Agent = SpawnAgent(Count % 2);
 		if (Agent)
 		{
-			AAgentController* AgentController = (AAgentController*)Agent->GetController();
+			AAgentController* AgentController = static_cast<AAgentController*>(Agent->GetController());
 			if (AgentController)
 			{
 				AgentController = AttachOrganismToAgentController(AgentController, (*CurOrg));
@@ -175,14 +177,12 @@ void AAgentEvolver::NeatTick()
 
 void AAgentEvolver::NeatTick(int Offsprings)
 {
-	if (WinnnerFound)
-	{
+	if (WinnnerFound){
 		return;
 	}
 
 	// Every popSize reproductions, adjust the compatThresh to better match the NumSpeciesTarget  and reassign the population to new species
-	if (CompatAdjustFrequency && Offsprings % CompatAdjustFrequency == 0)
-	{
+	if (CompatAdjustFrequency && Offsprings % CompatAdjustFrequency == 0){
 		int NumSpecies = (int)Population->species.size();
 		// Modify compat thresh to control speciation
 		double CompatMod = 0.1;
@@ -292,7 +292,7 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team)
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
-//			SpawnParams.bNoFail = true;
+			//			SpawnParams.bNoFail = true;
 
 			FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
 			FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;

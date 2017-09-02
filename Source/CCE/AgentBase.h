@@ -31,7 +31,7 @@ public:
 	float BaseLookUpRate;
 
 	/** Kick ABall instance */
-	void Kick();
+	virtual void Kick();
 
 protected:
 
@@ -59,7 +59,6 @@ protected:
 	/** Handler for when a touch input begins. */
 	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
-protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface

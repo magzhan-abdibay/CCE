@@ -2,7 +2,9 @@
 
 #include "GameFramework/Actor.h"
 #include "UObjectGlobals.h"
+#include "CCEGameState.h"
 #include "Goal.generated.h"
+
 
 UCLASS()
 
@@ -25,6 +27,8 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
+	
+	void ResetBallPosition(AActor* OtherActor) const;
 
 	FORCEINLINE int8 GetTeam() const { return Team; }
 

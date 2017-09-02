@@ -65,7 +65,7 @@ private:
 
 	NEAT::Population* ReadPopulation(char* filePath);
 
-	NEAT::Genome* ReadGenome(char* filePath);
+	NEAT::Genome* ReadGenome(char* filePath) const;
 
 	NEAT::Population* GeneratePopulation(NEAT::Genome* startGenome);
 
