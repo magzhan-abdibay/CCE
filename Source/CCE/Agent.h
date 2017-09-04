@@ -49,7 +49,7 @@ public:
 	FORCEINLINE int8 GetTeam() const { return Team; }
 
 	FORCEINLINE void SetTeam(int8 Value){Team = Value; DifferentiateTeamsByColor();}
-
+	
 	FORCEINLINE float GetDistanceToBall() const { return DistanceToBall; }
 
 	FORCEINLINE void SetDistanceToBall(float Value) { DistanceToBall = Value; }
@@ -70,6 +70,7 @@ public:
 
 	FORCEINLINE void SetDistanceToWalls(std::vector<float> Value) { DistanceToWalls = Value; }
 
+	UFUNCTION(BlueprintPure, Category = "Score")
 	FORCEINLINE int GetScoredPoints() const { return ScoredPoints; }
 
 	FORCEINLINE void SetScoredPoints(int Value) { ScoredPoints = Value; }
@@ -78,10 +79,12 @@ public:
 
 	FORCEINLINE void DecrementScoredPoints() { ScoredPoints--; GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Blue, FString::FromInt(ScoredPoints));}
 
+	UFUNCTION(BlueprintPure, Category = "Score")
 	FORCEINLINE int GetNumberOfKicks() const { return NumberOfKicks; }
 
 	FORCEINLINE void SetNumberOfKicks(int Value) { NumberOfKicks = Value; }
-
+	
+	UFUNCTION(BlueprintPure, Category = "Score")
 	FORCEINLINE int GetNumberOfFalseKicks() const { return NumberOfFalseKicks; }
 
 	FORCEINLINE void SeNumberOfFalseKicks(int Value) { NumberOfFalseKicks = Value; }
