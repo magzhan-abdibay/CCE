@@ -2,8 +2,7 @@
 #include "AgentController.h"
 
 AAgentController::AAgentController()
-{
-}
+{}
 
 
 void AAgentController::Possess(APawn* Value)
@@ -72,7 +71,7 @@ double AAgentController::EvaluateFitness() const
 
 	if (LastCalculatedOutput)
 	{
-		Result = MaxValue - Agent->GetDistanceToGoal();
+		Result = MaxValue- Agent->GetDistanceToBall()+Agent->GetDistanceToGoal();
 	}
 
 	return Result;
@@ -89,17 +88,17 @@ void AAgentController::ControlAgent(double* ControlValues) const
 
 	FVector MovementVector = FVector::ZeroVector;
 
-	//if(round(ControlValues[0]) == 1)
-	MovementVector += ControlValues[0] * FVector::ForwardVector;
+	if(round(ControlValues[0]) == 1)
+		MovementVector += ControlValues[0] * FVector::ForwardVector;
 
-	//if (round(ControlValues[1]) == 1)
-	MovementVector -= ControlValues[1] * FVector::ForwardVector;
+	if (round(ControlValues[1]) == 1)
+		MovementVector -= ControlValues[1] * FVector::ForwardVector;
 
-	//if (round(ControlValues[2]) == 1)
-	MovementVector += ControlValues[2] * FVector::RightVector;
+	if (round(ControlValues[2]) == 1)
+		MovementVector += ControlValues[2] * FVector::RightVector;
 
-	//if (round(ControlValues[3]) == 1)
-	MovementVector -= ControlValues[3] * FVector::RightVector;
+	if (round(ControlValues[3]) == 1)
+		MovementVector -= ControlValues[3] * FVector::RightVector;
 
 	Agent->AddMovementInput(MovementVector, moveStep);
 }

@@ -12,15 +12,15 @@ class CCE_API AAgentController : public AAIController
 {
 	GENERATED_BODY()
 private:
-	NEAT::Organism* NeatOrganism;
+	NEAT::Organism* NeatOrganism = nullptr;
 
-	AAgent* Agent;
+	AAgent* Agent=nullptr;
 
 	int8 TicksFromLastCalculate = 0;
 
 	int8 const CalculatingFrequencyInTicks = 60;
 
-	double* LastCalculatedOutput;
+	double* LastCalculatedOutput = nullptr;
 
 	void ControlAgent(double* ControlValues) const;
 
@@ -30,11 +30,8 @@ public:
 	AAgentController();
 
 	virtual void Tick(float DeltaSeconds) override;
-	void MoveAgent();
 
 	virtual void Possess(APawn* Pawn) override;
-
-	double* CalcualteOutput();
 
 	double EvaluateFitness() const;
 
