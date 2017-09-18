@@ -14,6 +14,7 @@ void AAgentEvolver::BeginPlay()
 	Super::BeginPlay();
 
 	NeatInit();
+
 }
 
 void AAgentEvolver::Tick(float DeltaTime)
@@ -119,7 +120,7 @@ NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome)
 	for (std::vector<NEAT::Organism *>::iterator CurOrg = (SpawnedPopulation->organisms).begin(); CurOrg != (SpawnedPopulation->organisms).end(); ++CurOrg , ++Count)
 	{
 		// shouldn't happen
-		if (((*CurOrg)->gnome) == nullptr)
+		if (((*CurOrg)->gnome) == 0)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return nullptr;
@@ -176,15 +177,13 @@ void AAgentEvolver::NeatTick()
 
 void AAgentEvolver::NeatTick(int Offsprings)
 {
-	if (WinnnerFound)
-	{
+	if (WinnnerFound){
 		return;
 	}
 
 	// Every popSize reproductions, adjust the compatThresh to better match the NumSpeciesTarget  and reassign the population to new species
-	if (CompatAdjustFrequency && Offsprings % CompatAdjustFrequency == 0)
-	{
-		int NumSpecies = (int)Population->species.size();
+	if (CompatAdjustFrequency && Offsprings % CompatAdjustFrequency == 0){
+		int NumSpecies = static_cast<int>(Population->species.size());
 		// Modify compat thresh to control speciation
 		double CompatMod = 0.1;
 
@@ -267,7 +266,14 @@ bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController)
 	{
 		NEAT::Organism* Org = AgentController->GetNeatOrganism();
 		Org->fitness = AgentController->EvaluateFitness();
-		double DesirableValue = 8500.0f;
+		double DesirableValue = 85000.0f;
+
+		//Output to screen
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString("Org: ") + FString::FromInt((Org->gnome)->genomeId) + FString(" fitness: ") + FString::FromInt(Org->fitness) + FString(" species id : ") + FString::FromInt(Org->species->id));
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString("( ") + FString::FromInt((Org->gnome)->genes.size()) + FString(" / ") + FString::FromInt((Org->gnome)->nodes.size()) + FString(" ) ") );
+		if (Org->mutStructBaby) GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(" [struct]"));
+		if (Org->mateBaby) GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(" [mate]"));
+
 		if (Org->fitness >= DesirableValue)
 		{
 			Org->winner = true;

@@ -25,7 +25,7 @@ mateMultiPointAvgProb 0.4
 mateSinglePointProb 0.0
 mateOnlyProb 0.2
 recurOnlyProb 0.0
-popSize 8
+popSize 2
 dropOffAge 15
 newLinkTries 20
 printEvery 5

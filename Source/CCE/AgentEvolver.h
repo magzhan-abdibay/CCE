@@ -73,7 +73,7 @@ private:
 
 	AAgentController* FindAgentControllerByNeatOrganism(NEAT::Organism* Org);
 
-	bool EvaluateAgentController(AAgentController* AgentController);
+	static bool EvaluateAgentController(AAgentController* AgentController);
 
 	AAgent* SpawnAgent(int8 Team);
 };
