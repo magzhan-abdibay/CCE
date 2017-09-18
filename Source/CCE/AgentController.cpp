@@ -15,7 +15,6 @@ void AAgentController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
 	ControlAgent(LastCalculatedOutput);
 
 	if (TicksFromLastCalculate++ > CalculatingFrequencyInTicks)
@@ -31,7 +30,7 @@ void AAgentController::Tick(float DeltaTime)
 double* AAgentController::ActivateNeuralNetwork() const
 {
 	double* Input = new double[11];
-	double* Output = new double[4];
+	double* Output = new double[5];
 	double MaxDistance = 9000.0f;
 	Input[0] = Agent->GetDistanceToBall() / MaxDistance;
 	Input[1] = Agent->GetDistanceToGoal() / MaxDistance;
@@ -80,7 +79,7 @@ double* AAgentController::ActivateNeuralNetwork() const
 
 	int i = 0;
 	std::vector<NEAT::NNode*>::iterator OutputIterator = NeatOrganism->net->outputs.begin();
-	for (OutputIterator = NeatOrganism->net->outputs.begin(); OutputIterator != NeatOrganism->net->outputs.end(); OutputIterator++ , i++)
+	for (OutputIterator = NeatOrganism->net->outputs.begin(); OutputIterator != NeatOrganism->net->outputs.end(); ++OutputIterator , i++)
 	{
 		Output[i] = (*OutputIterator)->activation;
 		//GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((*OutputIterator)->activation));
@@ -96,7 +95,11 @@ double AAgentController::EvaluateFitness() const
 
 	if (LastCalculatedOutput)
 	{
-		Result = MaxValue-Agent->GetDistanceToBall();
+		Result = 10*(MaxValue-Agent->GetDistanceToBall()) + 10*(MaxValue-Agent->GetDistanceToGoal())
+				+(Agent->GetDistanceToWalls()[0]+ Agent->GetDistanceToWalls()[1]+Agent->GetDistanceToWalls()[2]+ Agent->GetDistanceToWalls()[3])
+				+(Agent->GetDistanceToOpponents()[0]+ Agent->GetDistanceToOpponents()[1])
+				+((MaxValue-Agent->GetDistanceToTeammates()[0])+ (MaxValue-Agent->GetDistanceToTeammates()[1]))
+				-Agent->GetNumberOfFalseKicks()+100*Agent->GetNumberOfKicks()+10000*Agent->GetScoredPoints();
 		Result = Result < 0 ? 0 : Result;
 
 //		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Magenta, FString::SanitizeFloat(Result)+ " " + FString::SanitizeFloat(Agent->GetDistanceToBall()));
@@ -113,20 +116,15 @@ void AAgentController::ControlAgent(double* ControlValues) const
 	}
 
 	int16 moveStep = 5;
-
 	FVector MovementVector = FVector::ZeroVector;
-
-	if(round(ControlValues[0]) == 1)
-		MovementVector += ControlValues[0] * FVector::ForwardVector;
-
-	if (round(ControlValues[1]) == 1)
-		MovementVector -= ControlValues[1] * FVector::ForwardVector;
-
-	if (round(ControlValues[2]) == 1)
-		MovementVector += ControlValues[2] * FVector::RightVector;
-
-	if (round(ControlValues[3]) == 1)
-		MovementVector -= ControlValues[3] * FVector::RightVector;
-
+	MovementVector += ControlValues[0] * FVector::ForwardVector;
+	MovementVector -= ControlValues[1] * FVector::ForwardVector;
+	MovementVector += ControlValues[2] * FVector::RightVector;
+	MovementVector -= ControlValues[3] * FVector::RightVector;
 	Agent->AddMovementInput(MovementVector, moveStep);
+
+	if (round(ControlValues[4]) == 1)
+	{
+		Agent->Kick();
+	}
 }

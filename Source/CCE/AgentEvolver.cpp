@@ -120,7 +120,7 @@ NEAT::Population* AAgentEvolver::GeneratePopulation(NEAT::Genome* StartGenome)
 	for (std::vector<NEAT::Organism *>::iterator CurOrg = (SpawnedPopulation->organisms).begin(); CurOrg != (SpawnedPopulation->organisms).end(); ++CurOrg , ++Count)
 	{
 		// shouldn't happen
-		if (((*CurOrg)->gnome) == 0)
+		if (((*CurOrg)->gnome) == nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return nullptr;
@@ -210,7 +210,7 @@ void AAgentEvolver::NeatTick(int Offsprings)
 	}
 
 	//For printing only
-	for (std::vector<NEAT::Species *>::iterator curSpec = (Population->species).begin(); curSpec != (Population->species).end(); curSpec++)
+	for (std::vector<NEAT::Species *>::iterator curSpec = (Population->species).begin(); curSpec != (Population->species).end(); ++curSpec)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Species: ") + FString::FromInt((*curSpec)->id)
 		                                 + FString(" Size: ") + FString::FromInt((*curSpec)->organisms.size())
@@ -266,7 +266,7 @@ bool AAgentEvolver::EvaluateAgentController(AAgentController* AgentController)
 	{
 		NEAT::Organism* Org = AgentController->GetNeatOrganism();
 		Org->fitness = AgentController->EvaluateFitness();
-		double DesirableValue = 85000.0f;
+		double DesirableValue = INT_MAX;
 
 		//Output to screen
 		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString("Org: ") + FString::FromInt((Org->gnome)->genomeId) + FString(" fitness: ") + FString::FromInt(Org->fitness) + FString(" species id : ") + FString::FromInt(Org->species->id));
