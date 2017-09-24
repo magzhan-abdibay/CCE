@@ -13,6 +13,8 @@ void AAgent::Tick(float DeltaTime)
 
 	DistanceToBall = CalculateDistanceToBall();
 
+	AngleToBall = CalculateAngleToBall();
+
 	DistanceToGoal = CalculateDistanceToGoal();
 
 	DistanceToTeammates = CalcualteDistanceToTeammates();
@@ -41,6 +43,26 @@ float AAgent::CalculateDistanceToBall() const
 		DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0);
 #endif
 		return (LinkEnd - LinkStart).Size();
+	}
+	return 0.0f;
+}
+
+
+float AAgent::CalculateAngleToBall() const
+{
+	for (TActorIterator<ABall> BallItr(GetWorld()); BallItr; ++BallItr)
+	{
+		FVector LinkStart = GetActorLocation();
+		FVector LinkEnd = BallItr->GetActorLocation();
+
+		DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0);
+
+		FVector VectorToBall= LinkEnd - LinkStart;
+		VectorToBall.Normalize();
+		float result = FMath::RadiansToDegrees(acosf(FVector::DotProduct(VectorToBall, GetActorForwardVector())));
+//		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(result));
+		return result;
+
 	}
 	return 0.0f;
 }

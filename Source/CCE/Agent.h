@@ -23,6 +23,7 @@ private:
 	int8 Team = 0;
 
 	float DistanceToBall = 0.0f;
+	float AngleToBall = 0.0f;
 	float DistanceToGoal = 0.0f;
 	std::vector<float> DistanceToTeammates;
 	std::vector<float> DistanceToOpponents;
@@ -30,8 +31,10 @@ private:
 	int ScoredPoints = 0;
 	int NumberOfKicks = 0;
 	int NumberOfFalseKicks = 0;
+	float FitnessValue = 0.0f;
 
 	float CalculateDistanceToBall() const;
+	float CalculateAngleToBall() const;
 	float CalculateDistanceToGoal() const;
 	std::vector<float> CalcualteDistanceToTeammates();
 	std::vector<float> CalcualteDistanceToOpponents();
@@ -50,11 +53,23 @@ public:
 
 	FORCEINLINE void SetTeam(int8 Value){Team = Value; DifferentiateTeamsByColor();}
 	
+	UFUNCTION(BlueprintPure, Category = "AgentInfo")
 	FORCEINLINE float GetDistanceToBall() const { return DistanceToBall; }
 
 	FORCEINLINE void SetDistanceToBall(float Value) { DistanceToBall = Value; }
 
+	UFUNCTION(BlueprintPure, Category = "AgentInfo")
+	FORCEINLINE float GetAngleToBall() const { return AngleToBall; }
+
+	FORCEINLINE void SetAngleToBall(float Value) { AngleToBall = Value; }
+
+	UFUNCTION(BlueprintPure, Category = "AgentInfo")
 	FORCEINLINE float GetDistanceToGoal() const { return DistanceToGoal; }
+
+	FORCEINLINE void SetFitnessValue(float Value) { FitnessValue = Value; }
+
+	UFUNCTION(BlueprintPure, Category = "AgentInfo")
+	FORCEINLINE float GetFitnessValue() const { return FitnessValue; }
 
 	FORCEINLINE void SetDistanceToGoal(float Value) { DistanceToGoal = Value; }
 
@@ -70,7 +85,7 @@ public:
 
 	FORCEINLINE void SetDistanceToWalls(std::vector<float> Value) { DistanceToWalls = Value; }
 
-	UFUNCTION(BlueprintPure, Category = "Score")
+	UFUNCTION(BlueprintPure, Category = "AgentInfo")
 	FORCEINLINE int GetScoredPoints() const { return ScoredPoints; }
 
 	FORCEINLINE void SetScoredPoints(int Value) { ScoredPoints = Value; }

@@ -159,6 +159,26 @@ AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentControlle
 	if (AgentController)
 	{
 		AgentController->SetNeatOrganism(Org);
+		AgentController->GetAgent()->SetNumberOfKicks(0);
+		AgentController->GetAgent()->SeNumberOfFalseKicks(0);
+		AgentController->GetAgent()->SetScoredPoints(0);
+		
+//		for (TActorIterator<ABall> BallItr(GetWorld()); BallItr; ++BallItr)
+//		{
+//			FVector BallLocation = BallItr->GetActorLocation();
+			FVector SpawnLocation= FVector(0, 0, 600);
+			AgentController->GetAgent()->GetRootComponent()->SetWorldLocation(SpawnLocation);
+//		}
+
+//		if(WhereToSpawn){
+//		
+//			FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
+//			FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;
+//			FVector SpawnLocation = UKismetMathLibrary::RandomPointInBoundingBox(SpawnOrigin, SpawnExtent);
+//			FRotator SpawnRotation(0, FMath::FRand() * 360.0f, 0);
+//			AgentController->GetAgent()->GetRootComponent()->SetWorldLocation(SpawnLocation);
+//		}
+
 		Org->fitness = AgentController->EvaluateFitness();
 		return AgentController;
 	}
@@ -299,7 +319,7 @@ AAgent* AAgentEvolver::SpawnAgent(int8 Team)
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
-			//			SpawnParams.bNoFail = true;
+			//SpawnParams.bNoFail = true;
 
 			FVector SpawnOrigin = WhereToSpawn->Bounds.Origin;
 			FVector SpawnExtent = WhereToSpawn->Bounds.BoxExtent;

@@ -69,7 +69,7 @@ private:
 
 	NEAT::Population* GeneratePopulation(NEAT::Genome* startGenome);
 
-	static AAgentController* AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism* Org);
+	AAgentController* AttachOrganismToAgentController(AAgentController* AgentController, NEAT::Organism* Org);
 
 	AAgentController* FindAgentControllerByNeatOrganism(NEAT::Organism* Org);
 

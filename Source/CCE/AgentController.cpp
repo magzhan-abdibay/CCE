@@ -32,28 +32,29 @@ double* AAgentController::ActivateNeuralNetwork() const
 	double* Input = new double[11];
 	double* Output = new double[5];
 	double MaxDistance = 9000.0f;
+	double MaxAngle = 360.0f;
 	Input[0] = Agent->GetDistanceToBall() / MaxDistance;
-	Input[1] = Agent->GetDistanceToGoal() / MaxDistance;
+	Input[1] = Agent->GetAngleToBall() / MaxAngle;
+	Input[2] = Agent->GetDistanceToGoal() / MaxDistance;
 	if (!Agent->GetDistanceToTeammates().empty())
 	{
-		Input[2] = Agent->GetDistanceToTeammates()[0] != NULL ? Agent->GetDistanceToTeammates()[0] / MaxDistance : 1;
-		Input[3] = Agent->GetDistanceToTeammates()[1] != NULL ? Agent->GetDistanceToTeammates()[1] / MaxDistance : 1;
+		Input[3] = Agent->GetDistanceToTeammates()[0] != NULL ? Agent->GetDistanceToTeammates()[0] / MaxDistance : 1;
+		Input[4] = Agent->GetDistanceToTeammates()[1] != NULL ? Agent->GetDistanceToTeammates()[1] / MaxDistance : 1;
 	}
 	else
 	{
-		Input[2] = 1;
 		Input[3] = 1;
+		Input[4] = 1;
 	}
 	if (!Agent->GetDistanceToOpponents().empty())
 	{
-		Input[4] = Agent->GetDistanceToOpponents()[0] != NULL ? Agent->GetDistanceToOpponents()[0] / MaxDistance : 1;
-		Input[5] = Agent->GetDistanceToOpponents()[1] != NULL ? Agent->GetDistanceToOpponents()[1] / MaxDistance : 1;
+		Input[5] = Agent->GetDistanceToOpponents()[0] != NULL ? Agent->GetDistanceToOpponents()[0] / MaxDistance : 1;
 	}
 	else
 	{
-		Input[4] = 1;
 		Input[5] = 1;
 	}
+
 	if (!Agent->GetDistanceToWalls().empty())
 	{
 		Input[6] = Agent->GetDistanceToWalls()[0] != NULL ? Agent->GetDistanceToWalls()[0] / MaxDistance : 1;
@@ -95,11 +96,15 @@ double AAgentController::EvaluateFitness() const
 
 	if (LastCalculatedOutput)
 	{
-		Result = 10*(MaxValue-Agent->GetDistanceToBall()) + 10*(MaxValue-Agent->GetDistanceToGoal())
-				+(Agent->GetDistanceToWalls()[0]+ Agent->GetDistanceToWalls()[1]+Agent->GetDistanceToWalls()[2]+ Agent->GetDistanceToWalls()[3])
-				+(Agent->GetDistanceToOpponents()[0]+ Agent->GetDistanceToOpponents()[1])
-				+((MaxValue-Agent->GetDistanceToTeammates()[0])+ (MaxValue-Agent->GetDistanceToTeammates()[1]))
-				-Agent->GetNumberOfFalseKicks()+100*Agent->GetNumberOfKicks()+10000*Agent->GetScoredPoints();
+//		Result = 10*(MaxValue-Agent->GetDistanceToBall()) + 10*(MaxValue-Agent->GetDistanceToGoal())
+//				+(Agent->GetDistanceToWalls()[0]+ Agent->GetDistanceToWalls()[1]+Agent->GetDistanceToWalls()[2]+ Agent->GetDistanceToWalls()[3])
+//				+(Agent->GetDistanceToOpponents()[0]+ Agent->GetDistanceToOpponents()[1])
+//				+((MaxValue-Agent->GetDistanceToTeammates()[0])+ (MaxValue-Agent->GetDistanceToTeammates()[1]))
+//				-Agent->GetNumberOfFalseKicks()+100*Agent->GetNumberOfKicks()+10000*Agent->GetScoredPoints();
+		Result = 1000 * Agent->GetNumberOfKicks() - 10 * Agent->GetNumberOfFalseKicks() + 100000 * Agent->GetScoredPoints() + ((MaxValue - (Agent->GetDistanceToBall())) / 100)
+			+ (Agent->GetDistanceToWalls()[0] + Agent->GetDistanceToWalls()[1] + Agent->GetDistanceToWalls()[2] + Agent->GetDistanceToWalls()[3])/1000
+			+ (Agent->GetDistanceToOpponents()[0] + Agent->GetDistanceToOpponents()[1]) / 1000
+			+ ((MaxValue - Agent->GetDistanceToTeammates()[0]) + (MaxValue - Agent->GetDistanceToTeammates()[1]))/1000;
 		Result = Result < 0 ? 0 : Result;
 
 //		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Magenta, FString::SanitizeFloat(Result)+ " " + FString::SanitizeFloat(Agent->GetDistanceToBall()));
