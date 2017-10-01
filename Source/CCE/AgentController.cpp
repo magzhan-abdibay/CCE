@@ -24,6 +24,7 @@ void AAgentController::Tick(float DeltaTime)
 		LastCalculatedOutput = ActivateNeuralNetwork();
 
 		NeatOrganism->fitness = EvaluateFitness();
+		Agent->SetFitnessValue(NeatOrganism->fitness);
 	}
 }
 
@@ -96,18 +97,22 @@ double AAgentController::EvaluateFitness() const
 
 	if (LastCalculatedOutput)
 	{
-//		Result = 10*(MaxValue-Agent->GetDistanceToBall()) + 10*(MaxValue-Agent->GetDistanceToGoal())
-//				+(Agent->GetDistanceToWalls()[0]+ Agent->GetDistanceToWalls()[1]+Agent->GetDistanceToWalls()[2]+ Agent->GetDistanceToWalls()[3])
-//				+(Agent->GetDistanceToOpponents()[0]+ Agent->GetDistanceToOpponents()[1])
-//				+((MaxValue-Agent->GetDistanceToTeammates()[0])+ (MaxValue-Agent->GetDistanceToTeammates()[1]))
-//				-Agent->GetNumberOfFalseKicks()+100*Agent->GetNumberOfKicks()+10000*Agent->GetScoredPoints();
-		Result = 1000 * Agent->GetNumberOfKicks() - 10 * Agent->GetNumberOfFalseKicks() + 100000 * Agent->GetScoredPoints() + ((MaxValue - (Agent->GetDistanceToBall())) / 100)
-			+ (Agent->GetDistanceToWalls()[0] + Agent->GetDistanceToWalls()[1] + Agent->GetDistanceToWalls()[2] + Agent->GetDistanceToWalls()[3])/1000
-			+ (Agent->GetDistanceToOpponents()[0] + Agent->GetDistanceToOpponents()[1]) / 1000
-			+ ((MaxValue - Agent->GetDistanceToTeammates()[0]) + (MaxValue - Agent->GetDistanceToTeammates()[1]))/1000;
-		Result = Result < 0 ? 0 : Result;
+		float MinDistabceToWalls = 100.0f;
+		float StuckNearWallsPenalty = 0.0f;
+		for (int i = 0; i < Agent->GetDistanceToWalls().size(); i++)
+		{
+			if (Agent->GetDistanceToWalls()[i] < MinDistabceToWalls)
+			{
+				StuckNearWallsPenalty += 20.0f;
+			}
+		}
 
-//		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Magenta, FString::SanitizeFloat(Result)+ " " + FString::SanitizeFloat(Agent->GetDistanceToBall()));
+		Result = 1000 * Agent->GetNumberOfKicks() - 10 * Agent->GetNumberOfFalseKicks() + 100000 * Agent->GetScoredPoints() + ((MaxValue - (Agent->GetDistanceToBall())) / 100)
+			+ (Agent->GetDistanceToOpponents()[0] + Agent->GetDistanceToOpponents()[1]) / 1000
+			+ ((MaxValue - Agent->GetDistanceToTeammates()[0]) + (MaxValue - Agent->GetDistanceToTeammates()[1])) / 1000
+			- StuckNearWallsPenalty;
+		Result = Result < 0 ? 0 : Result;
+//		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((StuckNearWallsPenalty)));
 	}
 
 	return Result;
