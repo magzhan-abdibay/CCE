@@ -263,6 +263,10 @@ void AAgentEvolver::NeatTick(int Offsprings)
 		//TEMPORARY: Completely meaningless stuff
 		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 		return;
+	}else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString("Printing last population to file"));
+		Population->printToFileBySpecies(static_cast<char*>(TCHAR_TO_ANSI(*FileLastPopulationPath)));
 	}
 }
 
