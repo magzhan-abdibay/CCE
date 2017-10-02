@@ -107,12 +107,13 @@ double AAgentController::EvaluateFitness() const
 			}
 		}
 
-		Result = 1000 * Agent->GetNumberOfKicks() - 10 * Agent->GetNumberOfFalseKicks() + 100000 * Agent->GetScoredPoints() + 
-			((MaxValue - (Agent->GetDistanceToBall())) / 10)
-			+ (Agent->GetDistanceToOpponents()[0] + Agent->GetDistanceToOpponents()[1]) / 1000
-			+ ((MaxValue - Agent->GetDistanceToTeammates()[0]) + (MaxValue - Agent->GetDistanceToTeammates()[1])) / 1000
-			- StuckNearWallsPenalty;
-		Result = Result < 0 ? 0 : Result;
+//		Result = 1000 * Agent->GetNumberOfKicks() - 10 * Agent->GetNumberOfFalseKicks() + 100000 * Agent->GetScoredPoints() + 
+//			((MaxValue - (Agent->GetDistanceToBall())) / 10)
+//			+ (Agent->GetDistanceToOpponents()[0] + Agent->GetDistanceToOpponents()[1]) / 1000
+//			+ ((MaxValue - Agent->GetDistanceToTeammates()[0]) + (MaxValue - Agent->GetDistanceToTeammates()[1])) / 1000
+//			- StuckNearWallsPenalty;
+//		Result = Result < 0 ? 0 : Result;
+		Result = MaxValue -(Agent->GetDistanceToBall()*cosf(Agent->GetAngleToBall()));
 //		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((StuckNearWallsPenalty)));
 	}
 

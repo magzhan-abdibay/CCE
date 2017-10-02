@@ -30,9 +30,9 @@ void AAgentEvolver::NeatInit()
 
 	NEAT::Genome* StartGenome = ReadGenome(static_cast<char*>(TCHAR_TO_ANSI(*FileStartGenomePath)));
 
-	Population = GeneratePopulation(StartGenome);
+//	Population = GeneratePopulation(StartGenome);
 
-	//Population=ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileInitialPopulationPath)));
+	Population=ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileLastPopulationPath)));
 }
 
 NEAT::Genome* AAgentEvolver::ReadGenome(char* FilePath) const
@@ -62,7 +62,7 @@ NEAT::Population* AAgentEvolver::ReadPopulation(char* FilePath)
 	for (std::vector<NEAT::Organism *>::iterator CurOrg = (ReadPopulation->organisms).begin(); CurOrg != (ReadPopulation->organisms).end(); ++CurOrg , ++Count)
 	{
 		// shouldn't happen
-		if (((*CurOrg)->gnome) == 0)
+		if (((*CurOrg)->gnome) == nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString(TEXT("ERROR EMPTY GENOME!")));
 			return nullptr;
