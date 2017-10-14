@@ -25,6 +25,7 @@ private:
 	float DistanceToBall = 0.0f;
 	float AngleToBall = 0.0f;
 	float DistanceToGoal = 0.0f;
+	float DistanceToForwardObstacle = 0.0f;
 	std::vector<float> DistanceToTeammates;
 	std::vector<float> DistanceToOpponents;
 	std::vector<float> DistanceToWalls;
@@ -34,6 +35,7 @@ private:
 	float FitnessValue = 0.0f;
 
 	float CalculateDistanceToBall() const;
+	float CalculateDistanceToForwardObstacle() const;
 	float CalculateAngleToBall() const;
 	float CalculateDistanceToGoal() const;
 	std::vector<float> CalcualteDistanceToTeammates();
@@ -65,13 +67,18 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "AgentInfo")
 	FORCEINLINE float GetDistanceToGoal() const { return DistanceToGoal; }
+	
+	FORCEINLINE void SetDistanceToGoal(float Value) { DistanceToGoal = Value; }
 
 	FORCEINLINE void SetFitnessValue(float Value) { FitnessValue = Value; }
 
 	UFUNCTION(BlueprintPure, Category = "AgentInfo")
 	FORCEINLINE float GetFitnessValue() const { return FitnessValue; }
 
-	FORCEINLINE void SetDistanceToGoal(float Value) { DistanceToGoal = Value; }
+	FORCEINLINE void SetDistanceToForwardObstacle(float Value) { DistanceToForwardObstacle = Value; }
+
+	UFUNCTION(BlueprintPure, Category = "AgentInfo")
+	FORCEINLINE float GetDistanceToForwardObstacle() const { return DistanceToForwardObstacle; }
 
 	FORCEINLINE std::vector<float> GetDistanceToTeammates() const { return DistanceToTeammates; }
 

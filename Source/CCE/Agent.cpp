@@ -17,6 +17,8 @@ void AAgent::Tick(float DeltaTime)
 
 	DistanceToGoal = CalculateDistanceToGoal();
 
+	DistanceToForwardObstacle = CalculateDistanceToForwardObstacle();
+
 	DistanceToTeammates = CalcualteDistanceToTeammates();
 
 	DistanceToOpponents = CalcualteDistanceToOpponents();
@@ -45,6 +47,23 @@ float AAgent::CalculateDistanceToBall() const
 		return (LinkEnd - LinkStart).Size();
 	}
 	return 0.0f;
+}
+
+float AAgent::CalculateDistanceToForwardObstacle() const
+{
+	float RayCastLenght = 300.0f;
+	float Result = RayCastLenght;
+	FHitResult* HitResult = new FHitResult();
+	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
+	FVector StartTrace =  this->GetActorLocation();
+	FVector EndTrace= this->GetActorForwardVector()*RayCastLenght + StartTrace;
+
+	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, EndTrace, ECC_Visibility, *TraceParams))
+	{
+		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 5.0f);
+		Result=HitResult->Distance;
+	}
+	return Result;
 }
 
 

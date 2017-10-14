@@ -30,9 +30,9 @@ void AAgentEvolver::NeatInit()
 
 	NEAT::Genome* StartGenome = ReadGenome(static_cast<char*>(TCHAR_TO_ANSI(*FileStartGenomePath)));
 
-//	Population = GeneratePopulation(StartGenome);
+	Population = GeneratePopulation(StartGenome);
 
-	Population=ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileLastPopulationPath)));
+//	Population=ReadPopulation(static_cast<char*>(TCHAR_TO_ANSI(*FileLastPopulationPath)));
 }
 
 NEAT::Genome* AAgentEvolver::ReadGenome(char* FilePath) const

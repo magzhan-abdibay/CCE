@@ -34,17 +34,17 @@ double* AAgentController::ActivateNeuralNetwork() const
 	double* Output = new double[5];
 	double MaxDistance = 9000.0f;
 	double MaxAngle = 360.0f;
+	double MaxDistanceToObstacle = 300.0f;
 	Input[0] = Agent->GetDistanceToBall() / MaxDistance;
 	Input[1] = Agent->GetAngleToBall() / MaxAngle;
 	Input[2] = Agent->GetDistanceToGoal() / MaxDistance;
+	Input[3] = Agent->GetDistanceToForwardObstacle() / MaxDistanceToObstacle;
 	if (!Agent->GetDistanceToTeammates().empty())
 	{
-		Input[3] = Agent->GetDistanceToTeammates()[0] != NULL ? Agent->GetDistanceToTeammates()[0] / MaxDistance : 1;
-		Input[4] = Agent->GetDistanceToTeammates()[1] != NULL ? Agent->GetDistanceToTeammates()[1] / MaxDistance : 1;
+		Input[4] = Agent->GetDistanceToTeammates()[0] != NULL ? Agent->GetDistanceToTeammates()[0] / MaxDistance : 1;
 	}
 	else
 	{
-		Input[3] = 1;
 		Input[4] = 1;
 	}
 	if (!Agent->GetDistanceToOpponents().empty())
@@ -97,15 +97,8 @@ double AAgentController::EvaluateFitness() const
 
 	if (LastCalculatedOutput)
 	{
-		float MinDistabceToWalls = 100.0f;
-		float StuckNearWallsPenalty = 0.0f;
-		for (int i = 0; i < Agent->GetDistanceToWalls().size(); i++)
-		{
-			if (Agent->GetDistanceToWalls()[i] < MinDistabceToWalls)
-			{
-				StuckNearWallsPenalty += 20.0f;
-			}
-		}
+		float MinDistabceToWalls = 300.0f;
+	
 
 //		Result = 1000 * Agent->GetNumberOfKicks() - 10 * Agent->GetNumberOfFalseKicks() + 100000 * Agent->GetScoredPoints() + 
 //			((MaxValue - (Agent->GetDistanceToBall())) / 10)
@@ -113,7 +106,12 @@ double AAgentController::EvaluateFitness() const
 //			+ ((MaxValue - Agent->GetDistanceToTeammates()[0]) + (MaxValue - Agent->GetDistanceToTeammates()[1])) / 1000
 //			- StuckNearWallsPenalty;
 //		Result = Result < 0 ? 0 : Result;
+
 		Result = MaxValue -(Agent->GetDistanceToBall()*cosf(Agent->GetAngleToBall()));
+		if(Agent->GetDistanceToForwardObstacle()<MinDistabceToWalls)
+		{
+			Result = (1.0f - Agent->GetDistanceToForwardObstacle() / MinDistabceToWalls)*Result;
+		}
 //		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((StuckNearWallsPenalty)));
 	}
 
