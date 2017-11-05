@@ -107,10 +107,13 @@ double AAgentController::EvaluateFitness() const
 //			- StuckNearWallsPenalty;
 //		Result = Result < 0 ? 0 : Result;
 
-		Result = MaxValue -(Agent->GetDistanceToBall()*cosf(Agent->GetAngleToBall()));
+//		Result = MaxValue -(Agent->GetDistanceToBall()*cosf(Agent->GetAngleToBall()));
+//		Result = Agent->GetAgeInTicks();
+		Result = Agent->GetTotalDistanceTravelled();
 		if(Agent->GetDistanceToForwardObstacle()<MinDistabceToWalls)
 		{
 			Result = (1.0f - Agent->GetDistanceToForwardObstacle() / MinDistabceToWalls)*Result;
+			Agent->SetTotalDistanceTravelled(0);
 		}
 //		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Cyan, FString::SanitizeFloat((StuckNearWallsPenalty)));
 	}

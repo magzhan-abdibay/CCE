@@ -33,6 +33,11 @@ private:
 	int NumberOfKicks = 0;
 	int NumberOfFalseKicks = 0;
 	float FitnessValue = 0.0f;
+	long AgeInTicks = 0;
+	long TotalDistanceTravelled = 0;
+	FVector LastLocation = FVector::ZeroVector;
+
+
 
 	float CalculateDistanceToBall() const;
 	float CalculateDistanceToForwardObstacle() const;
@@ -41,7 +46,8 @@ private:
 	std::vector<float> CalcualteDistanceToTeammates();
 	std::vector<float> CalcualteDistanceToOpponents();
 	std::vector<float> CalcualteDistanceToWalls() const;
-	
+	long CalculateTotalDistanceTravelled();
+
 	TArray<AActor*> GetClosestAgents();
 	void DifferentiateTeamsByColor();
 public:
@@ -50,6 +56,8 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	void Kick() override;
+
+	virtual void BeginPlay() override;
 
 	FORCEINLINE int8 GetTeam() const { return Team; }
 
@@ -110,5 +118,13 @@ public:
 	FORCEINLINE int GetNumberOfFalseKicks() const { return NumberOfFalseKicks; }
 
 	FORCEINLINE void SeNumberOfFalseKicks(int Value) { NumberOfFalseKicks = Value; }
+
+	FORCEINLINE long GetAgeInTicks() const { return AgeInTicks; }
+
+	FORCEINLINE void SetAgeInTicks(long Value) { AgeInTicks = Value; }
+
+	FORCEINLINE long GetTotalDistanceTravelled() const { return TotalDistanceTravelled; }
+
+	FORCEINLINE void SetTotalDistanceTravelled(long Value) { TotalDistanceTravelled = Value; }
 
 };

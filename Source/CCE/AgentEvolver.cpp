@@ -162,6 +162,8 @@ AAgentController* AAgentEvolver::AttachOrganismToAgentController(AAgentControlle
 		AgentController->GetAgent()->SetNumberOfKicks(0);
 		AgentController->GetAgent()->SeNumberOfFalseKicks(0);
 		AgentController->GetAgent()->SetScoredPoints(0);
+		AgentController->GetAgent()->SetAgeInTicks(0);
+		AgentController->GetAgent()->SetTotalDistanceTravelled(0);
 		
 //		for (TActorIterator<ABall> BallItr(GetWorld()); BallItr; ++BallItr)
 //		{

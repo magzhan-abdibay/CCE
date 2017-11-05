@@ -11,6 +11,8 @@ void AAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	AgeInTicks++;
+
 	DistanceToBall = CalculateDistanceToBall();
 
 	AngleToBall = CalculateAngleToBall();
@@ -24,6 +26,9 @@ void AAgent::Tick(float DeltaTime)
 	DistanceToOpponents = CalcualteDistanceToOpponents();
 
 	DistanceToWalls = CalcualteDistanceToWalls();
+
+	TotalDistanceTravelled = CalculateTotalDistanceTravelled();
+
 }
 
 
@@ -157,6 +162,12 @@ void AAgent::Kick()
 	}
 }
 
+void AAgent::BeginPlay()
+{
+	Super::BeginPlay();
+	LastLocation = GetActorLocation();
+}
+
 std::vector<float> AAgent::CalcualteDistanceToOpponents()
 {
 	std::vector<float> distances;
@@ -251,4 +262,11 @@ std::vector<float> AAgent::CalcualteDistanceToWalls() const
 	}
 
 	return Result;
+}
+
+long AAgent::CalculateTotalDistanceTravelled()
+{
+	TotalDistanceTravelled = TotalDistanceTravelled + (GetActorLocation() - LastLocation).Size();
+	LastLocation = GetActorLocation();
+	return TotalDistanceTravelled;
 }
