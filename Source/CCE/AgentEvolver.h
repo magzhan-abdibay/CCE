@@ -47,6 +47,7 @@ private:
 	FString FileStartGenomePath = FPaths::GameConfigDir().Append("\\NEAT\\StartGene");
 	FString FileWinnerPopulationPath = FPaths::GameConfigDir().Append("\\NEAT\\WinnerPopulation");
 	FString FileLastPopulationPath = FPaths::GameConfigDir().Append("\\NEAT\\LastPopulation");
+	FString FilePopulationToReadPath = FPaths::GameConfigDir().Append("\\NEAT\\LastPopulation -GroupingInCenter");
 	FString FileInitialPopulationPath = FPaths::GameConfigDir().Append("\\NEAT\\Population");
 
 	std::vector<AAgentController*> AgentControllers;

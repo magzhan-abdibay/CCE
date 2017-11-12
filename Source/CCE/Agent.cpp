@@ -65,7 +65,7 @@ float AAgent::CalculateDistanceToForwardObstacle() const
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, EndTrace, ECC_Visibility, *TraceParams))
 	{
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 5.0f);
+		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 15.0f);
 		Result=HitResult->Distance;
 	}
 	return Result;
