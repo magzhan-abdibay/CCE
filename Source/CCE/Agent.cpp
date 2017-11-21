@@ -25,10 +25,11 @@ void AAgent::Tick(float DeltaTime)
 
 	DistanceToOpponents = CalcualteDistanceToOpponents();
 
-	DistanceToWalls = CalcualteDistanceToWalls();
+	//	DistanceToWalls = CalcualteDistanceToWalls();
+
+	DistanceCircular = CalcualteDistanceCircular();
 
 	TotalDistanceTravelled = CalculateTotalDistanceTravelled();
-
 }
 
 
@@ -46,9 +47,8 @@ float AAgent::CalculateDistanceToBall() const
 	{
 		FVector LinkStart = GetActorLocation();
 		FVector LinkEnd = BallItr->GetActorLocation();
-#if !UE_BUILD_SHIPPING
-		DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0);
-#endif
+		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0);
 		return (LinkEnd - LinkStart).Size();
 	}
 	return 0.0f;
@@ -60,13 +60,14 @@ float AAgent::CalculateDistanceToForwardObstacle() const
 	float Result = RayCastLenght;
 	FHitResult* HitResult = new FHitResult();
 	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
-	FVector StartTrace =  this->GetActorLocation();
-	FVector EndTrace= this->GetActorForwardVector()*RayCastLenght + StartTrace;
+	FVector StartTrace = this->GetActorLocation();
+	FVector EndTrace = this->GetActorForwardVector() * RayCastLenght + StartTrace;
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, EndTrace, ECC_Visibility, *TraceParams))
 	{
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 15.0f);
-		Result=HitResult->Distance;
+		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1, 15.0f);
+		Result = HitResult->Distance;
 	}
 	return Result;
 }
@@ -78,15 +79,14 @@ float AAgent::CalculateAngleToBall() const
 	{
 		FVector LinkStart = GetActorLocation();
 		FVector LinkEnd = BallItr->GetActorLocation();
+		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0);
 
-		DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Green, false, -1, 0);
-
-		FVector VectorToBall= LinkEnd - LinkStart;
+		FVector VectorToBall = LinkEnd - LinkStart;
 		VectorToBall.Normalize();
 		float result = FMath::RadiansToDegrees(acosf(FVector::DotProduct(VectorToBall, GetActorForwardVector())));
-//		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(result));
+		//		GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Red, FString::SanitizeFloat(result));
 		return result;
-
 	}
 	return 0.0f;
 }
@@ -99,9 +99,8 @@ float AAgent::CalculateDistanceToGoal() const
 		{
 			FVector LinkStart = GetActorLocation();
 			FVector LinkEnd = GoalItr->GetActorLocation();
-#if !UE_BUILD_SHIPPING
-			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Cyan, false, -1, 1);
-#endif
+			if (DrawDebugLines)
+				DrawDebugLine(GetWorld(), LinkStart, LinkEnd, FColor::Cyan, false, -1, 1);
 			return (LinkEnd - LinkStart).Size();
 		}
 	}
@@ -120,10 +119,9 @@ std::vector<float> AAgent::CalcualteDistanceToTeammates()
 			FVector LinkStart = GetActorLocation();
 			FVector LinkEnd = Agent->GetActorLocation();
 			distances.push_back((LinkEnd - LinkStart).Size());
-#if !UE_BUILD_SHIPPING
 			FColor TeamColor = Agent->GetTeam() == 0 ? FColor::Blue : FColor::Red;
-			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, TeamColor, false, -1, 1);
-#endif
+			if (DrawDebugLines)
+				DrawDebugLine(GetWorld(), LinkStart, LinkEnd, TeamColor, false, -1, 1);
 		}
 	}
 	return distances;
@@ -149,8 +147,8 @@ void AAgent::Kick()
 			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Red, false);
 			NumberOfKicks++;
 
-			ABall* ball=static_cast<ABall*>(HitResult->GetActor());
-			if(ball!=nullptr)
+			ABall* ball = static_cast<ABall*>(HitResult->GetActor());
+			if (ball != nullptr)
 			{
 				ball->SetLastKickedAgent(this);
 			}
@@ -180,10 +178,9 @@ std::vector<float> AAgent::CalcualteDistanceToOpponents()
 			FVector LinkStart = GetActorLocation();
 			FVector LinkEnd = Agent->GetActorLocation();
 			distances.push_back((LinkEnd - LinkStart).Size());
-#if !UE_BUILD_SHIPPING
 			FColor OpponentTeamColor = Agent->GetTeam() == 0 ? FColor::Red : FColor::Blue;
-			DrawDebugLine(GetWorld(), LinkStart, LinkEnd, OpponentTeamColor, false, -1, 1);
-#endif
+			if (DrawDebugLines)
+				DrawDebugLine(GetWorld(), LinkStart, LinkEnd, OpponentTeamColor, false, -1, 1);
 		}
 	}
 	return distances;
@@ -215,9 +212,8 @@ std::vector<float> AAgent::CalcualteDistanceToWalls() const
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::ForwardVector * RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-#if !UE_BUILD_SHIPPING
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
-#endif
+		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
 		Result.push_back(HitResult->Distance);
 	}
 	else
@@ -227,9 +223,8 @@ std::vector<float> AAgent::CalcualteDistanceToWalls() const
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::ForwardVector * RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-#if !UE_BUILD_SHIPPING
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
-#endif
+		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
 		Result.push_back(HitResult->Distance);
 	}
 	else
@@ -239,9 +234,8 @@ std::vector<float> AAgent::CalcualteDistanceToWalls() const
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (FVector::RightVector * RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-#if !UE_BUILD_SHIPPING
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
-#endif
+		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
 		Result.push_back(HitResult->Distance);
 	}
 	else
@@ -251,14 +245,51 @@ std::vector<float> AAgent::CalcualteDistanceToWalls() const
 
 	if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, (-FVector::RightVector * RayCastLenght) + StartTrace, ECC_Visibility, *TraceParams))
 	{
-#if !UE_BUILD_SHIPPING
-		DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
-#endif
+		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Purple, false, -1, 1);
 		Result.push_back(HitResult->Distance);
 	}
 	else
 	{
 		Result.push_back(0.0f);
+	}
+
+	return Result;
+}
+
+std::vector<float> AAgent::CalcualteDistanceCircular() const
+{
+	std::vector<float> Result;
+	float RayCastLenght = 10000.0f;
+	FHitResult* HitResult = new FHitResult();
+	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
+	FVector StartTrace = this->GetActorLocation();
+
+	std::vector<FVector> EndTraces;
+
+	for (int i = -2; i <= 2; i++)
+	{
+		if (i != 0)
+		{
+			FVector EndTrace = GetActorForwardVector().RotateAngleAxis(i * 45, GetActorUpVector()) * RayCastLenght + StartTrace;
+			EndTraces.push_back(EndTrace);
+		}
+	}
+
+
+	for (int i = 0; i < 4; i++) 
+	{
+		FVector EndTrace=EndTraces.at(i);
+		if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, EndTrace, ECC_Visibility, *TraceParams))
+		{
+			//		if (DrawDebugLines)
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Red, false, -1, 1, 2);
+			Result.push_back(HitResult->Distance);
+		}
+		else
+		{
+			Result.push_back(FLT_MAX);
+		}
 	}
 
 	return Result;

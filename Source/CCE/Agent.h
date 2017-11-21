@@ -21,7 +21,7 @@ class AAgent : public AAgentBase
 private:
 	UPROPERTY(EditAnywhere, Category = Team)
 	int8 Team = 0;
-
+	bool DrawDebugLines = false;
 	float DistanceToBall = 0.0f;
 	float AngleToBall = 0.0f;
 	float DistanceToGoal = 0.0f;
@@ -29,6 +29,7 @@ private:
 	std::vector<float> DistanceToTeammates;
 	std::vector<float> DistanceToOpponents;
 	std::vector<float> DistanceToWalls;
+	std::vector<float> DistanceCircular;
 	int ScoredPoints = 0;
 	int NumberOfKicks = 0;
 	int NumberOfFalseKicks = 0;
@@ -46,6 +47,7 @@ private:
 	std::vector<float> CalcualteDistanceToTeammates();
 	std::vector<float> CalcualteDistanceToOpponents();
 	std::vector<float> CalcualteDistanceToWalls() const;
+	std::vector<float> CalcualteDistanceCircular() const;
 	long CalculateTotalDistanceTravelled();
 
 	TArray<AActor*> GetClosestAgents();
@@ -99,6 +101,10 @@ public:
 	FORCEINLINE std::vector<float> GetDistanceToWalls() const { return DistanceToWalls; }
 
 	FORCEINLINE void SetDistanceToWalls(std::vector<float> Value) { DistanceToWalls = Value; }
+
+	FORCEINLINE std::vector<float> GetDistanceCircular() const { return DistanceCircular; }
+
+	FORCEINLINE void SetDistanceCircular(std::vector<float> Value) { DistanceCircular = Value; }
 
 	UFUNCTION(BlueprintPure, Category = "AgentInfo")
 	FORCEINLINE int GetScoredPoints() const { return ScoredPoints; }

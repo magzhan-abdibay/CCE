@@ -56,12 +56,12 @@ double* AAgentController::ActivateNeuralNetwork() const
 		Input[5] = 1;
 	}
 
-	if (!Agent->GetDistanceToWalls().empty())
+	if (!Agent->GetDistanceCircular().empty())
 	{
-		Input[6] = Agent->GetDistanceToWalls()[0] != NULL ? Agent->GetDistanceToWalls()[0] / MaxDistance : 1;
-		Input[7] = Agent->GetDistanceToWalls()[1] != NULL ? Agent->GetDistanceToWalls()[1] / MaxDistance : 1;
-		Input[8] = Agent->GetDistanceToWalls()[2] != NULL ? Agent->GetDistanceToWalls()[2] / MaxDistance : 1;
-		Input[9] = Agent->GetDistanceToWalls()[3] != NULL ? Agent->GetDistanceToWalls()[3] / MaxDistance : 1;
+		Input[6] = Agent->GetDistanceCircular()[0] != NULL ? Agent->GetDistanceCircular()[0] / MaxDistance : 1;
+		Input[7] = Agent->GetDistanceCircular()[1] != NULL ? Agent->GetDistanceCircular()[1] / MaxDistance : 1;
+		Input[8] = Agent->GetDistanceCircular()[2] != NULL ? Agent->GetDistanceCircular()[2] / MaxDistance : 1;
+		Input[9] = Agent->GetDistanceCircular()[3] != NULL ? Agent->GetDistanceCircular()[3] / MaxDistance : 1;
 	}else
 	{
 		Input[6] = 1;
@@ -70,10 +70,6 @@ double* AAgentController::ActivateNeuralNetwork() const
 		Input[9] = 1;
 	}
 	Input[10] = .5;
-
-	//for (int i = 0; i < 10; i++) {
-	//	GEngine->AddOnScreenDebugMessage(-1, 7.f, FColor::Green, FString::SanitizeFloat(Input[i]));
-	//}
 
 	NeatOrganism->net->loadSensors(Input);
 
@@ -134,6 +130,7 @@ void AAgentController::ControlAgent(double* ControlValues) const
 	MovementVector -= ControlValues[1] * FVector::ForwardVector;
 	MovementVector += ControlValues[2] * FVector::RightVector;
 	MovementVector -= ControlValues[3] * FVector::RightVector;
+	MovementVector += Agent->GetActorForwardVector();
 	Agent->AddMovementInput(MovementVector, moveStep);
 
 	if (round(ControlValues[4]) == 1)
