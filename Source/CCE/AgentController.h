@@ -18,7 +18,7 @@ private:
 
 	int8 TicksFromLastCalculate = 0;
 
-	int8 const CalculatingFrequencyInTicks = 60;
+	int8 const CalculatingFrequencyInTicks = 5;
 
 	double* LastCalculatedOutput = nullptr;
 

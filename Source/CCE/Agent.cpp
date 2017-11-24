@@ -260,35 +260,33 @@ std::vector<float> AAgent::CalcualteDistanceToWalls() const
 std::vector<float> AAgent::CalcualteDistanceCircular() const
 {
 	std::vector<float> Result;
-	float RayCastLenght = 10000.0f;
+	float RayCastLenght = 5000.0f;
+	float CapsuleRadius = 45.0f;
 	FHitResult* HitResult = new FHitResult();
 	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
 	FVector StartTrace = this->GetActorLocation();
 
-	std::vector<FVector> EndTraces;
+	std::vector<FVector> EndTraceDirections;
 
-	for (int i = -2; i <= 2; i++)
+	for (int i = -4; i <= 4; i++)
 	{
-		if (i != 0)
-		{
-			FVector EndTrace = GetActorForwardVector().RotateAngleAxis(i * 45, GetActorUpVector()) * RayCastLenght + StartTrace;
-			EndTraces.push_back(EndTrace);
-		}
+			FVector EndTraceDirection = GetActorForwardVector().RotateAngleAxis(i * 40, GetActorUpVector());
+			EndTraceDirections.push_back(EndTraceDirection);
 	}
 
 
-	for (int i = 0; i < 4; i++) 
+	for (int i = 0; i <= 8; i++) 
 	{
-		FVector EndTrace=EndTraces.at(i);
-		if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace, EndTrace, ECC_Visibility, *TraceParams))
+		FVector EndTraceDirection =EndTraceDirections.at(i);
+		if (GetWorld()->LineTraceSingleByChannel(*HitResult, StartTrace+ CapsuleRadius*EndTraceDirection, EndTraceDirection* RayCastLenght + StartTrace, ECC_OverlapAll_Deprecated, *TraceParams))
 		{
 			//		if (DrawDebugLines)
-			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Red, false, -1, 1, 2);
+			DrawDebugLine(GetWorld(), StartTrace, HitResult->ImpactPoint, FColor::Green, false, -1, 1, 1.5f);
 			Result.push_back(HitResult->Distance);
 		}
 		else
 		{
-			Result.push_back(FLT_MAX);
+			Result.push_back(RayCastLenght);
 		}
 	}
 
